@@ -30,6 +30,16 @@ class Move(ABC):
 
     @classmethod
     def from_position(cls, position, steps):
+        """
+        Create a move based on the current position and steps (hori/verti).
+
+        Parameters:
+        position(String): The current position (eg. a1)
+        steps(tuple(int, int)): The steps taken in the move
+
+        Returns:
+        Move: A new move instance
+        """
         (letter_steps, number_steps) = steps
         current_letter_index = letterlist.index(position[0])
         current_number_index = numbers.index(int(position[1]))
@@ -41,6 +51,7 @@ class Move(ABC):
         return cls(move)
 
     def squares_between(self):
+        """ Return the squares between the origin and destination. """
         # TODO Make horizontal/vertical steps part of a move
         # Use it to get the squares between a move, return list
         # Don't forget the is_diagonal function
@@ -58,6 +69,7 @@ class Move(ABC):
         return squares
 
     def is_diagonal(self):
+        """ Is the move diagonal? """
         if self.horizontal == 0 or self.vertical == 0:
             return False
         if not abs(self.horizontal) == abs(self.vertical):
@@ -65,6 +77,7 @@ class Move(ABC):
         return True
 
     def is_horizontal(self):
+        """ Is the move horizontal (only)? """
         if self.horizontal == 0:
             return False
         if self.vertical != 0:
@@ -72,6 +85,7 @@ class Move(ABC):
         return True
 
     def is_vertical(self):
+        """ Is the move vertical (only)? """
         if self.vertical == 0:
             return False
         if self.horizontal != 0:
@@ -79,6 +93,7 @@ class Move(ABC):
         return True
 
     def get_steps(self):
+        """ Return the horizontal/vertical steps of the move. """
         current_letter_index = letterlist.index(self.origin[0])
         current_number_index = numbers.index(int(self.origin[1]))
         dest_letter_index = letterlist.index(self.destination[0])
@@ -90,6 +105,7 @@ class Move(ABC):
         return (horizontal_steps, vertical_steps)
 
     def __eq__(self, item):
+        """ Describes how to compare a Move. """
         if isinstance(item, Move):
             return self.text == item.text
         try:
@@ -98,4 +114,5 @@ class Move(ABC):
             return NotImplemented
 
     def __str__(self):
+        """ String representation of a Move. """
         return self.text
