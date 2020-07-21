@@ -1,4 +1,4 @@
-import game
+from nerdchess import game
 from tabulate import tabulate
 
 

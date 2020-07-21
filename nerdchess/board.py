@@ -1,6 +1,6 @@
 import string
-import pieces
-from config import colors, letters, MOVE_REGEX
+from nerdchess import pieces
+from nerdchess.config import colors, letters, MOVE_REGEX
 
 
 class Board():

@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
-from config import colors, numbers, letterlist
-from move import Move
+from nerdchess.config import colors, numbers, letterlist
+from nerdchess.move import Move
 
 
 class Piece(ABC):

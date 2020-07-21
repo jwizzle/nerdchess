@@ -1,5 +1,5 @@
 from abc import ABC
-from config import MOVE_REGEX, letterlist, numbers
+from nerdchess.config import MOVE_REGEX, letterlist, numbers
 
 
 class Move(ABC):

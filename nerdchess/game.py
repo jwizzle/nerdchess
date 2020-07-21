@@ -1,8 +1,8 @@
 import random
-import pieces
-from board import Board
-from config import colors
-from move import Move
+from nerdchess import pieces
+from nerdchess.board import Board
+from nerdchess.config import colors
+from nerdchess.move import Move
 
 
 class Player():
