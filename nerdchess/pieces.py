@@ -37,6 +37,36 @@ class Piece(ABC):
         """
         pass
 
+    def diagonal_pattern(self):
+        """ Returns a diagonal movement pattern as a list (bishops) """
+        pattern = []
+        cur_letter = self.position[0]
+        pos_letter = letterlist.index(cur_letter)
+
+        for letter in letterlist:
+            letter_diff = letterlist.index(letter) - pos_letter
+            pattern.append((0 + letter_diff, letter_diff))
+            pattern.append((0 - letter_diff, letter_diff))
+
+        return pattern
+
+    def straight_pattern(self):
+        """ Returns a straight movement pattern as a list (rooks) """
+        pattern = []
+        cur_letter = self.position[0]
+        cur_number = int(self.position[1])
+        pos_letter = letterlist.index(cur_letter)
+        pos_number = numbers.index(cur_number)
+
+        for letter in letterlist:
+            letter_diff = letterlist.index(letter) - pos_letter
+            pattern.append((letter_diff, 0))
+        for number in numbers:
+            number_diff = numbers.index(number) - pos_number
+            pattern.append((0, number_diff))
+
+        return pattern
+
     def allowed_moves(self):
         """ 
         Transform the move pattern into a list of allowed moves.
@@ -112,20 +142,7 @@ class Rook(Piece):
             return ('a1', 'h1')
 
     def move_pattern(self):
-        pattern = []
-        cur_letter = self.position[0]
-        cur_number = int(self.position[1])
-        pos_letter = letterlist.index(cur_letter)
-        pos_number = numbers.index(cur_number)
-
-        for letter in letterlist:
-            letter_diff = letterlist.index(letter) - pos_letter
-            pattern.append((0, letter_diff))
-        for number in numbers:
-            number_diff = numbers.index(number) - pos_number
-            pattern.append((0, number_diff))
-
-        return pattern
+        return self.straight_pattern()
 
 
 class Bishop(Piece):
@@ -146,16 +163,7 @@ class Bishop(Piece):
             return ('c1', 'f1')
 
     def move_pattern(self):
-        pattern = []
-        cur_letter = self.position[0]
-        pos_letter = letterlist.index(cur_letter)
-
-        for letter in letterlist:
-            letter_diff = letterlist.index(letter) - pos_letter
-            pattern.append((0 + letter_diff, letter_diff))
-            pattern.append((0 - letter_diff, letter_diff))
-
-        return pattern
+        return self.diagonal_pattern()
 
 
 class Knight(Piece):
@@ -207,21 +215,9 @@ class Queen(Piece):
             return 'd1'
 
     def move_pattern(self):
-        pattern = []
-        cur_letter = self.position[0]
-        cur_number = int(self.position[1])
-        pos_letter = letterlist.index(cur_letter)
-        pos_number = numbers.index(cur_number)
-
-        for letter in letterlist:
-            letter_diff = letterlist.index(letter) - pos_letter
-            pattern.append((0 + letter_diff, letter_diff))
-            pattern.append((0 - letter_diff, letter_diff))
-            pattern.append((0, letter_diff))
-        for number in numbers:
-            number_diff = numbers.index(number) - pos_number
-            pattern.append((0, number_diff))
-
+        straight = self.straight_pattern()
+        diagonal = self.diagonal_pattern()
+        pattern = straight + diagonal
         return pattern
 
 

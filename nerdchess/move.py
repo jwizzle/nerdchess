@@ -15,6 +15,8 @@ class Move(ABC):
     destination(String): String representation of the destination square
     horizontal(int): Amount of horizontal steps in the move
     vertical(int): Amount of vertical steps in the move
+    indices(dict): Origin/destination letter(x)/number(y) mapped to their list
+                   position
     """
 
     def __init__(self, move):
@@ -25,6 +27,16 @@ class Move(ABC):
         self.text = move
         self.origin = move[:2]
         self.destination = move[2:]
+        self.indices = {
+            'or': {
+                'x': letterlist.index(self.origin[0]),
+                'y': numbers.index(int(self.origin[1]))
+            },
+            'dest': {
+                'x': letterlist.index(self.destination[0]),
+                'y': numbers.index(int(self.destination[1]))
+            }
+        }
         (self.horizontal,
          self.vertical) = self.get_steps()
 
@@ -52,19 +64,29 @@ class Move(ABC):
 
     def squares_between(self):
         """ Return the squares between the origin and destination. """
-        # TODO Make horizontal/vertical steps part of a move
-        # Use it to get the squares between a move, return list
-        # Don't forget the is_diagonal function
         squares = []
 
         if self.is_diagonal():
             steps = 1 if self.horizontal > 0 else -1
-            for i in range(1, self.horizontal, steps):
-                # TODO for every step get a new number/letter
-                # TODO maybe think of some way to keep letter/number list index
-                # more ready it's being used a lot like in get_steps
-
-                pass
+            for i in range(steps, self.horizontal, steps):
+                letter = letterlist[self.indices['or']['x'] + i]
+                number = numbers[self.indices['or']['y'] + i]
+                square = f"{letter}{number}"
+                squares.append(square)
+        elif self.is_horizontal():
+            steps = 1 if self.horizontal > 0 else -1
+            for i in range(steps, self.horizontal, steps):
+                letter = letterlist[self.indices['or']['x'] + i]
+                number = self.origin[1]
+                square = f"{letter}{number}"
+                squares.append(square)
+        elif self.is_vertical():
+            steps = 1 if self.vertical > 0 else -1
+            for i in range(steps, self.vertical, steps):
+                letter = self.origin[0]
+                number = numbers[self.indices['or']['y'] + i]
+                square = f"{letter}{number}"
+                squares.append(square)
 
         return squares
 
@@ -94,13 +116,10 @@ class Move(ABC):
 
     def get_steps(self):
         """ Return the horizontal/vertical steps of the move. """
-        current_letter_index = letterlist.index(self.origin[0])
-        current_number_index = numbers.index(int(self.origin[1]))
-        dest_letter_index = letterlist.index(self.destination[0])
-        dest_number_index = numbers.index(int(self.destination[1]))
-
-        horizontal_steps = dest_letter_index - current_letter_index
-        vertical_steps = dest_number_index - current_number_index
+        horizontal_steps = self.indices['dest']['x'] - \
+            self.indices['or']['x']
+        vertical_steps = self.indices['dest']['y'] - \
+            self.indices['or']['y']
 
         return (horizontal_steps, vertical_steps)
 

@@ -75,9 +75,11 @@ class Board():
                     return False
         # Blocking lines
         if not isinstance(piece, pieces.Knight):
-            # TODO block lines
-            # Get squares between origin destination
-            squares_between = move.squares_between()
+            for square in move.squares_between():
+                c = square[0]
+                i = int(square[1])
+                if self.board[c][i].occupant:
+                    return False
         return True
 
     def process_move(self, move):
@@ -136,6 +138,16 @@ class Board():
         """ Set up the pieces and pawns in one go. """
         self.setup_pieces(game_pieces)
         self.setup_pawns(pawns)
+
+    def place_piecepawn(self, piece, position):
+        """
+        Place a piece or pawn on the board.
+        Mostly used for testing setups.
+        """
+        letter = position[0]
+        number = int(position[1])
+        self.board[letter][number].occupant = piece
+        piece.position = position
 
     def setup_pieces(self, game_pieces):
         """
