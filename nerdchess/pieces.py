@@ -255,3 +255,31 @@ class King(Piece):
         pattern.append((-1, -1))
 
         return pattern
+
+
+def create_pieces():
+    """ Create a standard set of chess pieces. """
+    chess_pieces = []
+
+    for color in colors:
+        chess_pieces.append(Rook(color))
+        chess_pieces.append(Rook(color))
+        chess_pieces.append(Knight(color))
+        chess_pieces.append(Knight(color))
+        chess_pieces.append(Bishop(color))
+        chess_pieces.append(Bishop(color))
+        chess_pieces.append(Queen(color))
+        chess_pieces.append(King(color))
+
+    return chess_pieces
+
+
+def create_pawns():
+    """ Create a standard set of pawns. """
+    pawns = []
+
+    for color in colors:
+        for letter in letterlist:
+            pawns.append(Pawn(color))
+
+    return pawns

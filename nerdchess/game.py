@@ -55,8 +55,8 @@ class ChessGame():
         self.playerlist = [self.player_1, self.player_2]
 
         self.board = Board()
-        self.pieces = self.create_pieces()
-        self.pawns = self.create_pawns()
+        self.pieces = pieces.create_pieces()
+        self.pawns = pieces.create_pawns()
         self.board.setup_board(self.pieces, self.pawns)
         self.over = over
 
@@ -91,32 +91,6 @@ class ChessGame():
             self.pass_turn()
 
         return result
-
-    def create_pieces(self):
-        """ Create chesspieces used in the game. """
-        chess_pieces = []
-
-        for color in colors:
-            chess_pieces.append(pieces.Rook(color))
-            chess_pieces.append(pieces.Rook(color))
-            chess_pieces.append(pieces.Knight(color))
-            chess_pieces.append(pieces.Knight(color))
-            chess_pieces.append(pieces.Bishop(color))
-            chess_pieces.append(pieces.Bishop(color))
-            chess_pieces.append(pieces.Queen(color))
-            chess_pieces.append(pieces.King(color))
-
-        return chess_pieces
-
-    def create_pawns(self):
-        """ Create pawns used in the game. """
-        pawns = []
-
-        for color in colors:
-            for letter in self.board.letters:
-                pawns.append(pieces.Pawn(color))
-
-        return pawns
 
     def create_players(self, name_1, name_2, color_input):
         """
