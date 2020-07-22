@@ -1,5 +1,6 @@
-from abc import ABC
+from abc import ABC, abstractmethod
 from nerdchess.config import MOVE_REGEX, letterlist, numbers
+from nerdchess import pieces
 
 
 class Move(ABC):
@@ -135,3 +136,93 @@ class Move(ABC):
     def __str__(self):
         """ String representation of a Move. """
         return self.text
+
+
+# TODO Make something like an enumerator with boardrules.
+# Maybe an enumerator that loops over functions if that works.
+class BoardMove(Move):
+    """
+    Represents a move in the context of a board.
+    Inherits base class (Move) attributes.
+    """
+
+    def get_origin_destination(self, board):
+        """
+        Get the origin and destination square of a move.
+
+        Paramters:
+        move(Move): The move to get the squares for
+
+        Returns:
+        tuple(Square, Square): The origin and destination
+        """
+        o_letter = str(self.origin[0])
+        o_number = int(self.origin[1])
+
+        d_letter = str(self.destination[0])
+        d_number = int(self.destination[1])
+
+        origin = board.squares[o_letter][o_number]
+        destination = board.squares[d_letter][d_number]
+
+        return (origin, destination)
+
+    # TODO Expand this function with more boardrules to complete the base game!
+    def legal_move(self, board, piece):
+        """
+        Checks if a move is legal in the context of the board.
+
+        Parameters:
+        move(Move): The move to check
+        piece(Piece): The piece that's being moved
+
+        Returns:
+        Bool: Is the move legal?
+        """
+        (origin, destination) = self.get_origin_destination(board)
+
+        # Pawn rules
+        if isinstance(piece, pieces.Pawn):
+            # Capturing pawn rules
+            if self.horizontal == 1:
+                if not destination.occupant:
+                    return False
+        # Blocking lines
+        if not isinstance(piece, pieces.Knight):
+            for square in self.squares_between():
+                c = square[0]
+                i = int(square[1])
+                if board.squares[c][i].occupant:
+                    return False
+        return True
+
+    def process(self, board):
+        """
+        Provess a move in the context of a board.
+
+        Parameters:
+        board(Board): The board to execute on
+
+        Returns:
+        Bool: False if the move is incorrect
+        Board: A new board
+        """
+        (origin, destination) = self.get_origin_destination(board)
+
+        if not origin.occupant:
+            return False
+
+        piece = origin.occupant
+        if Move(self.text) not in piece.allowed_moves():
+            return False
+
+        if not self.legal_move(board, piece):
+            return False
+
+        origin.occupant = None
+        if destination.occupant:
+            destination.occupant.captured = True
+        destination.occupant = piece
+        piece.position = destination.selector
+
+        return board

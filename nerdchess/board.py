@@ -10,7 +10,7 @@ class Board():
     Attributes:
     letters(list): The letters of a board
     numbers(list): The numbers of a board
-    board(dict): A dict of letters containing numbers with squares
+    squares(dict): A dict of letters containing numbers with squares
 
     {
         a: {
@@ -30,87 +30,8 @@ class Board():
     def __init__(self):
         self.letters = [i.value for i in letters]
         self.numbers = range(1, 9)
-        self.board = {}
+        self.squares = {}
         self.create_board()
-
-    def get_origin_destination(self, move):
-        """
-        Get the origin and destination square of a move.
-
-        Paramters:
-        move(Move): The move to get the squares for
-
-        Returns:
-        tuple(Square, Square): The origin and destination
-        """
-        o_letter = str(move.origin[0])
-        o_number = int(move.origin[1])
-
-        d_letter = str(move.destination[0])
-        d_number = int(move.destination[1])
-
-        origin = self.board[o_letter][o_number]
-        destination = self.board[d_letter][d_number]
-
-        return (origin, destination)
-
-    def legal_move(self, move, piece):
-        """
-        Checks if a move is legal in the context of the board.
-
-        Parameters:
-        move(Move): The move to check
-        piece(Piece): The piece that's being moved
-
-        Returns:
-        Bool: Is the move legal?
-        """
-        (origin, destination) = self.get_origin_destination(move)
-
-        # Pawn rules
-        if isinstance(piece, pieces.Pawn):
-            # Capturing pawn rules
-            if move.horizontal == 1:
-                if not destination.occupant:
-                    return False
-        # Blocking lines
-        if not isinstance(piece, pieces.Knight):
-            for square in move.squares_between():
-                c = square[0]
-                i = int(square[1])
-                if self.board[c][i].occupant:
-                    return False
-        return True
-
-    def process_move(self, move):
-        """
-        Process a move on the board, if the piece allows it.
-
-        Parameters:
-        move(Move): The move to process
-
-        Returns:
-        Bool: Did the move succeed?
-        """
-        (origin, destination) = self.get_origin_destination(move)
-
-        if not origin.occupant:
-            return False
-
-        piece = origin.occupant
-        if move not in piece.allowed_moves():
-            return False
-
-        if not self.legal_move(move, piece):
-            return False
-
-        origin.occupant = None
-        if destination.occupant:
-            destination.occupant.captured = True
-        destination.occupant = piece
-        piece.position = destination.selector
-
-        return True
 
     def matrix(self):
         """ Returns a matrix of the board represented as list. """
@@ -121,7 +42,7 @@ class Board():
             row.append(str(i))
 
             for letter in self.letters:
-                row.append(str(self.board[letter][i]))
+                row.append(str(self.squares[letter][i]))
 
             matrix.append(row)
 
@@ -146,7 +67,7 @@ class Board():
         """
         letter = position[0]
         number = int(position[1])
-        self.board[letter][number].occupant = piece
+        self.squares[letter][number].occupant = piece
         piece.position = position
 
     def setup_pieces(self, game_pieces):
@@ -160,7 +81,7 @@ class Board():
             row = 1 if piece.color == colors.WHITE else 8
 
             for letter in self.letters:
-                square = self.board[letter][row]
+                square = self.squares[letter][row]
                 if (square.selector in piece.start_position()
                         and not square.occupant):
                     piece.position = square.selector
@@ -178,7 +99,7 @@ class Board():
             row = 2 if pawn.color == colors.WHITE else 7
 
             for letter in self.letters:
-                square = self.board[letter][row]
+                square = self.squares[letter][row]
 
                 if not square.occupant:
                     square.occupant = pawn
@@ -188,11 +109,11 @@ class Board():
     def create_board(self):
         """ Create the board. """
         for letter in self.letters:
-            self.board[letter] = {}
+            self.squares[letter] = {}
 
             for number in self.numbers:
                 selector = "{}{}".format(letter, number)
-                self.board[letter][number] = Square(selector)
+                self.squares[letter][number] = Square(selector)
 
 
 class Square():

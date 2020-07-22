@@ -2,7 +2,7 @@ import random
 from nerdchess import pieces
 from nerdchess.board import Board
 from nerdchess.config import colors
-from nerdchess.move import Move
+from nerdchess.move import Move, BoardMove
 
 
 class Player():
@@ -76,9 +76,9 @@ class ChessGame():
         Returns:
         Bool: Was the move succesful?
         """
-        move = Move(move)
+        move = BoardMove(move)
 
-        (origin, destination) = self.board.get_origin_destination(move)
+        (origin, destination) = move.get_origin_destination(self.board)
 
         if origin.occupant:
             if origin.occupant.color != player.color:
@@ -86,11 +86,13 @@ class ChessGame():
         else:
             return False
 
-        result = self.board.process_move(move)
+        result = move.process(self.board)
         if result:
+            self.board = result
             self.pass_turn()
-
-        return result
+            return True
+        else:
+            return False
 
     def create_players(self, name_1, name_2, color_input):
         """
