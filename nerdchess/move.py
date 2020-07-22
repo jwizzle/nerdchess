@@ -187,6 +187,8 @@ class BoardMove(Move):
             if self.horizontal == 1:
                 if not destination.occupant:
                     return False
+        # TODO en passant
+        #
         # Blocking lines
         if not isinstance(piece, pieces.Knight):
             for square in self.squares_between():
@@ -194,6 +196,10 @@ class BoardMove(Move):
                 i = int(square[1])
                 if board.squares[c][i].occupant:
                     return False
+        # TODO Implement is_check() for the Board so we can use it here
+        # TODO Check for self-checking your king
+        # TODO Castling?
+
         return True
 
     def process(self, board):
