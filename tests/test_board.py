@@ -8,21 +8,19 @@ from nerdchess.config import colors
     ('e5', colors.BLACK),
     ('f6', False)
 ])
-def board_kingcheck(request):
+def board_kingcheck(request, board_fixt):
     """ Board set up for a king to be and not to be in check. """
     (pos, result) = request.param
-    board = Board()
-    queen = Queen(colors.WHITE)
-    king = King(colors.BLACK)
+    board_fixt.place_piece(Queen(colors.WHITE), 'e4')
+    board_fixt.place_piece(King(colors.BLACK), pos)
 
-    board.place_piece(queen, 'e4')
-    board.place_piece(king, pos)
-
-    return (board, result)
+    return (board_fixt.board, result)
 
 
 class TestBoard():
+    """ Test aspects of the Board class. """
 
     def test_ischeck(self, board_kingcheck):
+        """ Test if kingcheck works correctly """
         (board, result) = board_kingcheck
         assert board.is_check() == result
