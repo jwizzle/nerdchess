@@ -8,23 +8,10 @@ from nerdchess.config import colors
 
 
 @pytest.fixture
-def board_default():
-    """ Board set up with default pieces for a new game. """
-    board = Board()
-    boardpieces = pieces.create_pieces()
-    pawns = pieces.create_pawns()
-    board.setup_board(boardpieces, pawns)
-    return board
-
-
-@pytest.fixture
-def board_queen_e4():
+def board_queen_e4(board_fixt):
     """ Empty board with queen on e4. """
-    board = Board()
-    piece = pieces.Queen(colors.WHITE)
-    piece.position = 'e4'
-    board.squares['e'][4].occupant = piece
-    return board
+    board_fixt.place_piece(pieces.Queen(colors.WHITE), 'e4')
+    return board_fixt.board
 
 
 class TestDirections():
@@ -54,32 +41,24 @@ class TestDirections():
         assert result
 
 
-@pytest.fixture
-def board_pawncapture():
-    """ Board set up for a pawn to capture a rook on f5. """
-    board = Board()
-    pawn = pieces.Pawn(colors.WHITE)
-    piece = pieces.Rook(colors.BLACK)
-
-    board.place_piecepawn(pawn, 'e4')
-    board.place_piecepawn(piece, 'f5')
-
-    return board
-
-
 class TestBoardRules():
     """ Test specific board rules defined in legal_move(). """
 
-    def test_pawncapture(self, board_pawncapture):
+    def test_pawncapture(self, board_fixt):
         """ Test the possibility for pawns to move horizontally. """
         move = BoardMove('e4f5')
-        valid = move.process(board_pawncapture)
+        board_fixt.place_piece(pieces.Pawn(colors.WHITE), 'e4')
+        board_fixt.place_piece(pieces.Rook(colors.BLACK), 'f5')
+
+        valid = move.process(board_fixt.board)
 
         assert valid
         assert isinstance(
-            board_pawncapture.squares['f'][5].occupant, pieces.Pawn)
+            valid.squares['f'][5].occupant, pieces.Pawn)
 
-    def test_blocked(self, board_default):
+    def test_blocked(self, board_fixt):
+        """ Test rules for blocked pieces work correctly. """
+        board = board_fixt.default_setup()
         move = BoardMove('c1f4')
-        valid = move.process(board_default)
+        valid = move.process(board)
         assert not valid

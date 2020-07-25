@@ -6,18 +6,17 @@ from nerdchess.move import Move, BoardMove
 
 
 class Player():
-    """ 
-    Represents a player in a chessgame.
+    """Represents a player in a chessgame.
 
-    Parameters: 
-    name(String): The name of the player
-    color(colors): The color of the player
-    turn(Bool): Whether it's the players turn
+    Args: 
+        name: The name of the player
+        color: The color of the player
+        turn: Whether it's the players turn
 
     Attributes:
-    name(String): The name of the player
-    color(colors): The color of the player
-    turn(Bool): Is it the players turn?
+        name: The name of the player
+        color: The color of the player
+        turn: Is it the players turn?
     """
 
     def __init__(self, name, color, turn=True):
@@ -66,15 +65,14 @@ class ChessGame():
             player.turn = False if player.turn else True
 
     def move(self, player, move):
-        """
-        Process the move in a game of chess.
+        """Process the move in a game of chess.
 
         Parameters:
-        player(Player): The player that made the move
-        move(String): The move representeed by squares (eg. e2e4)
+            player: The player that made the move
+            move: The move representeed by squares (eg. e2e4)
 
         Returns:
-        Bool: Was the move succesful?
+            Bool: Was the move succesful?
         """
         move = BoardMove(move)
 
@@ -95,16 +93,15 @@ class ChessGame():
             return False
 
     def create_players(self, name_1, name_2, color_input):
-        """
-        Creates two players and bases the colors off of the one assigned to 1.
+        """Creates two players and bases the colors off of the one assigned to 1.
 
         Parameters:
-        name_1(String): The name of player 1
-        name_2(String): The name of player 2
-        color_input(String): The color to assign to player 1
+            name_1: The name of player 1
+            name_2: The name of player 2
+            color_input: The color to assign to player 1
 
         Returns:
-        Tuple(Player, Player): The players that are going to play the game
+            Tuple(Player, Player): The players that are going to play the game
         """
         if color_input == 'r':
             color = self.random_color()

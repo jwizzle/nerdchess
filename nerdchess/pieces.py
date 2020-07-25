@@ -92,6 +92,7 @@ class Piece(ABC):
 
 
 class Pawn(Piece):
+    """ Represents a pawn in a game of chess. """
 
     def move(self):
         pass
@@ -125,6 +126,7 @@ class Pawn(Piece):
 
 
 class Rook(Piece):
+    """ Represents a rook in a game of chess. """
 
     def move(self):
         pass
@@ -146,6 +148,7 @@ class Rook(Piece):
 
 
 class Bishop(Piece):
+    """ Represents a bishop in a game of chess. """
 
     def move(self):
         pass
@@ -167,6 +170,7 @@ class Bishop(Piece):
 
 
 class Knight(Piece):
+    """ Represents a knight in a game of chess. """
 
     def move(self):
         pass
@@ -198,6 +202,7 @@ class Knight(Piece):
 
 
 class Queen(Piece):
+    """ Represents a queen in a game of chess. """
 
     def move(self):
         pass
@@ -222,6 +227,7 @@ class Queen(Piece):
 
 
 class King(Piece):
+    """ Represents a king in a game of chess. """
 
     def move(self):
         pass

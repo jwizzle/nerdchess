@@ -1,3 +1,5 @@
+import copy
+from tabulate import tabulate
 from abc import ABC, abstractmethod
 from nerdchess.config import MOVE_REGEX, letterlist, numbers
 from nerdchess import pieces
@@ -66,6 +68,9 @@ class Move(ABC):
     def squares_between(self):
         """ Return the squares between the origin and destination. """
         squares = []
+
+        if self.horizontal == 1 or self.vertical == 1:
+            return squares
 
         if self.is_diagonal():
             steps = 1 if self.horizontal > 0 else -1
@@ -169,15 +174,14 @@ class BoardMove(Move):
 
     # TODO Expand this function with more boardrules to complete the base game!
     def legal_move(self, board, piece):
-        """
-        Checks if a move is legal in the context of the board.
+        """Checks if a move is legal in the context of the board.
 
         Parameters:
-        move(Move): The move to check
-        piece(Piece): The piece that's being moved
+            move: The move to check
+            piece: The piece that's being moved
 
         Returns:
-        Bool: Is the move legal?
+            Bool: Is the move legal?
         """
         (origin, destination) = self.get_origin_destination(board)
 
@@ -202,16 +206,39 @@ class BoardMove(Move):
 
         return True
 
-    def process(self, board):
-        """
-        Provess a move in the context of a board.
+    def new_board(self, board):
+        """Create a new board from the current move and a board.
+
+        This does not do any explicit validation on the move.
 
         Parameters:
-        board(Board): The board to execute on
+            board: The board to process the current move on
 
         Returns:
-        Bool: False if the move is incorrect
-        Board: A new board
+            newboard: The new board
+        """
+        newboard = copy.deepcopy(board)
+        (origin, destination) = self.get_origin_destination(newboard)
+
+        piece = origin.occupant
+
+        origin.occupant = None
+        if destination.occupant:
+            destination.occupant.captured = True
+        destination.occupant = piece
+        piece.position = destination.selector
+
+        return newboard
+
+    def process(self, board):
+        """Process a move in the context of a board.
+
+        Parameters:
+            board: The board to execute on
+
+        Returns:
+            Bool: False if the move is incorrect
+            Board: A new board
         """
         (origin, destination) = self.get_origin_destination(board)
 
@@ -225,10 +252,8 @@ class BoardMove(Move):
         if not self.legal_move(board, piece):
             return False
 
-        origin.occupant = None
-        if destination.occupant:
-            destination.occupant.captured = True
-        destination.occupant = piece
-        piece.position = destination.selector
+        newboard = self.new_board(board)
+        if newboard.is_check() == piece.color:
+            return False
 
-        return board
+        return newboard
