@@ -62,3 +62,20 @@ class TestBoardRules():
         move = BoardMove('c1f4')
         valid = move.process(board)
         assert not valid
+
+    @pytest.mark.parametrize("move,expected", [
+        ('f5e7', False),
+        ('e4d4', Board),
+    ])
+    def test_selfchecking(self, board_fixt, move, expected):
+        """ Confirm it's not possible to place self in check. """
+        board_fixt.place_piece(pieces.King(colors.WHITE), 'e4')
+        board_fixt.place_piece(pieces.Knight(colors.WHITE), 'f5')
+        board_fixt.place_piece(pieces.Queen(colors.BLACK), 'g6')
+        boardmove = BoardMove(move)
+        result = boardmove.process(board_fixt.board)
+
+        if isinstance(expected, bool):
+            assert result == expected
+        else:
+            assert isinstance(result, expected)

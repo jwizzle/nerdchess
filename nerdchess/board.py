@@ -148,6 +148,32 @@ class Board():
 
         return False
 
+    def is_checkmate(self):
+        """Is one of the kings in checkmate?
+
+        Returns:
+            color: Color of the king in mate or False
+        """
+        check = self.is_check()
+        if not check:
+            return False
+
+        pieces = list(self.piece_list(self.squares))
+        moves = []
+        for i in pieces:
+            if i.color == check:
+                moves = moves + i.allowed_moves()
+
+        boardmoves = [BoardMove(i.text) for i in moves]
+
+        for move in boardmoves:
+            valid_move = move.process(self)
+            if valid_move:
+                if valid_move.is_check() != check:
+                    return False
+
+        return check
+
 
 class Square():
     """Represents a square on a chessboard.

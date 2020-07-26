@@ -1,26 +1,32 @@
 import pytest
 from nerdchess.board import Board
-from nerdchess.pieces import King, Queen
+from nerdchess.pieces import King, Queen, Bishop
 from nerdchess.config import colors
-
-
-@pytest.fixture(params=[
-    ('e5', colors.BLACK),
-    ('f6', False)
-])
-def board_kingcheck(request, board_fixt):
-    """ Board set up for a king to be and not to be in check. """
-    (pos, result) = request.param
-    board_fixt.place_piece(Queen(colors.WHITE), 'e4')
-    board_fixt.place_piece(King(colors.BLACK), pos)
-
-    return (board_fixt.board, result)
 
 
 class TestBoard():
     """ Test aspects of the Board class. """
 
-    def test_ischeck(self, board_kingcheck):
+    @pytest.mark.parametrize("king_pos,expected", [
+        ('e5', colors.BLACK),
+        ('f6', False),
+    ])
+    def test_ischeck(self, board_fixt, king_pos, expected):
         """ Test if kingcheck works correctly """
-        (board, result) = board_kingcheck
-        assert board.is_check() == result
+        board_fixt.place_piece(Queen(colors.WHITE), 'e4')
+        board_fixt.place_piece(King(colors.BLACK), king_pos)
+        check = board_fixt.board.is_check()
+
+        assert check == expected
+
+    @pytest.mark.parametrize("king_pos,expected", [
+        ('h1', colors.WHITE),
+        ('f3', False),
+    ])
+    def test_checkmate(self, board_fixt, king_pos, expected):
+        board_fixt.place_piece(Queen(colors.BLACK), 'g2')
+        board_fixt.place_piece(Bishop(colors.BLACK), 'h3')
+        board_fixt.place_piece(King(colors.WHITE), king_pos)
+        check = board_fixt.board.is_checkmate()
+
+        assert check == expected
