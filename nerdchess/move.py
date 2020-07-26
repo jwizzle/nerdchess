@@ -173,26 +173,35 @@ class BoardMove(Move):
         return (origin, destination)
 
     # TODO Expand this function with more boardrules to complete the base game!
-    def legal_move(self, board, piece):
+    def legal_move(self, board):
         """Checks if a move is legal in the context of the board.
 
         Parameters:
-            move: The move to check
+            board: The board to test the move against
             piece: The piece that's being moved
 
         Returns:
             Bool: Is the move legal?
         """
         (origin, destination) = self.get_origin_destination(board)
+        piece = origin.occupant
+
+        if Move(self.text) not in piece.allowed_moves():
+            return False
 
         # Pawn rules
         if isinstance(piece, pieces.Pawn):
             # Capturing pawn rules
             if self.horizontal == 1:
+                # If we're going horizontal, are we at least capturing?
                 if not destination.occupant:
-                    return False
-        # TODO en passant
-        #
+                    d_letter = self.destination[0]
+                    o_number = int(self.origin[1])
+                    # If not, is it at least en passant?
+                    if not isinstance(
+                            board.squares[d_letter][o_number].occupant,
+                            pieces.Pawn):
+                        return False
         # Blocking lines
         if not isinstance(piece, pieces.Knight):
             for square in self.squares_between():
@@ -200,8 +209,6 @@ class BoardMove(Move):
                 i = int(square[1])
                 if board.squares[c][i].occupant:
                     return False
-        # TODO Implement is_check() for the Board so we can use it here
-        # TODO Check for self-checking your king
         # TODO Castling?
 
         return True
@@ -246,10 +253,8 @@ class BoardMove(Move):
             return False
 
         piece = origin.occupant
-        if Move(self.text) not in piece.allowed_moves():
-            return False
 
-        if not self.legal_move(board, piece):
+        if not self.legal_move(board):
             return False
 
         newboard = self.new_board(board)

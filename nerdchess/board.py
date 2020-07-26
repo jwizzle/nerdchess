@@ -8,11 +8,6 @@ class Board():
     """
     Represents a board in a game of chess.
 
-    Attributes:
-    letters(list): The letters of a board
-    numbers(list): The numbers of a board
-    squares(dict): A dict of letters containing numbers with squares
-
     {
         a: {
             1: (Square),
@@ -26,6 +21,12 @@ class Board():
         }
         etc...
     }
+
+    Attributes:
+        letters(list): The letters of a board
+        numbers(list): The numbers of a board
+        squares(dict): A dict of letters containing numbers with squares
+
     """
 
     def __init__(self):

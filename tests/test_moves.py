@@ -56,6 +56,22 @@ class TestBoardRules():
         assert isinstance(
             valid.squares['f'][5].occupant, pieces.Pawn)
 
+    @pytest.mark.parametrize("black_pos,expected", [
+        ('d2', True),
+        ('d4', False),
+    ])
+    def test_enpassant(self, board_fixt, black_pos, expected):
+        """ Test enpassant rules. """
+        move = BoardMove('c2d3')
+        move_piece = pieces.Pawn(colors.WHITE)
+
+        board_fixt.place_piece(move_piece, 'c2')
+        board_fixt.place_piece(pieces.Pawn(colors.BLACK), black_pos)
+
+        result = move.legal_move(board_fixt.board)
+
+        assert result == expected
+
     def test_blocked(self, board_fixt):
         """ Test rules for blocked pieces work correctly. """
         board = board_fixt.default_setup()
