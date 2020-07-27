@@ -248,12 +248,15 @@ class BoardMove(Move):
             Board: A new board
         """
         (origin, destination) = self.get_origin_destination(board)
-
-        if not origin.occupant:
-            return False
-
         piece = origin.occupant
 
+        if not piece:
+            return False
+
+        if Move(self.text) not in piece.allowed_moves():
+            return False
+
+        # TODO replace with boardrules class
         if not self.legal_move(board):
             return False
 
