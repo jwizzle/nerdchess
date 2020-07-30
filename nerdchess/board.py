@@ -1,6 +1,7 @@
 import string
+import copy
 from nerdchess.config import colors, letters, MOVE_REGEX
-from nerdchess.move import BoardMove
+from nerdchess.boardmove import BoardMove
 from nerdchess.pieces import King
 
 
@@ -174,6 +175,31 @@ class Board():
                     return False
 
         return check
+
+    def new_board(self, move):
+        """Create a new board from a supplied move.
+
+        This does not do any explicit validation on the move.
+
+        Parameters:
+            move: The move to process
+
+        Returns:
+            newboard: The new board
+        """
+        newboard = copy.deepcopy(self)
+        move = BoardMove(move.text)
+        (origin, destination) = move.get_origin_destination(newboard)
+
+        piece = origin.occupant
+
+        origin.occupant = None
+        if destination.occupant:
+            destination.occupant.captured = True
+        destination.occupant = piece
+        piece.position = destination.selector
+
+        return newboard
 
 
 class Square():

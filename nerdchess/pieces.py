@@ -90,6 +90,13 @@ class Piece(ABC):
         """ String representation of the class. """
         pass
 
+    def __eq__(self, item):
+        """ Comparing this class. """
+        if type(item) == type(self):
+            return self.color == item.color
+        else:
+            return NotImplemented
+
 
 class Pawn(Piece):
     """ Represents a pawn in a game of chess. """
@@ -245,16 +252,23 @@ class King(Piece):
             return 'e1'
 
     def move_pattern(self):
-        pattern = []
+        pattern = [
+            (0, 1),
+            (0, -1),
+            (1, 1),
+            (1, -1),
+            (1, 0),
+            (-1, 1),
+            (-1, 0),
+            (-1, -1)
+        ]
 
-        pattern.append((0, 1))
-        pattern.append((0, -1))
-        pattern.append((1, 1))
-        pattern.append((1, -1))
-        pattern.append((1, 0))
-        pattern.append((-1, 1))
-        pattern.append((-1, 0))
-        pattern.append((-1, -1))
+        if self.position == self.start_position():
+            pattern.append((2, 0))
+            pattern.append((3, 0))
+            pattern.append((-2, 0))
+            pattern.append((-3, 0))
+            pattern.append((-4, 0))
 
         return pattern
 

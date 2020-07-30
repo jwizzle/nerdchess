@@ -1,10 +1,12 @@
 import pytest
 from tabulate import tabulate
 from nerdchess.board import Board
-from nerdchess.move import Move, BoardMove
+from nerdchess.move import Move
+from nerdchess.boardmove import BoardMove
 from nerdchess.game import ChessGame
 from nerdchess import pieces
 from nerdchess.config import colors
+from nerdchess.boardrules import BoardRules
 
 
 @pytest.fixture
@@ -68,9 +70,9 @@ class TestBoardRules():
         board_fixt.place_piece(move_piece, 'c2')
         board_fixt.place_piece(pieces.Pawn(colors.BLACK), black_pos)
 
-        result = move.legal_move(board_fixt.board)
+        rules = BoardRules(move, board_fixt.board)
 
-        assert result == expected
+        assert rules.valid == expected
 
     def test_blocked(self, board_fixt):
         """ Test rules for blocked pieces work correctly. """
@@ -95,3 +97,21 @@ class TestBoardRules():
             assert result == expected
         else:
             assert isinstance(result, expected)
+
+    # TODO Expand this test with some blocking and checks underway
+    @pytest.mark.parametrize("move,expected", [
+        ('e1a1', True)
+    ])
+    def test_castling(self, board_fixt, move, expected):
+        """ Test different castling scenario's """
+        boardmove = BoardMove(move)
+        board_fixt.place_piece(pieces.King(colors.WHITE), 'e1')
+        board_fixt.place_piece(pieces.Rook(colors.WHITE), 'a1')
+        board_fixt.place_piece(pieces.Rook(colors.WHITE), 'h1')
+        board_fixt.place_piece(pieces.King(colors.BLACK), 'e8')
+        board_fixt.place_piece(pieces.Rook(colors.BLACK), 'a8')
+        board_fixt.place_piece(pieces.Rook(colors.BLACK), 'h8')
+
+        rules = BoardRules(boardmove, board_fixt.board)
+
+        assert rules.valid == expected

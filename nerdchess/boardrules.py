@@ -1,4 +1,6 @@
+from tabulate import tabulate
 from nerdchess import pieces
+from nerdchess.move import Move
 
 
 class BoardRules():
@@ -11,7 +13,7 @@ class BoardRules():
     Attributes:
         move: The move we're checking
         board: The board we're checking
-        valid: Is the checked move valid?
+        valid: Is the checked move valid? see self.apply()
         origin: The origin square of the move
         destination: The destination square of the move
         piece: The piece being moved
@@ -32,7 +34,10 @@ class BoardRules():
             self.__pawn_rules()
         if not isinstance(self.piece, pieces.Knight):
             self.__blocking_pieces()
-        self.__self_checking()
+        if self.move.is_castling(self.board):
+            self.__castling()
+        else:
+            self.__self_checking()
 
     def __pawn_rules(self):
         """ Rules to apply to pawns only. """
@@ -57,6 +62,30 @@ class BoardRules():
 
     def __self_checking(self):
         """ Check if the move puts the player itself in check. """
-        newboard = self.move.new_board(self.board)
+        newboard = self.board.new_board(self.move)
         if newboard.is_check() == self.piece.color:
             self.valid = False
+
+    def __castling(self):
+        """ Apply rules specific to castling. """
+        pattern = []
+
+        if self.board.is_check() == self.piece.color:
+            self.valid = False
+
+        if self.move.horizontal > 0:
+            pattern = [
+                (1, 0),
+                (2, 0)
+            ]
+        else:
+            pattern = [
+                (-1, 0),
+                (-2, 0)
+            ]
+
+        for move in pattern:
+            inter_move = Move.from_position(self.piece.position, move)
+            inter_board = self.board.new_board(inter_move)
+            if inter_board.is_check() == self.piece.color:
+                self.valid = False

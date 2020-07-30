@@ -2,7 +2,8 @@ import random
 from nerdchess import pieces
 from nerdchess.board import Board
 from nerdchess.config import colors
-from nerdchess.move import Move, BoardMove
+from nerdchess.move import Move
+from nerdchess.boardmove import BoardMove
 
 
 class Player():
