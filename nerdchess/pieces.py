@@ -47,6 +47,8 @@ class Piece(ABC):
             letter_diff = letterlist.index(letter) - pos_letter
             pattern.append((0 + letter_diff, letter_diff))
             pattern.append((0 - letter_diff, letter_diff))
+            pattern.append((letter_diff, 0 + letter_diff))
+            pattern.append((letter_diff, 0 - letter_diff))
 
         return pattern
 
@@ -79,7 +81,8 @@ class Piece(ABC):
         for move in self.move_pattern():
             try:
                 new_move = Move.from_position(self.position, move)
-                allowed_moves.append(new_move)
+                if new_move:
+                    allowed_moves.append(new_move)
             except IndexError:
                 pass
 
@@ -222,7 +225,7 @@ class Queen(Piece):
 
     def start_position(self):
         if self.color == colors.BLACK:
-            return 'e8'
+            return 'd8'
         else:
             return 'd1'
 
@@ -247,7 +250,7 @@ class King(Piece):
 
     def start_position(self):
         if self.color == colors.BLACK:
-            return 'd8'
+            return 'e8'
         else:
             return 'e1'
 

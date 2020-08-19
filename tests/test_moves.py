@@ -99,10 +99,19 @@ class TestBoardRules():
             assert isinstance(result, expected)
 
     # TODO Expand this test with some blocking and checks underway
-    @pytest.mark.parametrize("move,expected", [
-        ('e1a1', True)
+    @pytest.mark.parametrize("move,expected,side,color", [
+        # Queenside castle for white with no checks etc.
+        ('e1a1', True, 'queenside', colors.WHITE),
+        # Same as above but differnt notation
+        ('e1b1', True, 'queenside', colors.WHITE),
+        # Black kingside no checks etc.
+        ('e8h8', True, 'kingside', colors.BLACK),
+        # White kingside, checked by bishop
+        ('e1h1', False, 'kingside', colors.WHITE),
+        # Black queenside, checked by bishop on ending square
+        ('e8a8', False, 'queenside', colors.BLACK),
     ])
-    def test_castling(self, board_fixt, move, expected):
+    def test_castling(self, board_fixt, move, expected, side, color):
         """ Test different castling scenario's """
         boardmove = BoardMove(move)
         board_fixt.place_piece(pieces.King(colors.WHITE), 'e1')
@@ -111,7 +120,28 @@ class TestBoardRules():
         board_fixt.place_piece(pieces.King(colors.BLACK), 'e8')
         board_fixt.place_piece(pieces.Rook(colors.BLACK), 'a8')
         board_fixt.place_piece(pieces.Rook(colors.BLACK), 'h8')
+        board_fixt.place_piece(pieces.Bishop(colors.BLACK), 'h3')
+        board_fixt.place_piece(pieces.Bishop(colors.WHITE), 'f5')
 
-        rules = BoardRules(boardmove, board_fixt.board)
+        result = boardmove.process(board_fixt.board)
 
-        assert rules.valid == expected
+        if expected:
+            board = result.squares
+            if side == 'kingside':
+                r_char = 'f'
+                k_char = 'g'
+
+            else:
+                r_char = 'd'
+                k_char = 'c'
+
+            if color == colors.WHITE:
+                row = 1
+            else:
+                row = 8
+
+            assert isinstance(board[k_char][row].occupant, pieces.King)
+            assert isinstance(board[r_char][row].occupant, pieces.Rook)
+
+        else:
+            assert result == expected

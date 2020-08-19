@@ -55,8 +55,14 @@ class Move(ABC):
         current_letter_index = letterlist.index(position[0])
         current_number_index = numbers.index(int(position[1]))
 
-        new_letter = letterlist[current_letter_index + letter_steps]
-        new_number = numbers[current_number_index + number_steps]
+        new_letter_index = current_letter_index + letter_steps
+        new_number_index = current_number_index + number_steps
+
+        if new_letter_index >= 0 and new_number_index >= 0:
+            new_letter = letterlist[new_letter_index]
+            new_number = numbers[new_number_index]
+        else:
+            return None
 
         move = "{}{}{}".format(position, new_letter, new_number)
         return cls(move)

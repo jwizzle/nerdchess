@@ -1,7 +1,7 @@
 import string
 import copy
 from nerdchess.config import colors, letters, MOVE_REGEX
-from nerdchess.boardmove import BoardMove
+from nerdchess.boardmove import BoardMove, CastleSide
 from nerdchess.pieces import King
 
 
@@ -142,8 +142,15 @@ class Board():
         for piece in pieces:
             moves = [BoardMove(i.text) for i in piece.allowed_moves()]
             for move in moves:
+                if not move:
+                    continue
+
                 (origin,
                  destination) = move.get_origin_destination(self)
+
+                if not destination.occupant:
+                    continue
+
                 if (isinstance(destination.occupant, King) and
                         destination.occupant.color != origin.occupant.color):
                     return destination.occupant.color
@@ -189,8 +196,8 @@ class Board():
         """
         newboard = copy.deepcopy(self)
         move = BoardMove(move.text)
-        (origin, destination) = move.get_origin_destination(newboard)
 
+        (origin, destination) = move.get_origin_destination(newboard)
         piece = origin.occupant
 
         origin.occupant = None
@@ -198,6 +205,50 @@ class Board():
             destination.occupant.captured = True
         destination.occupant = piece
         piece.position = destination.selector
+
+        return newboard
+
+    def castle(self, side, color):
+        """ Perform castling on a board.
+
+        Parameters:
+            side: The side to castle to
+            color: The color performing the castle
+
+        Returns:
+            newboard: A new board with the processed move
+        """
+        newboard = copy.deepcopy(self)
+
+        if color == colors.WHITE:
+            kingsquare = newboard.squares['e'][1]
+            if side == CastleSide.QUEEN:
+                rooksquare = newboard.squares['a'][1]
+            else:
+                rooksquare = newboard.squares['h'][1]
+        else:
+            kingsquare = newboard.squares['e'][8]
+            if side == CastleSide.QUEEN:
+                rooksquare = newboard.squares['a'][8]
+            else:
+                rooksquare = newboard.squares['h'][8]
+
+        kchar = 'c' if side == CastleSide.QUEEN else 'g'
+        rchar = 'd' if side == CastleSide.QUEEN else 'f'
+        kint = 1 if color == colors.WHITE else 8
+        rint = 1 if color == colors.WHITE else 8
+        king_dest = newboard.squares[kchar][kint]
+        rook_dest = newboard.squares[rchar][rint]
+
+        king = kingsquare.occupant
+        rook = rooksquare.occupant
+        kingsquare.occupant = None
+        rooksquare.occupant = None
+
+        king_dest.occupant = king
+        rook_dest.occupant = rook
+        king.position = king_dest.selector
+        rook.position = rook_dest.selector
 
         return newboard
 

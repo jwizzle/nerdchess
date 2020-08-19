@@ -2,7 +2,13 @@ from nerdchess import pieces
 from nerdchess.move import Move
 from nerdchess.config import colors
 from nerdchess.boardrules import BoardRules
+from enum import Enum
 import copy
+
+
+class CastleSide(Enum):
+    QUEEN = 'queenside'
+    KING = 'kingside'
 
 
 class BoardMove(Move):
@@ -10,6 +16,17 @@ class BoardMove(Move):
     Represents a move in the context of a board.
     Inherits base class (Move) attributes.
     """
+
+    def castle_side(self, board):
+        """ Return the side we're castling to. """
+        castling = self.is_castling(board)
+        if not castling:
+            raise Exception('Trying to determine castleside but not castling.')
+
+        if self.horizontal > 0:
+            return CastleSide.KING
+        else:
+            return CastleSide.QUEEN
 
     def is_castling(self, board):
         """ Is this a castling move? """
@@ -49,7 +66,7 @@ class BoardMove(Move):
         if self not in castling_moves:
             return False
 
-        return True
+        return piece.color
 
     def get_origin_destination(self, board):
         """Get the origin and destination square of a move.
@@ -94,7 +111,13 @@ class BoardMove(Move):
         if not boardrules.valid:
             return False
 
-        newboard = board.new_board(self)
+        castling = self.is_castling(board)
+        if not castling:
+            newboard = board.new_board(self)
+        else:
+            side = self.castle_side(board)
+            newboard = board.castle(side, piece.color)
+
         if newboard.is_check() == piece.color:
             return False
 
