@@ -74,12 +74,23 @@ class TestBoardRules():
 
         assert rules.valid == expected
 
-    def test_blocked(self, board_fixt):
+    @pytest.mark.parametrize("move,expected", [
+        # Can we move through other colored pieces?
+        ('g5e7', False),
+        # Can we move through our own pieces?
+        ('c5e7', False),
+    ])
+    def test_blocked(self, board_fixt, move, expected):
         """ Test rules for blocked pieces work correctly. """
-        board = board_fixt.default_setup()
-        move = BoardMove('c1f4')
-        valid = move.process(board)
-        assert not valid
+        board_fixt.place_piece(pieces.Pawn(colors.BLACK), 'd6')
+        board_fixt.place_piece(pieces.Bishop(colors.WHITE), 'g5')
+        board_fixt.place_piece(pieces.Pawn(colors.BLACK), 'f6')
+        board_fixt.place_piece(pieces.Bishop(colors.BLACK), 'c5')
+        move = BoardMove(move)
+
+        result = move.process(board_fixt.board)
+
+        assert result == expected
 
     @pytest.mark.parametrize("move,expected", [
         ('f5e7', False),
@@ -98,7 +109,6 @@ class TestBoardRules():
         else:
             assert isinstance(result, expected)
 
-    # TODO Expand this test with some blocking and checks underway
     @pytest.mark.parametrize("move,expected,side,color", [
         # Queenside castle for white with no checks etc.
         ('e1a1', True, 'queenside', colors.WHITE),
@@ -145,3 +155,18 @@ class TestBoardRules():
 
         else:
             assert result == expected
+
+    @pytest.mark.parametrize("move,expected", [
+        # Queenside castle for white with a bishop in the way.
+        ('e1a1', False),
+    ])
+    def test_castling_blocked(self, board_fixt, move, expected):
+        """ Test if we can castle through others. """
+        boardmove = BoardMove(move)
+        board_fixt.place_piece(pieces.King(colors.WHITE), 'e1')
+        board_fixt.place_piece(pieces.Bishop(colors.WHITE), 'b1')
+        board_fixt.place_piece(pieces.Rook(colors.WHITE), 'a1')
+
+        result = boardmove.process(board_fixt.board)
+
+        assert result == expected

@@ -9,8 +9,8 @@ It's still the idea to make it possible to write AI's againt this package. But f
 I'm not aiming for this to be some widely used package, and am mostly making it for fun and learning. Expect things to change a lot, and your applications to break if you don't freeze versions might you decide to use this. At least in it's current state.
 
 ## TODO
-* Finish the basic engine, see TODO items and use common sense to find what's missing
-* Complete the basic version of the game as we go finishing the engine itself
-* Write tests
+* Finish the basic engine, see TODO items and use common sense to find what's missing -> seems done for now, but some testing is needed, and I need a nice front-end to test manually. The past few hundred lines of changes have solely been tested by pytest.
+* Complete the basic version of the game as we go finishing the engine itself -> seems done but same as above
+* Write tests -> seems done for now
 * Read up on UCI and possibly implement it
 * Start seperate project for a more complete TUI chessgame implementing this package

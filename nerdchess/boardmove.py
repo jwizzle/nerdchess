@@ -28,6 +28,13 @@ class BoardMove(Move):
         else:
             return CastleSide.QUEEN
 
+    def is_capturing(self, board):
+        (origin, destination) = self.get_origin_destination(board)
+        if destination.occupant:
+            return True
+        else:
+            return False
+
     def is_castling(self, board):
         """ Is this a castling move? """
         (origin, destination) = self.get_origin_destination(board)
@@ -100,6 +107,9 @@ class BoardMove(Move):
         """
         (origin, destination) = self.get_origin_destination(board)
         piece = origin.occupant
+
+        if origin == destination:
+            return False
 
         if not piece:
             return False

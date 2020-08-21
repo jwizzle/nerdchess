@@ -1,5 +1,6 @@
 import string
 import copy
+from tabulate import tabulate
 from nerdchess.config import colors, letters, MOVE_REGEX
 from nerdchess.boardmove import BoardMove, CastleSide
 from nerdchess.pieces import King
@@ -37,7 +38,7 @@ class Board():
         self.create_board()
 
     @classmethod
-    def piece_list(cls, square_dict):
+    def piece_list(cls, square_dict, color=None):
         """Generator to get the current pieces on the board as a list.
 
         Parameters:
@@ -45,10 +46,16 @@ class Board():
         """
         for v in square_dict.values():
             if isinstance(v, dict):
-                yield from cls.piece_list(v)
+                yield from cls.piece_list(v, color)
             else:
                 if v.occupant:
-                    yield v.occupant
+                    if color:
+                        if v.occupant.color == color:
+                            yield v.occupant
+                        else:
+                            pass
+                    else:
+                        yield v.occupant
                 else:
                     pass
 
@@ -132,13 +139,17 @@ class Board():
                 selector = "{}{}".format(letter, number)
                 self.squares[letter][number] = Square(selector)
 
-    def is_check(self):
+    # TODO write a test to see if bishops can't check through pawns
+    def is_check(self, color=None):
         """Is one of the kings in check?
+
+        Parameters:
+            color(optional): The color to check for
 
         Returns:
             color: The color of the king that is in check or False
         """
-        pieces = list(self.piece_list(self.squares))
+        pieces = list(self.piece_list(self.squares, color))
         for piece in pieces:
             moves = [BoardMove(i.text) for i in piece.allowed_moves()]
             for move in moves:
@@ -167,18 +178,17 @@ class Board():
         if not check:
             return False
 
-        pieces = list(self.piece_list(self.squares))
+        pieces = list(self.piece_list(self.squares, check))
         moves = []
         for i in pieces:
-            if i.color == check:
-                moves = moves + i.allowed_moves()
+            moves = moves + i.allowed_moves()
 
         boardmoves = [BoardMove(i.text) for i in moves]
 
         for move in boardmoves:
             valid_move = move.process(self)
             if valid_move:
-                if valid_move.is_check() != check:
+                if not valid_move.is_check(check):
                     return False
 
         return check

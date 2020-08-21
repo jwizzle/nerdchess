@@ -62,3 +62,32 @@ class TestGame():
                 assert dude.turn
             else:
                 assert not dude.turn
+
+
+class TestMatch():
+    """
+    Test a complete match between two players!
+    """
+
+    @pytest.mark.parametrize("move,game_over", [
+        ('e2e4', False),
+        ('e7e5', False),
+        ('f1c4', False),
+        ('f8a3', False),
+        ('g1f3', False),
+        ('b8a6', False),
+        ('f3e5', False),
+        ('c7c6', False),
+        ('d1f3', False),
+        ('d7d5', False),
+        ('f3f7', True),
+    ])
+    def test_match(self, chessgame, move, game_over):
+        for player in chessgame.playerlist:
+            if player.turn:
+                current_player = player
+
+        result = chessgame.move(current_player, move)
+
+        assert(result)
+        assert(chessgame.over == game_over)

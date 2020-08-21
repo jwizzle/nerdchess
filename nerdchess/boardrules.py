@@ -37,7 +37,13 @@ class BoardRules():
         if self.move.is_castling(self.board):
             self.__castling()
         else:
+            if self.move.is_capturing(self.board):
+                self.__capturing()
             self.__self_checking()
+
+    def __capturing(self):
+        if self.destination.occupant.color == self.origin.occupant.color:
+            self.valid = False
 
     def __pawn_rules(self):
         """ Rules to apply to pawns only. """

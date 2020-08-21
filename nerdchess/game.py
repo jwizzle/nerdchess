@@ -87,6 +87,8 @@ class ChessGame():
 
         result = move.process(self.board)
         if result:
+            if result.is_checkmate():
+                self.over = True
             self.board = result
             self.pass_turn()
             return True

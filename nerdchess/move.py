@@ -67,6 +67,7 @@ class Move(ABC):
         move = "{}{}{}".format(position, new_letter, new_number)
         return cls(move)
 
+    # TODO Clean up this mess of a function
     def squares_between(self):
         """ Return the squares between the origin and destination. """
         squares = []
@@ -74,13 +75,32 @@ class Move(ABC):
         if self.horizontal == 1 or self.vertical == 1:
             return squares
 
+        if self.horizontal == -1 or self.vertical == -1:
+            return squares
+
         if self.is_diagonal():
             steps = 1 if self.horizontal > 0 else -1
-            for i in range(steps, self.horizontal, steps):
-                letter = letterlist[self.indices['or']['x'] + i]
-                number = numbers[self.indices['or']['y'] + i]
-                square = f"{letter}{number}"
-                squares.append(square)
+            if self.vertical < 0 and steps == 1:
+                v_steps = -1
+            elif self.vertical > 0 and steps == -1:
+                v_steps = -1
+            else:
+                v_steps = 1
+
+            try:
+                for i in range(steps, self.horizontal, steps):
+                    step_index_x = self.indices['or']['x'] + i
+                    step_index_y = self.indices['or']['y'] + (i * v_steps)
+
+                    if step_index_x < 0 or step_index_y < 0:
+                        continue
+
+                    letter = letterlist[step_index_x]
+                    number = numbers[step_index_y]
+                    square = f"{letter}{number}"
+                    squares.append(square)
+            except IndexError:
+                pass
         elif self.is_horizontal():
             steps = 1 if self.horizontal > 0 else -1
             for i in range(steps, self.horizontal, steps):
