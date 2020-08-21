@@ -1,9 +1,6 @@
 import pytest
-from tabulate import tabulate
 from nerdchess.board import Board
-from nerdchess.move import Move
 from nerdchess.boardmove import BoardMove
-from nerdchess.game import ChessGame
 from nerdchess import pieces
 from nerdchess.config import colors
 from nerdchess.boardrules import BoardRules

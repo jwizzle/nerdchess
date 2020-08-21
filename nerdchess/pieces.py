@@ -29,7 +29,7 @@ class Piece(ABC):
 
     @abstractmethod
     def move_pattern(self):
-        """ 
+        """
         The move pattern a piece follows.
 
         Returns:
@@ -70,7 +70,7 @@ class Piece(ABC):
         return pattern
 
     def allowed_moves(self):
-        """ 
+        """
         Transform the move pattern into a list of allowed moves.
 
         Returns:

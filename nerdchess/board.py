@@ -1,7 +1,5 @@
-import string
 import copy
-from tabulate import tabulate
-from nerdchess.config import colors, letters, MOVE_REGEX
+from nerdchess.config import colors, letters
 from nerdchess.boardmove import BoardMove, CastleSide
 from nerdchess.pieces import King
 
