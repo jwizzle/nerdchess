@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="NerdChess-jwizzle",  # Replace with your own username
-    version="0.1.0",
+    version="0.2.0",
     author="j wizzle",
     author_email="info@hossel.net",
     description="A Python chess engine.",
