@@ -3,7 +3,6 @@ from nerdchess.move import Move
 from nerdchess.config import colors
 from nerdchess.boardrules import BoardRules
 from enum import Enum
-import copy
 
 
 class CastleSide(Enum):

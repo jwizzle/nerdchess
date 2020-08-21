@@ -2,14 +2,13 @@ import random
 from nerdchess import pieces
 from nerdchess.board import Board
 from nerdchess.config import colors
-from nerdchess.move import Move
 from nerdchess.boardmove import BoardMove
 
 
 class Player():
     """Represents a player in a chessgame.
 
-    Args: 
+    Args:
         name: The name of the player
         color: The color of the player
         turn: Whether it's the players turn

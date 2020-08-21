@@ -1,5 +1,4 @@
 import pytest
-from tabulate import tabulate
 from nerdchess.game import Player, ChessGame
 from nerdchess.board import Board
 from nerdchess.config import colors

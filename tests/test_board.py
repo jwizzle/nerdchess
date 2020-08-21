@@ -1,5 +1,4 @@
 import pytest
-from nerdchess.board import Board
 from nerdchess.pieces import King, Queen, Bishop
 from nerdchess.config import colors
 

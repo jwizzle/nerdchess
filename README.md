@@ -1,3 +1,5 @@
+![Python package](https://github.com/jwizzle/nerdchess/workflows/Python%20package/badge.svg?branch=master)
+
 # NerdChess
 
 A chess engine written in Python.

@@ -1,4 +1,3 @@
-from tabulate import tabulate
 from nerdchess import pieces
 from nerdchess.move import Move
 
