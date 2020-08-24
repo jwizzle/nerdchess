@@ -1,3 +1,10 @@
+"""A move in the context of a board.
+
+This module glues moves and a board together.
+
+Todo:
+    - Make it so not every method needs a board object.
+"""
 from nerdchess import pieces
 from nerdchess.move import Move
 from nerdchess.config import colors
@@ -6,18 +13,20 @@ from enum import Enum
 
 
 class CastleSide(Enum):
+    """Enumerator with castling sides."""
+
     QUEEN = 'queenside'
     KING = 'kingside'
 
 
 class BoardMove(Move):
-    """
-    Represents a move in the context of a board.
+    """Represents a move in the context of a board.
+
     Inherits base class (Move) attributes.
     """
 
     def castle_side(self, board):
-        """ Return the side we're castling to. """
+        """Return the side we're castling to."""
         castling = self.is_castling(board)
         if not castling:
             raise Exception('Trying to determine castleside but not castling.')
@@ -28,6 +37,7 @@ class BoardMove(Move):
             return CastleSide.QUEEN
 
     def is_capturing(self, board):
+        """Is this a capturing move."""
         (origin, destination) = self.get_origin_destination(board)
         if destination.occupant:
             return True
@@ -35,7 +45,7 @@ class BoardMove(Move):
             return False
 
     def is_castling(self, board):
-        """ Is this a castling move? """
+        """Is this a castling move."""
         (origin, destination) = self.get_origin_destination(board)
         piece = origin.occupant
         is_king = isinstance(piece, pieces.King)

@@ -1,3 +1,9 @@
+"""This module represents a board in a game of chess.
+
+Todo:
+    - Write better docs
+    - Create a base board class that outlines what a board is more
+"""
 import copy
 from nerdchess.config import colors, letters
 from nerdchess.boardmove import BoardMove, CastleSide
@@ -30,6 +36,7 @@ class Board():
     """
 
     def __init__(self):
+        """Init."""
         self.letters = [i.value for i in letters]
         self.numbers = range(1, 9)
         self.squares = {}
@@ -37,7 +44,7 @@ class Board():
 
     @classmethod
     def piece_list(cls, square_dict, color=None):
-        """Generator to get the current pieces on the board as a list.
+        """Generate the current pieces on the board as a list.
 
         Parameters:
             square_dict: The dictionary of squares to get the list from
@@ -58,7 +65,7 @@ class Board():
                     pass
 
     def matrix(self):
-        """ Returns a matrix of the board represented as list. """
+        """Return a matrix of the board represented as list."""
         matrix = []
 
         for i in reversed(self.numbers):
@@ -80,22 +87,12 @@ class Board():
         return matrix
 
     def setup_board(self, game_pieces, pawns):
-        """ Set up the pieces and pawns in one go. """
+        """Set up the pieces and pawns in one go."""
         self.setup_pieces(game_pieces)
         self.setup_pawns(pawns)
 
-    def place_piece(self, piece, position):
-        """
-        Place a piece or pawn on the board.
-        Mostly used for testing setups.
-        """
-        letter = position[0]
-        number = int(position[1])
-        self.squares[letter][number].occupant = piece
-        piece.position = position
-
     def setup_pieces(self, game_pieces):
-        """Sets up the pieces on the board.
+        """Set up the pieces on the board.
 
         Parameters:
             game_pieces: A list of pieces to set up
@@ -112,7 +109,7 @@ class Board():
                     break
 
     def setup_pawns(self, pawns):
-        """Sets up the pawns on the board.
+        """Set up the pawns on the board.
 
         Parameters:
             pawns: A list of pawns to set up
@@ -129,7 +126,7 @@ class Board():
                     break
 
     def create_board(self):
-        """ Create the board. """
+        """Create the board."""
         for letter in self.letters:
             self.squares[letter] = {}
 
@@ -139,7 +136,7 @@ class Board():
 
     # TODO write a test to see if bishops can't check through pawns
     def is_check(self, color=None):
-        """Is one of the kings in check?
+        """Is one of the kings in check.
 
         Parameters:
             color(optional): The color to check for
@@ -167,7 +164,7 @@ class Board():
         return False
 
     def is_checkmate(self):
-        """Is one of the kings in checkmate?
+        """Is one of the kings in checkmate.
 
         Returns:
             color: Color of the king in mate or False
@@ -217,7 +214,7 @@ class Board():
         return newboard
 
     def castle(self, side, color):
-        """ Perform castling on a board.
+        """Perform castling on a board.
 
         Parameters:
             side: The side to castle to
@@ -270,11 +267,12 @@ class Square():
     """
 
     def __init__(self, selector, occupant=None):
+        """Init."""
         self.selector = selector
         self.occupant = occupant
 
     def __str__(self):
-        """ String representation of a square. """
+        """Text representation of a square."""
         if self.occupant:
             return "[{}]".format(str(self.occupant))
         else:

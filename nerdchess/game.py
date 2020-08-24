@@ -1,3 +1,20 @@
+"""Start a game of chess.
+
+This module offers a simple interface to start a game of chess.
+The game consists of:
+    - 2 Players (The names need to be passed)
+    - A board
+    - Pieces
+    - Pawns
+
+Example:
+    chessgame = game.ChessGame(name_1, name_2, name_1_color)
+
+Todo:
+    - Make the game accept player objects to move away that logic from here.
+    - Move player to a seperate file.
+"""
+
 import random
 from nerdchess import pieces
 from nerdchess.board import Board
@@ -20,12 +37,13 @@ class Player():
     """
 
     def __init__(self, name, color, turn=True):
+        """Init."""
         self.name = name
         self.color = color
         self.turn = turn
 
     def __str__(self):
-        """ String representation of a player. """
+        """Text representation of a player."""
         return "{}, playing {}.".format(self.name, self.color)
 
 
@@ -49,6 +67,7 @@ class ChessGame():
     """
 
     def __init__(self, name_1, name_2, color_input, over=False):
+        """Init."""
         (self.player_1,
          self.player_2) = self.create_players(name_1, name_2, color_input)
         self.playerlist = [self.player_1, self.player_2]
@@ -60,7 +79,7 @@ class ChessGame():
         self.over = over
 
     def pass_turn(self):
-        """ Passes the turn to the other player. """
+        """Pass the turn to the other player."""
         for player in self.playerlist:
             player.turn = False if player.turn else True
 
@@ -95,7 +114,7 @@ class ChessGame():
             return False
 
     def create_players(self, name_1, name_2, color_input):
-        """Creates two players and bases the colors off of the one assigned to 1.
+        """Create two players and base the colors off of the one assigned to 1.
 
         Parameters:
             name_1: The name of player 1
@@ -125,7 +144,7 @@ class ChessGame():
         return (player_1, player_2)
 
     def random_color(self):
-        """ Return a random color. """
+        """Return a random color."""
         if bool(random.getrandbits(1)):
             return colors.WHITE
         else:

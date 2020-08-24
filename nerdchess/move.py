@@ -1,3 +1,13 @@
+"""This module describes a move in a game of chess.
+
+The move is not aware of the board context, but is aware of the boundaries
+of a board in general.
+
+Todo:
+    - Currently the boundaries of a board are quite hardcoded
+    - Possibly make a class more suitable of describing a board
+        -- Make the current board class inherit from these boundaries
+"""
 from abc import ABC
 from nerdchess.config import MOVE_REGEX, letterlist, numbers
 
@@ -20,6 +30,7 @@ class Move(ABC):
     """
 
     def __init__(self, move):
+        """Init."""
         valid_move = MOVE_REGEX.match(move)
         if not valid_move:
             raise ValueError('Invalid move')
@@ -69,7 +80,7 @@ class Move(ABC):
 
     # TODO Clean up this mess of a function
     def squares_between(self):
-        """ Return the squares between the origin and destination. """
+        """Return the squares between the origin and destination."""
         squares = []
 
         if self.horizontal == 1 or self.vertical == 1:
@@ -119,7 +130,7 @@ class Move(ABC):
         return squares
 
     def is_diagonal(self):
-        """ Is the move diagonal? """
+        """Is the move diagonal."""
         if self.horizontal == 0 or self.vertical == 0:
             return False
         if not abs(self.horizontal) == abs(self.vertical):
@@ -127,7 +138,7 @@ class Move(ABC):
         return True
 
     def is_horizontal(self):
-        """ Is the move horizontal (only)? """
+        """Is the move horizontal (only)."""
         if self.horizontal == 0:
             return False
         if self.vertical != 0:
@@ -135,7 +146,7 @@ class Move(ABC):
         return True
 
     def is_vertical(self):
-        """ Is the move vertical (only)? """
+        """Is the move vertical (only)."""
         if self.vertical == 0:
             return False
         if self.horizontal != 0:
@@ -143,7 +154,7 @@ class Move(ABC):
         return True
 
     def get_steps(self):
-        """ Return the horizontal/vertical steps of the move. """
+        """Return the horizontal/vertical steps of the move."""
         horizontal_steps = self.indices['dest']['x'] - \
             self.indices['or']['x']
         vertical_steps = self.indices['dest']['y'] - \
@@ -152,7 +163,7 @@ class Move(ABC):
         return (horizontal_steps, vertical_steps)
 
     def __eq__(self, item):
-        """ Describes how to compare a Move. """
+        """Describe how to compare a Move."""
         if isinstance(item, Move):
             return self.text == item.text
         try:
@@ -161,5 +172,5 @@ class Move(ABC):
             return NotImplemented
 
     def __str__(self):
-        """ String representation of a Move. """
+        """Text representation of a Move."""
         return self.text
