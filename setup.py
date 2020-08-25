@@ -1,11 +1,13 @@
+"""Info for setup tools."""
+
 import setuptools
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="nerdchess",  # Replace with your own username
-    version="0.2.1",
+    name="nerdchess",
+    version="0.2.2",
     author="j wizzle",
     author_email="info@hossel.net",
     description="A Python chess engine.",

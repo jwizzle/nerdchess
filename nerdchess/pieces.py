@@ -1,44 +1,44 @@
+"""This module describes what pieces and pawns look like."""
 from abc import ABC, abstractmethod
 from nerdchess.config import colors, numbers, letterlist
 from nerdchess.move import Move
 
 
 class Piece(ABC):
-    """
-    Baseclass of a game piece (pawns and pieces).
+    """Baseclass of a game piece (pawns and pieces).
 
     Parameters:
-    color(colors): The color of the piece
-    captured(Bool): Is the piece captured?
+        color(colors): The color of the piece
+        captured(Bool): Is the piece captured?
 
     Attributes:
-    color(colors): The color of the piece
-    position(String): The position of the piece
-    captured(Bool): Is the piece captured?
+        color(colors): The color of the piece
+        position(String): The position of the piece
+        captured(Bool): Is the piece captured?
     """
 
     def __init__(self, color, captured=False):
+        """Init."""
         self.color = color
         self.position = ''
         self.captured = captured
 
     @abstractmethod
     def start_position(self):
-        """ The allowed starting positions of a piece. """
+        """Start positions of a piece."""
         pass
 
     @abstractmethod
     def move_pattern(self):
-        """
-        The move pattern a piece follows.
+        """Movevement pattern of a piece.
 
         Returns:
-        list(tuple(int, int), ): Move pattern as list of tuples
+            list(tuple(int, int), ): Move pattern as list of tuples
         """
         pass
 
     def diagonal_pattern(self):
-        """ Returns a diagonal movement pattern as a list (bishops) """
+        """Return a diagonal movement pattern as a list (bishops)."""
         pattern = []
         cur_letter = self.position[0]
         pos_letter = letterlist.index(cur_letter)
@@ -53,7 +53,7 @@ class Piece(ABC):
         return pattern
 
     def straight_pattern(self):
-        """ Returns a straight movement pattern as a list (rooks) """
+        """Return a straight movement pattern as a list (rooks)."""
         pattern = []
         cur_letter = self.position[0]
         cur_number = int(self.position[1])
@@ -70,12 +70,11 @@ class Piece(ABC):
         return pattern
 
     def allowed_moves(self):
-        """
-        Transform the move pattern into a list of allowed moves.
+        """Transform the move pattern into a list of allowed moves.
 
         Returns:
-        list(Move, ): A list of allowed moves for the piece
-                      doesn't factor in other pieces on the board.
+            list(Move, ): A list of allowed moves for the piece
+                          doesn't factor in other pieces on the board.
         """
         allowed_moves = []
         for move in self.move_pattern():
@@ -90,11 +89,11 @@ class Piece(ABC):
 
     @abstractmethod
     def __str__(self):
-        """ String representation of the class. """
+        """Text representation of the class."""
         pass
 
     def __eq__(self, item):
-        """ Comparing this class. """
+        """Compare this class."""
         if type(item) == type(self):
             return self.color == item.color
         else:
@@ -102,21 +101,25 @@ class Piece(ABC):
 
 
 class Pawn(Piece):
-    """ Represents a pawn in a game of chess. """
-
-    def move(self):
-        pass
+    """Represents a pawn in a game of chess."""
 
     def __str__(self):
+        """Text representation of the class."""
         if self.color == colors.BLACK:
             return u'\u2659'
         else:
             return u'\u265F'
 
     def start_position(self):
+        """Start positions of a piece."""
         pass
 
     def move_pattern(self):
+        """Movevement pattern of a piece.
+
+        Returns:
+            list(tuple(int, int), ): Move pattern as list of tuples
+        """
         pattern = []
 
         if self.color == colors.WHITE:
@@ -136,68 +139,80 @@ class Pawn(Piece):
 
 
 class Rook(Piece):
-    """ Represents a rook in a game of chess. """
-
-    def move(self):
-        pass
+    """Represents a rook in a game of chess."""
 
     def __str__(self):
+        """Text representation of the class."""
         if self.color == colors.BLACK:
             return u'\u2656'
         else:
             return u'\u265C'
 
     def start_position(self):
+        """Start positions of a piece."""
         if self.color == colors.BLACK:
             return ('a8', 'h8')
         else:
             return ('a1', 'h1')
 
     def move_pattern(self):
+        """Movevement pattern of a piece.
+
+        Returns:
+            list(tuple(int, int), ): Move pattern as list of tuples
+        """
         return self.straight_pattern()
 
 
 class Bishop(Piece):
-    """ Represents a bishop in a game of chess. """
-
-    def move(self):
-        pass
+    """Represents a bishop in a game of chess."""
 
     def __str__(self):
+        """Text representation of the class."""
         if self.color == colors.BLACK:
             return u'\u2657'
         else:
             return u'\u265D'
 
     def start_position(self):
+        """Start positions of a piece."""
         if self.color == colors.BLACK:
             return ('c8', 'f8')
         else:
             return ('c1', 'f1')
 
     def move_pattern(self):
+        """Movevement pattern of a piece.
+
+        Returns:
+            list(tuple(int, int), ): Move pattern as list of tuples
+        """
         return self.diagonal_pattern()
 
 
 class Knight(Piece):
-    """ Represents a knight in a game of chess. """
-
-    def move(self):
-        pass
+    """Represents a knight in a game of chess."""
 
     def __str__(self):
+        """Text representation of the class."""
         if self.color == colors.BLACK:
             return u'\u2658'
         else:
             return u'\u265E'
 
     def start_position(self):
+        """Start positions of a piece."""
         if self.color == colors.BLACK:
             return ('b8', 'g8')
         else:
             return ('b1', 'g1')
 
     def move_pattern(self):
+        """Movevement pattern of a piece.
+
+        Returns:
+            list(tuple(int, int), ): Move pattern as list of tuples
+        """
         pattern = [
             (2, 1),
             (2, -1),
@@ -212,24 +227,28 @@ class Knight(Piece):
 
 
 class Queen(Piece):
-    """ Represents a queen in a game of chess. """
-
-    def move(self):
-        pass
+    """Represents a queen in a game of chess."""
 
     def __str__(self):
+        """Text representation of the class."""
         if self.color == colors.BLACK:
             return u'\u2655'
         else:
             return u'\u265B'
 
     def start_position(self):
+        """Start positions of a piece."""
         if self.color == colors.BLACK:
             return 'd8'
         else:
             return 'd1'
 
     def move_pattern(self):
+        """Movevement pattern of a piece.
+
+        Returns:
+            list(tuple(int, int), ): Move pattern as list of tuples
+        """
         straight = self.straight_pattern()
         diagonal = self.diagonal_pattern()
         pattern = straight + diagonal
@@ -237,24 +256,28 @@ class Queen(Piece):
 
 
 class King(Piece):
-    """ Represents a king in a game of chess. """
-
-    def move(self):
-        pass
+    """Represents a king in a game of chess."""
 
     def __str__(self):
+        """Text representation of the class."""
         if self.color == colors.BLACK:
             return u'\u2654'
         else:
             return u'\u265A'
 
     def start_position(self):
+        """Start positions of a piece."""
         if self.color == colors.BLACK:
             return 'e8'
         else:
             return 'e1'
 
     def move_pattern(self):
+        """Movevement pattern of a piece.
+
+        Returns:
+            list(tuple(int, int), ): Move pattern as list of tuples
+        """
         pattern = [
             (0, 1),
             (0, -1),
@@ -277,7 +300,7 @@ class King(Piece):
 
 
 def create_pieces():
-    """ Create a standard set of chess pieces. """
+    """Create a standard set of chess pieces."""
     chess_pieces = []
 
     for color in colors:
@@ -294,7 +317,7 @@ def create_pieces():
 
 
 def create_pawns():
-    """ Create a standard set of pawns. """
+    """Create a standard set of pawns."""
     pawns = []
 
     for color in colors:

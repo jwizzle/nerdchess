@@ -1,3 +1,5 @@
+"""This module helps check for valid moves in the context of a board."""
+
 from nerdchess import pieces
 from nerdchess.move import Move
 
@@ -19,6 +21,7 @@ class BoardRules():
     """
 
     def __init__(self, move, board):
+        """Init."""
         self.move = move
         self.board = board
         self.valid = True
@@ -28,7 +31,7 @@ class BoardRules():
         self.apply()
 
     def apply(self):
-        """ Apply boardrules based on the moved piece. """
+        """Apply boardrules based on the moved piece."""
         if isinstance(self.piece, pieces.Pawn):
             self.__pawn_rules()
         if not isinstance(self.piece, pieces.Knight):
@@ -45,7 +48,7 @@ class BoardRules():
             self.valid = False
 
     def __pawn_rules(self):
-        """ Rules to apply to pawns only. """
+        """Rules to apply to pawns only."""
         if self.move.horizontal == 1:
             # If we're going horizontal, are we at least capturing?
             if not self.destination.occupant:
@@ -58,7 +61,7 @@ class BoardRules():
                     self.valid = False
 
     def __blocking_pieces(self):
-        """ Check if the move is being blocked. """
+        """Check if the move is being blocked."""
         for square in self.move.squares_between():
             c = square[0]
             i = int(square[1])
@@ -66,13 +69,13 @@ class BoardRules():
                 self.valid = False
 
     def __self_checking(self):
-        """ Check if the move puts the player itself in check. """
+        """Check if the move puts the player itself in check."""
         newboard = self.board.new_board(self.move)
         if newboard.is_check() == self.piece.color:
             self.valid = False
 
     def __castling(self):
-        """ Apply rules specific to castling. """
+        """Apply rules specific to castling."""
         pattern = []
 
         if self.board.is_check() == self.piece.color:
