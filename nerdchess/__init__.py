@@ -3,6 +3,7 @@
 When ran standalone opens a small TUI game of chess.
 """
 from nerdchess import game
+from nerdchess.player import Player
 from tabulate import tabulate
 
 
@@ -14,7 +15,9 @@ def main():
         ".format(name_1))
     name_2 = input('What is the name of player 2?')
 
-    chessgame = game.ChessGame(name_1, name_2, name_1_color)
+    (player_1,
+     player_2) = Player.create_two(name_1, name_2, name_1_color)
+    chessgame = game.ChessGame(player_1, player_2)
 
     print(tabulate(chessgame.board.matrix()))
 
