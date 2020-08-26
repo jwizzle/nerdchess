@@ -1,4 +1,8 @@
-"""This module helps check for valid moves in the context of a board."""
+"""This module helps check for valid moves in the context of a board.
+
+Todo:
+    - Board is now part of boardmoves, check if it can be removed here safely.
+"""
 
 from nerdchess import pieces
 from nerdchess.move import Move
@@ -26,7 +30,7 @@ class BoardRules():
         self.board = board
         self.valid = True
         (self.origin,
-         self.destination) = self.move.get_origin_destination(self.board)
+         self.destination) = self.move.get_origin_destination()
         self.piece = self.origin.occupant
         self.apply()
 
@@ -36,10 +40,10 @@ class BoardRules():
             self.__pawn_rules()
         if not isinstance(self.piece, pieces.Knight):
             self.__blocking_pieces()
-        if self.move.is_castling(self.board):
+        if self.move.is_castling():
             self.__castling()
         else:
-            if self.move.is_capturing(self.board):
+            if self.move.is_capturing():
                 self.__capturing()
             self.__self_checking()
 

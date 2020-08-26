@@ -29,7 +29,7 @@ class Move(ABC):
                    position
     """
 
-    def __init__(self, move):
+    def __init__(self, move, *args, **kwargs):
         """Init."""
         valid_move = MOVE_REGEX.match(move)
         if not valid_move:

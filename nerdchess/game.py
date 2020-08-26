@@ -61,9 +61,9 @@ class ChessGame():
         Returns:
             Bool: Was the move succesful?
         """
-        move = BoardMove(move)
+        move = BoardMove(self.board, move)
 
-        (origin, destination) = move.get_origin_destination(self.board)
+        (origin, destination) = move.get_origin_destination()
 
         if origin.occupant:
             if origin.occupant.color != player.color:
@@ -71,7 +71,7 @@ class ChessGame():
         else:
             return False
 
-        result = move.process(self.board)
+        result = move.process()
         if result:
             if result.is_checkmate():
                 self.over = True
