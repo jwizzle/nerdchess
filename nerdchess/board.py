@@ -1,9 +1,4 @@
-"""This module represents a board in a game of chess.
-
-Todo:
-    - Write better docs
-    - Create a base board class that outlines what a board is more
-"""
+"""This module represents a board in a game of chess."""
 import copy
 from nerdchess.config import colors, letters
 from nerdchess.boardmove import BoardMove, CastleSide
@@ -48,6 +43,9 @@ class Board():
 
         Parameters:
             square_dict: The dictionary of squares to get the list from
+
+        Yields:
+            Piece: A chess piece or pawn
         """
         for v in square_dict.values():
             if isinstance(v, dict):
@@ -65,7 +63,7 @@ class Board():
                     pass
 
     def matrix(self):
-        """Return a matrix of the board represented as list."""
+        """Return a matrix of the board represented as a nested list."""
         matrix = []
 
         for i in reversed(self.numbers):
@@ -87,7 +85,12 @@ class Board():
         return matrix
 
     def setup_board(self, game_pieces, pawns):
-        """Set up the pieces and pawns in one go."""
+        """Set up the pieces and pawns in one go.
+
+        Parameters:
+            game_pieces(list(Piece)): A list of game pieces to set up
+            pawns(list(Pawns)): A list of pawns to set up
+        """
         self.setup_pieces(game_pieces)
         self.setup_pawns(pawns)
 
@@ -95,7 +98,7 @@ class Board():
         """Set up the pieces on the board.
 
         Parameters:
-            game_pieces: A list of pieces to set up
+            game_pieces(list(Piece)): A list of pieces to set up
         """
         for piece in game_pieces:
             row = 1 if piece.color == colors.WHITE else 8
@@ -112,7 +115,7 @@ class Board():
         """Set up the pawns on the board.
 
         Parameters:
-            pawns: A list of pawns to set up
+            pawns(list(Pawn)): A list of pawns to set up
         """
         for pawn in pawns:
             row = 2 if pawn.color == colors.WHITE else 7
@@ -191,7 +194,7 @@ class Board():
         This does not do any explicit validation on the move.
 
         Parameters:
-            move: The move to process
+            move(Move): The move to process
 
         Returns:
             newboard: The new board
@@ -213,8 +216,8 @@ class Board():
         """Perform castling on a board.
 
         Parameters:
-            side: The side to castle to
-            color: The color performing the castle
+            side(CastleSide): The side to castle to
+            color(Color): The color performing the castle
 
         Returns:
             newboard: A new board with the processed move
@@ -258,8 +261,12 @@ class Square():
     """Represents a square on a chessboard.
 
     Parameters:
-        selector: A selector of the square (eg. a1)
-        occupant: Usually a piece or pawn, needs to have __str__
+        selector(String): A selector of the square (eg. a1)
+        occupant(Piece): Usually a piece or pawn, needs to implement __str__
+
+    Attributes:
+        selector(String): A selector of the square (eg. a1)
+        occupant(Piece): Usually a piece or pawn, needs to implement __str__
     """
 
     def __init__(self, selector, occupant=None):
@@ -268,7 +275,12 @@ class Square():
         self.occupant = occupant
 
     def __str__(self):
-        """Text representation of a square."""
+        """Text representation of a square.
+
+        Returns:
+            String: Either a square filled with the contents of the occupant or
+            an empty one.
+        """
         if self.occupant:
             return "[{}]".format(str(self.occupant))
         else:
