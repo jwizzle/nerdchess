@@ -67,7 +67,7 @@ class TestBoardRules():
         board_fixt.place_piece(move_piece, 'c2')
         board_fixt.place_piece(pieces.Pawn(colors.BLACK), black_pos)
 
-        rules = BoardRules(move, board_fixt.board)
+        rules = BoardRules(move)
 
         assert rules.valid == expected
 

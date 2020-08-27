@@ -25,7 +25,7 @@ class Player():
         turn: Is it the players turn?
     """
 
-    def __init__(self, name, color, turn=True):
+    def __init__(self, name, color, turn=True, *args, **kwargs):
         """Init."""
         self.name = name
         self.color = color

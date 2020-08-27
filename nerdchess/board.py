@@ -150,15 +150,13 @@ class Board():
                 if not move:
                     continue
 
-                (origin,
-                 destination) = move.get_origin_destination()
-
-                if not destination.occupant:
+                if not move.destination_sq.occupant:
                     continue
 
-                if (isinstance(destination.occupant, King) and
-                        destination.occupant.color != origin.occupant.color):
-                    return destination.occupant.color
+                if (isinstance(move.destination_sq.occupant, King) and
+                        move.destination_sq.occupant.color != move.origin_sq.
+                        occupant.color):
+                    return move.destination_sq.occupant.color
 
         return False
 
@@ -201,14 +199,13 @@ class Board():
         newboard = copy.deepcopy(self)
         move = BoardMove(newboard, move.text)
 
-        (origin, destination) = move.get_origin_destination()
-        piece = origin.occupant
+        piece = move.origin_sq.occupant
 
-        origin.occupant = None
-        if destination.occupant:
-            destination.occupant.captured = True
-        destination.occupant = piece
-        piece.position = destination.selector
+        move.origin_sq.occupant = None
+        if move.destination_sq.occupant:
+            move.destination_sq.occupant.captured = True
+        move.destination_sq.occupant = piece
+        piece.position = move.destination_sq.selector
 
         return newboard
 

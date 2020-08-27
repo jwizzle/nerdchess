@@ -1,10 +1,6 @@
 """A move in the context of a board.
 
 This module glues moves and a board together.
-
-Todo:
-    - Fix docs.
-    - Check if origin/destination needs to be an attribute?
 """
 from nerdchess import pieces
 from nerdchess.move import Move
@@ -24,12 +20,23 @@ class BoardMove(Move):
     """Represents a move in the context of a board.
 
     Inherits base class (Move) attributes.
+    And adds some new ones.
+
+    Parameters:
+        board(Board): The board we're playing on.
+
+    Attributes:
+        board(Board): The boardcontext.
+        origin_sq(Square): The origin square.
+        destination_sq(Square): The destination square.
     """
 
     def __init__(self, board, *args, **kwargs):
         """Init."""
         super().__init__(*args, **kwargs)
         self.board = board
+        (self.origin_sq,
+         self.destination_sq) = self.__get_origin_destination()
 
     def castle_side(self):
         """Return the side we're castling to."""
@@ -44,16 +51,14 @@ class BoardMove(Move):
 
     def is_capturing(self):
         """Is this a capturing move."""
-        (origin, destination) = self.get_origin_destination()
-        if destination.occupant:
+        if self.destination_sq.occupant:
             return True
         else:
             return False
 
     def is_castling(self):
         """Is this a castling move."""
-        (origin, destination) = self.get_origin_destination()
-        piece = origin.occupant
+        piece = self.origin_sq.occupant
         is_king = isinstance(piece, pieces.King)
         is_rook = isinstance(piece, pieces.Rook)
         castling_moves = [
@@ -90,11 +95,8 @@ class BoardMove(Move):
 
         return piece.color
 
-    def get_origin_destination(self):
+    def __get_origin_destination(self):
         """Get the origin and destination square of a move.
-
-        Parameters:
-            move(Move): The move to get the squares for
 
         Returns:
             tuple(Square, Square): The origin and destination
@@ -111,19 +113,15 @@ class BoardMove(Move):
         return (origin, destination)
 
     def process(self):
-        """Process a move in the context of a board.
-
-        Parameters:
-            board: The board to execute on
+        """Process a move in the context of the board.
 
         Returns:
             Bool: False if the move is incorrect
             Board: A new board
         """
-        (origin, destination) = self.get_origin_destination()
-        piece = origin.occupant
+        piece = self.origin_sq.occupant
 
-        if origin == destination:
+        if self.origin_sq == self.destination_sq:
             return False
 
         if not piece:
@@ -132,7 +130,7 @@ class BoardMove(Move):
         if Move(self.text) not in piece.allowed_moves():
             return False
 
-        boardrules = BoardRules(self, self.board)
+        boardrules = BoardRules(self)
         if not boardrules.valid:
             return False
 

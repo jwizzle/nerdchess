@@ -63,10 +63,8 @@ class ChessGame():
         """
         move = BoardMove(self.board, move)
 
-        (origin, destination) = move.get_origin_destination()
-
-        if origin.occupant:
-            if origin.occupant.color != player.color:
+        if move.origin_sq.occupant:
+            if move.origin_sq.occupant.color != player.color:
                 return False
         else:
             return False
