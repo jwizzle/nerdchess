@@ -1,9 +1,6 @@
 """A move in the context of a board.
 
 This module glues moves and a board together.
-
-Todo:
-    - Make it so not every method needs a board object.
 """
 from nerdchess import pieces
 from nerdchess.move import Move
@@ -23,11 +20,27 @@ class BoardMove(Move):
     """Represents a move in the context of a board.
 
     Inherits base class (Move) attributes.
+    And adds some new ones.
+
+    Parameters:
+        board(Board): The board we're playing on.
+
+    Attributes:
+        board(Board): The boardcontext.
+        origin_sq(Square): The origin square.
+        destination_sq(Square): The destination square.
     """
 
-    def castle_side(self, board):
+    def __init__(self, board, *args, **kwargs):
+        """Init."""
+        super().__init__(*args, **kwargs)
+        self.board = board
+        (self.origin_sq,
+         self.destination_sq) = self.__get_origin_destination()
+
+    def castle_side(self):
         """Return the side we're castling to."""
-        castling = self.is_castling(board)
+        castling = self.is_castling()
         if not castling:
             raise Exception('Trying to determine castleside but not castling.')
 
@@ -36,18 +49,16 @@ class BoardMove(Move):
         else:
             return CastleSide.QUEEN
 
-    def is_capturing(self, board):
+    def is_capturing(self):
         """Is this a capturing move."""
-        (origin, destination) = self.get_origin_destination(board)
-        if destination.occupant:
+        if self.destination_sq.occupant:
             return True
         else:
             return False
 
-    def is_castling(self, board):
+    def is_castling(self):
         """Is this a castling move."""
-        (origin, destination) = self.get_origin_destination(board)
-        piece = origin.occupant
+        piece = self.origin_sq.occupant
         is_king = isinstance(piece, pieces.King)
         is_rook = isinstance(piece, pieces.Rook)
         castling_moves = [
@@ -72,11 +83,11 @@ class BoardMove(Move):
 
         if piece.color == colors.WHITE:
             king = pieces.King(colors.WHITE)
-            if board.squares['e'][1].occupant != king:
+            if self.board.squares['e'][1].occupant != king:
                 return False
         else:
             king = pieces.King(colors.BLACK)
-            if board.squares['e'][8].occupant != king:
+            if self.board.squares['e'][8].occupant != king:
                 return False
 
         if self not in castling_moves:
@@ -84,11 +95,8 @@ class BoardMove(Move):
 
         return piece.color
 
-    def get_origin_destination(self, board):
+    def __get_origin_destination(self):
         """Get the origin and destination square of a move.
-
-        Parameters:
-            move(Move): The move to get the squares for
 
         Returns:
             tuple(Square, Square): The origin and destination
@@ -99,25 +107,21 @@ class BoardMove(Move):
         d_letter = str(self.destination[0])
         d_number = int(self.destination[1])
 
-        origin = board.squares[o_letter][o_number]
-        destination = board.squares[d_letter][d_number]
+        origin = self.board.squares[o_letter][o_number]
+        destination = self.board.squares[d_letter][d_number]
 
         return (origin, destination)
 
-    def process(self, board):
-        """Process a move in the context of a board.
-
-        Parameters:
-            board: The board to execute on
+    def process(self):
+        """Process a move in the context of the board.
 
         Returns:
             Bool: False if the move is incorrect
             Board: A new board
         """
-        (origin, destination) = self.get_origin_destination(board)
-        piece = origin.occupant
+        piece = self.origin_sq.occupant
 
-        if origin == destination:
+        if self.origin_sq == self.destination_sq:
             return False
 
         if not piece:
@@ -126,16 +130,16 @@ class BoardMove(Move):
         if Move(self.text) not in piece.allowed_moves():
             return False
 
-        boardrules = BoardRules(self, board)
+        boardrules = BoardRules(self)
         if not boardrules.valid:
             return False
 
-        castling = self.is_castling(board)
+        castling = self.is_castling()
         if not castling:
-            newboard = board.new_board(self)
+            newboard = self.board.new_board(self)
         else:
-            side = self.castle_side(board)
-            newboard = board.castle(side, piece.color)
+            side = self.castle_side()
+            newboard = self.board.castle(side, piece.color)
 
         if newboard.is_check() == piece.color:
             return False

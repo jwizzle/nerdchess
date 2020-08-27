@@ -17,15 +17,15 @@ class TestDirections():
     """ Test directional movement with a queen on e4. """
 
     def test_diagonal(self, board_queen_e4):
-        move = BoardMove('e4c2')
-        result = move.process(board_queen_e4)
+        move = BoardMove(board_queen_e4, 'e4c2')
+        result = move.process()
 
         assert move.squares_between() == ['d3']
         assert result
 
     def test_horizontal(self, board_queen_e4):
-        move = BoardMove('e4a4')
-        result = move.process(board_queen_e4)
+        move = BoardMove(board_queen_e4, 'e4a4')
+        result = move.process()
 
         assert move.squares_between() == [
             'd4', 'c4', 'b4'
@@ -33,8 +33,8 @@ class TestDirections():
         assert result
 
     def test_vertical(self, board_queen_e4):
-        move = BoardMove('e4e7')
-        result = move.process(board_queen_e4)
+        move = BoardMove(board_queen_e4, 'e4e7')
+        result = move.process()
 
         assert move.squares_between() == ['e5', 'e6']
         assert result
@@ -45,11 +45,11 @@ class TestBoardRules():
 
     def test_pawncapture(self, board_fixt):
         """ Test the possibility for pawns to move horizontally. """
-        move = BoardMove('e4f5')
+        move = BoardMove(board_fixt.board, 'e4f5')
         board_fixt.place_piece(pieces.Pawn(colors.WHITE), 'e4')
         board_fixt.place_piece(pieces.Rook(colors.BLACK), 'f5')
 
-        valid = move.process(board_fixt.board)
+        valid = move.process()
 
         assert valid
         assert isinstance(
@@ -61,13 +61,13 @@ class TestBoardRules():
     ])
     def test_enpassant(self, board_fixt, black_pos, expected):
         """ Test enpassant rules. """
-        move = BoardMove('c2d3')
+        move = BoardMove(board_fixt.board, 'c2d3')
         move_piece = pieces.Pawn(colors.WHITE)
 
         board_fixt.place_piece(move_piece, 'c2')
         board_fixt.place_piece(pieces.Pawn(colors.BLACK), black_pos)
 
-        rules = BoardRules(move, board_fixt.board)
+        rules = BoardRules(move)
 
         assert rules.valid == expected
 
@@ -83,9 +83,9 @@ class TestBoardRules():
         board_fixt.place_piece(pieces.Bishop(colors.WHITE), 'g5')
         board_fixt.place_piece(pieces.Pawn(colors.BLACK), 'f6')
         board_fixt.place_piece(pieces.Bishop(colors.BLACK), 'c5')
-        move = BoardMove(move)
+        move = BoardMove(board_fixt.board, move)
 
-        result = move.process(board_fixt.board)
+        result = move.process()
 
         assert result == expected
 
@@ -98,8 +98,8 @@ class TestBoardRules():
         board_fixt.place_piece(pieces.King(colors.WHITE), 'e4')
         board_fixt.place_piece(pieces.Knight(colors.WHITE), 'f5')
         board_fixt.place_piece(pieces.Queen(colors.BLACK), 'g6')
-        boardmove = BoardMove(move)
-        result = boardmove.process(board_fixt.board)
+        boardmove = BoardMove(board_fixt.board, move)
+        result = boardmove.process()
 
         if isinstance(expected, bool):
             assert result == expected
@@ -120,7 +120,7 @@ class TestBoardRules():
     ])
     def test_castling(self, board_fixt, move, expected, side, color):
         """ Test different castling scenario's """
-        boardmove = BoardMove(move)
+        boardmove = BoardMove(board_fixt.board, move)
         board_fixt.place_piece(pieces.King(colors.WHITE), 'e1')
         board_fixt.place_piece(pieces.Rook(colors.WHITE), 'a1')
         board_fixt.place_piece(pieces.Rook(colors.WHITE), 'h1')
@@ -130,7 +130,7 @@ class TestBoardRules():
         board_fixt.place_piece(pieces.Bishop(colors.BLACK), 'h3')
         board_fixt.place_piece(pieces.Bishop(colors.WHITE), 'f5')
 
-        result = boardmove.process(board_fixt.board)
+        result = boardmove.process()
 
         if expected:
             board = result.squares
@@ -159,11 +159,11 @@ class TestBoardRules():
     ])
     def test_castling_blocked(self, board_fixt, move, expected):
         """ Test if we can castle through others. """
-        boardmove = BoardMove(move)
+        boardmove = BoardMove(board_fixt.board, move)
         board_fixt.place_piece(pieces.King(colors.WHITE), 'e1')
         board_fixt.place_piece(pieces.Bishop(colors.WHITE), 'b1')
         board_fixt.place_piece(pieces.Rook(colors.WHITE), 'a1')
 
-        result = boardmove.process(board_fixt.board)
+        result = boardmove.process()
 
         assert result == expected

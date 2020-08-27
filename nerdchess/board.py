@@ -134,7 +134,6 @@ class Board():
                 selector = "{}{}".format(letter, number)
                 self.squares[letter][number] = Square(selector)
 
-    # TODO write a test to see if bishops can't check through pawns
     def is_check(self, color=None):
         """Is one of the kings in check.
 
@@ -146,20 +145,18 @@ class Board():
         """
         pieces = list(self.piece_list(self.squares, color))
         for piece in pieces:
-            moves = [BoardMove(i.text) for i in piece.allowed_moves()]
+            moves = [BoardMove(self, i.text) for i in piece.allowed_moves()]
             for move in moves:
                 if not move:
                     continue
 
-                (origin,
-                 destination) = move.get_origin_destination(self)
-
-                if not destination.occupant:
+                if not move.destination_sq.occupant:
                     continue
 
-                if (isinstance(destination.occupant, King) and
-                        destination.occupant.color != origin.occupant.color):
-                    return destination.occupant.color
+                if (isinstance(move.destination_sq.occupant, King) and
+                        move.destination_sq.occupant.color != move.origin_sq.
+                        occupant.color):
+                    return move.destination_sq.occupant.color
 
         return False
 
@@ -178,10 +175,10 @@ class Board():
         for i in pieces:
             moves = moves + i.allowed_moves()
 
-        boardmoves = [BoardMove(i.text) for i in moves]
+        boardmoves = [BoardMove(self, i.text) for i in moves]
 
         for move in boardmoves:
-            valid_move = move.process(self)
+            valid_move = move.process()
             if valid_move:
                 if not valid_move.is_check(check):
                     return False
@@ -200,16 +197,15 @@ class Board():
             newboard: The new board
         """
         newboard = copy.deepcopy(self)
-        move = BoardMove(move.text)
+        move = BoardMove(newboard, move.text)
 
-        (origin, destination) = move.get_origin_destination(newboard)
-        piece = origin.occupant
+        piece = move.origin_sq.occupant
 
-        origin.occupant = None
-        if destination.occupant:
-            destination.occupant.captured = True
-        destination.occupant = piece
-        piece.position = destination.selector
+        move.origin_sq.occupant = None
+        if move.destination_sq.occupant:
+            move.destination_sq.occupant.captured = True
+        move.destination_sq.occupant = piece
+        piece.position = move.destination_sq.selector
 
         return newboard
 

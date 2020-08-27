@@ -6,7 +6,10 @@ from nerdchess.config import colors
 
 @pytest.fixture(scope='class')
 def chessgame():
-    game = ChessGame('blaat', 'henk', 'r')
+    (player_1,
+     player_2) = Player.create_two('blaat', 'henk', 'r')
+
+    game = ChessGame(player_1, player_2)
 
     return game
 

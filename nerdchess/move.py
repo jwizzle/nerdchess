@@ -17,19 +17,20 @@ class Move(ABC):
     Represents a move in a game of chess.
 
     Parameters:
-    move(String): A string that's tested with the regex '[a-h][1-8][a-h][1-8]'
+        move(String): A string that's tested with the regex
+                      '[a-h][1-8][a-h][1-8]'
 
     Attributes:
-    text(String): String representation of the move r'[a-h][1-8][a-h][1-8]'
-    origin(String): String representation of the origin square
-    destination(String): String representation of the destination square
-    horizontal(int): Amount of horizontal steps in the move
-    vertical(int): Amount of vertical steps in the move
-    indices(dict): Origin/destination letter(x)/number(y) mapped to their list
-                   position
+        text(String): String representation of the move r'[a-h][1-8][a-h][1-8]'
+        origin(String): String representation of the origin square
+        destination(String): String representation of the destination square
+        horizontal(int): Amount of horizontal steps in the move
+        vertical(int): Amount of vertical steps in the move
+        indices(dict): Origin/destination letter(x)/number(y) mapped to their
+                       list position
     """
 
-    def __init__(self, move):
+    def __init__(self, move, *args, **kwargs):
         """Init."""
         valid_move = MOVE_REGEX.match(move)
         if not valid_move:
