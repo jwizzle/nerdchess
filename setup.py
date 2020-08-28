@@ -7,7 +7,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="nerdchess",
-    version="0.3.1",
+    version="0.3.2",
     author="j wizzle",
     author_email="info@hossel.net",
     description="A Python chess engine.",

@@ -2,11 +2,6 @@
 
 The move is not aware of the board context, but is aware of the boundaries
 of a board in general.
-
-Todo:
-    - Currently the boundaries of a board are quite hardcoded
-    - Possibly make a class more suitable of describing a board
-        -- Make the current board class inherit from these boundaries
 """
 from abc import ABC
 from nerdchess.config import MOVE_REGEX, letterlist, numbers
