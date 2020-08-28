@@ -22,6 +22,8 @@ project = 'nerdchess'
 copyright = '2020, jwizzle'
 author = 'jwizzle'
 
+# Index file
+master_doc = 'index'
 
 # -- General configuration ---------------------------------------------------
 
