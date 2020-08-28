@@ -1,0 +1,1202 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>nerdchess package &#8212; nerdchess  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="nerdchess-package">
+<h1>nerdchess package<a class="headerlink" href="#nerdchess-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-nerdchess.board">
+<span id="nerdchess-board-module"></span><h2>nerdchess.board module<a class="headerlink" href="#module-nerdchess.board" title="Permalink to this headline">¶</a></h2>
+<p>This module represents a board in a game of chess.</p>
+<dl class="py class">
+<dt id="nerdchess.board.Board">
+<em class="property">class </em><code class="sig-prename descclassname">nerdchess.board.</code><code class="sig-name descname">Board</code><a class="headerlink" href="#nerdchess.board.Board" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a board in a game of chess.</p>
+<dl>
+<dt>{</dt><dd><dl class="simple">
+<dt>a: {</dt><dd><p>1: (Square),
+2: (Square),
+etc…</p>
+</dd>
+</dl>
+<p>},
+b: {</p>
+<blockquote>
+<div><p>1: (Square),
+2: (Square),
+etc…</p>
+</div></blockquote>
+<p>}
+etc…</p>
+</dd>
+</dl>
+<p>}</p>
+<dl class="py attribute">
+<dt id="nerdchess.board.Board.letters">
+<code class="sig-name descname">letters</code><a class="headerlink" href="#nerdchess.board.Board.letters" title="Permalink to this definition">¶</a></dt>
+<dd><p>The letters of a board</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="nerdchess.board.Board.numbers">
+<code class="sig-name descname">numbers</code><a class="headerlink" href="#nerdchess.board.Board.numbers" title="Permalink to this definition">¶</a></dt>
+<dd><p>The numbers of a board</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="nerdchess.board.Board.squares">
+<code class="sig-name descname">squares</code><a class="headerlink" href="#nerdchess.board.Board.squares" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dict of letters containing numbers with squares</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nerdchess.board.Board.castle">
+<code class="sig-name descname">castle</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">side</span></em>, <em class="sig-param"><span class="n">color</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nerdchess.board.Board.castle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform castling on a board.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>side</strong> (<a class="reference internal" href="#nerdchess.boardmove.CastleSide" title="nerdchess.boardmove.CastleSide"><em>CastleSide</em></a>) – The side to castle to</p></li>
+<li><p><strong>color</strong> (<em>Color</em>) – The color performing the castle</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A new board with the processed move</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>newboard</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nerdchess.board.Board.create_board">
+<code class="sig-name descname">create_board</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nerdchess.board.Board.create_board" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create the board.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nerdchess.board.Board.is_check">
+<code class="sig-name descname">is_check</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">color</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nerdchess.board.Board.is_check" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is one of the kings in check.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>color</strong> (<em>optional</em>) – The color to check for</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The color of the king that is in check or False</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>color</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nerdchess.board.Board.is_checkmate">
+<code class="sig-name descname">is_checkmate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nerdchess.board.Board.is_checkmate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is one of the kings in checkmate.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Color of the king in mate or False</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>color</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nerdchess.board.Board.matrix">
+<code class="sig-name descname">matrix</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nerdchess.board.Board.matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a matrix of the board represented as a nested list.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nerdchess.board.Board.new_board">
+<code class="sig-name descname">new_board</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">move</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nerdchess.board.Board.new_board" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new board from a supplied move.</p>
+<p>This does not do any explicit validation on the move.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>move</strong> (<a class="reference internal" href="#nerdchess.move.Move" title="nerdchess.move.Move"><em>Move</em></a>) – The move to process</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The new board</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>newboard</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nerdchess.board.Board.piece_list">
+<em class="property">classmethod </em><code class="sig-name descname">piece_list</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">square_dict</span></em>, <em class="sig-param"><span class="n">color</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nerdchess.board.Board.piece_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate the current pieces on the board as a list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>square_dict</strong> – The dictionary of squares to get the list from</p>
+</dd>
+<dt class="field-even">Yields</dt>
+<dd class="field-even"><p><em>Piece</em> – A chess piece or pawn</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nerdchess.board.Board.setup_board">
+<code class="sig-name descname">setup_board</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">game_pieces</span></em>, <em class="sig-param"><span class="n">pawns</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nerdchess.board.Board.setup_board" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set up the pieces and pawns in one go.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>game_pieces</strong> (<em>list</em><em>(</em><a class="reference internal" href="#nerdchess.pieces.Piece" title="nerdchess.pieces.Piece"><em>Piece</em></a><em>)</em>) – A list of game pieces to set up</p></li>
+<li><p><strong>pawns</strong> (<em>list</em><em>(</em><em>Pawns</em><em>)</em>) – A list of pawns to set up</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nerdchess.board.Board.setup_pawns">
+<code class="sig-name descname">setup_pawns</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pawns</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nerdchess.board.Board.setup_pawns" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set up the pawns on the board.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>pawns</strong> (<em>list</em><em>(</em><a class="reference internal" href="#nerdchess.pieces.Pawn" title="nerdchess.pieces.Pawn"><em>Pawn</em></a><em>)</em>) – A list of pawns to set up</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nerdchess.board.Board.setup_pieces">
+<code class="sig-name descname">setup_pieces</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">game_pieces</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nerdchess.board.Board.setup_pieces" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set up the pieces on the board.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>game_pieces</strong> (<em>list</em><em>(</em><a class="reference internal" href="#nerdchess.pieces.Piece" title="nerdchess.pieces.Piece"><em>Piece</em></a><em>)</em>) – A list of pieces to set up</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="nerdchess.board.Square">
+<em class="property">class </em><code class="sig-prename descclassname">nerdchess.board.</code><code class="sig-name descname">Square</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">selector</span></em>, <em class="sig-param"><span class="n">occupant</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nerdchess.board.Square" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a square on a chessboard.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>selector</strong> (<em>String</em>) – A selector of the square (eg. a1)</p></li>
+<li><p><strong>occupant</strong> (<a class="reference internal" href="#nerdchess.pieces.Piece" title="nerdchess.pieces.Piece"><em>Piece</em></a>) – Usually a piece or pawn, needs to implement __str__</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="nerdchess.board.Square.selector">
+<code class="sig-name descname">selector</code><a class="headerlink" href="#nerdchess.board.Square.selector" title="Permalink to this definition">¶</a></dt>
+<dd><p>A selector of the square (eg. a1)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>String</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="nerdchess.board.Square.occupant">
+<code class="sig-name descname">occupant</code><a class="headerlink" href="#nerdchess.board.Square.occupant" title="Permalink to this definition">¶</a></dt>
+<dd><p>Usually a piece or pawn, needs to implement __str__</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#nerdchess.pieces.Piece" title="nerdchess.pieces.Piece">Piece</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-nerdchess.boardmove">
+<span id="nerdchess-boardmove-module"></span><h2>nerdchess.boardmove module<a class="headerlink" href="#module-nerdchess.boardmove" title="Permalink to this headline">¶</a></h2>
+<p>A move in the context of a board.</p>
+<p>This module glues moves and a board together.</p>
+<dl class="py class">
+<dt id="nerdchess.boardmove.BoardMove">
+<em class="property">class </em><code class="sig-prename descclassname">nerdchess.boardmove.</code><code class="sig-name descname">BoardMove</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">board</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nerdchess.boardmove.BoardMove" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nerdchess.move.Move" title="nerdchess.move.Move"><code class="xref py py-class docutils literal notranslate"><span class="pre">nerdchess.move.Move</span></code></a></p>
+<p>Represents a move in the context of a board.</p>
+<p>Inherits base class (Move) attributes.
+And adds some new ones.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>board</strong> (<a class="reference internal" href="#nerdchess.board.Board" title="nerdchess.board.Board"><em>Board</em></a>) – The board we’re playing on.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="nerdchess.boardmove.BoardMove.board">
+<code class="sig-name descname">board</code><a class="headerlink" href="#nerdchess.boardmove.BoardMove.board" title="Permalink to this definition">¶</a></dt>
+<dd><p>The boardcontext.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#nerdchess.board.Board" title="nerdchess.board.Board">Board</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="nerdchess.boardmove.BoardMove.origin_sq">
+<code class="sig-name descname">origin_sq</code><a class="headerlink" href="#nerdchess.boardmove.BoardMove.origin_sq" title="Permalink to this definition">¶</a></dt>
+<dd><p>The origin square.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#nerdchess.board.Square" title="nerdchess.board.Square">Square</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="nerdchess.boardmove.BoardMove.destination_sq">
+<code class="sig-name descname">destination_sq</code><a class="headerlink" href="#nerdchess.boardmove.BoardMove.destination_sq" title="Permalink to this definition">¶</a></dt>
+<dd><p>The destination square.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#nerdchess.board.Square" title="nerdchess.board.Square">Square</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nerdchess.boardmove.BoardMove.castle_side">
+<code class="sig-name descname">castle_side</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nerdchess.boardmove.BoardMove.castle_side" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the side we’re castling to.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nerdchess.boardmove.BoardMove.is_capturing">
+<code class="sig-name descname">is_capturing</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nerdchess.boardmove.BoardMove.is_capturing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is this a capturing move.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nerdchess.boardmove.BoardMove.is_castling">
+<code class="sig-name descname">is_castling</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nerdchess.boardmove.BoardMove.is_castling" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is this a castling move.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nerdchess.boardmove.BoardMove.process">
+<code class="sig-name descname">process</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nerdchess.boardmove.BoardMove.process" title="Permalink to this definition">¶</a></dt>
+<dd><p>Process a move in the context of the board.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>False if the move is incorrect
+Board: A new board</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="nerdchess.boardmove.CastleSide">
+<em class="property">class </em><code class="sig-prename descclassname">nerdchess.boardmove.</code><code class="sig-name descname">CastleSide</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">value</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nerdchess.boardmove.CastleSide" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>Enumerator with castling sides.</p>
+<dl class="py attribute">
+<dt id="nerdchess.boardmove.CastleSide.KING">
+<code class="sig-name descname">KING</code><em class="property"> = 'kingside'</em><a class="headerlink" href="#nerdchess.boardmove.CastleSide.KING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="nerdchess.boardmove.CastleSide.QUEEN">
+<code class="sig-name descname">QUEEN</code><em class="property"> = 'queenside'</em><a class="headerlink" href="#nerdchess.boardmove.CastleSide.QUEEN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-nerdchess.boardrules">
+<span id="nerdchess-boardrules-module"></span><h2>nerdchess.boardrules module<a class="headerlink" href="#module-nerdchess.boardrules" title="Permalink to this headline">¶</a></h2>
+<p>Helps check for valid moves in the context of a board.</p>
+<dl class="py class">
+<dt id="nerdchess.boardrules.BoardRules">
+<em class="property">class </em><code class="sig-prename descclassname">nerdchess.boardrules.</code><code class="sig-name descname">BoardRules</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">move</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nerdchess.boardrules.BoardRules" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Applies different boardrules.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>move</strong> – The boardmove to check against</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="nerdchess.boardrules.BoardRules.move">
+<code class="sig-name descname">move</code><a class="headerlink" href="#nerdchess.boardrules.BoardRules.move" title="Permalink to this definition">¶</a></dt>
+<dd><p>The move we’re checking</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="nerdchess.boardrules.BoardRules.valid">
+<code class="sig-name descname">valid</code><a class="headerlink" href="#nerdchess.boardrules.BoardRules.valid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is the checked move valid? see self.apply()</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="nerdchess.boardrules.BoardRules.origin">
+<code class="sig-name descname">origin</code><a class="headerlink" href="#nerdchess.boardrules.BoardRules.origin" title="Permalink to this definition">¶</a></dt>
+<dd><p>The origin square of the move</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="nerdchess.boardrules.BoardRules.destination">
+<code class="sig-name descname">destination</code><a class="headerlink" href="#nerdchess.boardrules.BoardRules.destination" title="Permalink to this definition">¶</a></dt>
+<dd><p>The destination square of the move</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="nerdchess.boardrules.BoardRules.piece">
+<code class="sig-name descname">piece</code><a class="headerlink" href="#nerdchess.boardrules.BoardRules.piece" title="Permalink to this definition">¶</a></dt>
+<dd><p>The piece being moved</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nerdchess.boardrules.BoardRules.apply">
+<code class="sig-name descname">apply</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nerdchess.boardrules.BoardRules.apply" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply boardrules based on the moved piece.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-nerdchess.config">
+<span id="nerdchess-config-module"></span><h2>nerdchess.config module<a class="headerlink" href="#module-nerdchess.config" title="Permalink to this headline">¶</a></h2>
+<p>Global config for nerdchess.</p>
+<dl class="py attribute">
+<dt id="nerdchess.config.MOVE_REGEX">
+<code class="sig-prename descclassname">nerdchess.config.</code><code class="sig-name descname">MOVE_REGEX</code><a class="headerlink" href="#nerdchess.config.MOVE_REGEX" title="Permalink to this definition">¶</a></dt>
+<dd><p>Regex to validate a move.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Regex</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="nerdchess.config.numbers">
+<code class="sig-prename descclassname">nerdchess.config.</code><code class="sig-name descname">numbers</code><a class="headerlink" href="#nerdchess.config.numbers" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of numbers of a chessboard.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list(int)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="nerdchess.config.letterlijst">
+<code class="sig-prename descclassname">nerdchess.config.</code><code class="sig-name descname">letterlijst</code><a class="headerlink" href="#nerdchess.config.letterlijst" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of letters of a chessboard.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list(letter(Enum))</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt id="nerdchess.config.colors">
+<em class="property">class </em><code class="sig-prename descclassname">nerdchess.config.</code><code class="sig-name descname">colors</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">value</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nerdchess.config.colors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>The colors of the players in a game of chess.</p>
+<dl class="py attribute">
+<dt id="nerdchess.config.colors.BLACK">
+<code class="sig-name descname">BLACK</code><em class="property"> = 'b'</em><a class="headerlink" href="#nerdchess.config.colors.BLACK" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="nerdchess.config.colors.WHITE">
+<code class="sig-name descname">WHITE</code><em class="property"> = 'w'</em><a class="headerlink" href="#nerdchess.config.colors.WHITE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="nerdchess.config.letters">
+<em class="property">class </em><code class="sig-prename descclassname">nerdchess.config.</code><code class="sig-name descname">letters</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">value</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nerdchess.config.letters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>The letters of a chess board.</p>
+<dl class="py attribute">
+<dt id="nerdchess.config.letters.A">
+<code class="sig-name descname">A</code><em class="property"> = 'a'</em><a class="headerlink" href="#nerdchess.config.letters.A" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="nerdchess.config.letters.B">
+<code class="sig-name descname">B</code><em class="property"> = 'b'</em><a class="headerlink" href="#nerdchess.config.letters.B" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="nerdchess.config.letters.C">
+<code class="sig-name descname">C</code><em class="property"> = 'c'</em><a class="headerlink" href="#nerdchess.config.letters.C" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="nerdchess.config.letters.D">
+<code class="sig-name descname">D</code><em class="property"> = 'd'</em><a class="headerlink" href="#nerdchess.config.letters.D" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="nerdchess.config.letters.E">
+<code class="sig-name descname">E</code><em class="property"> = 'e'</em><a class="headerlink" href="#nerdchess.config.letters.E" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="nerdchess.config.letters.F">
+<code class="sig-name descname">F</code><em class="property"> = 'f'</em><a class="headerlink" href="#nerdchess.config.letters.F" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="nerdchess.config.letters.G">
+<code class="sig-name descname">G</code><em class="property"> = 'g'</em><a class="headerlink" href="#nerdchess.config.letters.G" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="nerdchess.config.letters.H">
+<code class="sig-name descname">H</code><em class="property"> = 'h'</em><a class="headerlink" href="#nerdchess.config.letters.H" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-nerdchess.game">
+<span id="nerdchess-game-module"></span><h2>nerdchess.game module<a class="headerlink" href="#module-nerdchess.game" title="Permalink to this headline">¶</a></h2>
+<p>Start a game of chess.</p>
+<p>This module offers a simple interface to start a game of chess.
+The game consists of:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>2 Players</p></li>
+<li><p>A board</p></li>
+<li><p>Pieces</p></li>
+<li><p>Pawns</p></li>
+</ul>
+</div></blockquote>
+<p class="rubric">Example</p>
+<p>chessgame = game.ChessGame(player_1, player_2)</p>
+<dl class="py class">
+<dt id="nerdchess.game.ChessGame">
+<em class="property">class </em><code class="sig-prename descclassname">nerdchess.game.</code><code class="sig-name descname">ChessGame</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">player_1</span></em>, <em class="sig-param"><span class="n">player_2</span></em>, <em class="sig-param"><span class="n">over</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nerdchess.game.ChessGame" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Creates a new chessgame with players, pieces, and sets up the board.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name_1</strong> (<a class="reference internal" href="#nerdchess.player.Player" title="nerdchess.player.Player"><em>Player</em></a>) – Player 1</p></li>
+<li><p><strong>name_2</strong> (<a class="reference internal" href="#nerdchess.player.Player" title="nerdchess.player.Player"><em>Player</em></a>) – Player 2</p></li>
+<li><p><strong>over</strong> (<em>Bool</em>) – Whether the game is over</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="nerdchess.game.ChessGame.player_1">
+<code class="sig-name descname">player_1</code><a class="headerlink" href="#nerdchess.game.ChessGame.player_1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Player 1</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#nerdchess.player.Player" title="nerdchess.player.Player">Player</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="nerdchess.game.ChessGame.player_2">
+<code class="sig-name descname">player_2</code><a class="headerlink" href="#nerdchess.game.ChessGame.player_2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Player 2</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#nerdchess.player.Player" title="nerdchess.player.Player">Player</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="nerdchess.game.ChessGame.playerlist">
+<code class="sig-name descname">playerlist</code><a class="headerlink" href="#nerdchess.game.ChessGame.playerlist" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of the two players</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="nerdchess.game.ChessGame.board">
+<code class="sig-name descname">board</code><a class="headerlink" href="#nerdchess.game.ChessGame.board" title="Permalink to this definition">¶</a></dt>
+<dd><p>The board the game is played on</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#nerdchess.board.Board" title="nerdchess.board.Board">Board</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="nerdchess.game.ChessGame.pieces">
+<code class="sig-name descname">pieces</code><a class="headerlink" href="#nerdchess.game.ChessGame.pieces" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of the pieces the game is played with</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="nerdchess.game.ChessGame.pawns">
+<code class="sig-name descname">pawns</code><a class="headerlink" href="#nerdchess.game.ChessGame.pawns" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of the pawns the game is played with</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nerdchess.game.ChessGame.move">
+<code class="sig-name descname">move</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">player</span></em>, <em class="sig-param"><span class="n">move</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nerdchess.game.ChessGame.move" title="Permalink to this definition">¶</a></dt>
+<dd><p>Process the move in a game of chess.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>player</strong> – The player that made the move</p></li>
+<li><p><strong>move</strong> – The move representeed by squares (eg. e2e4)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Was the move succesful?</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nerdchess.game.ChessGame.pass_turn">
+<code class="sig-name descname">pass_turn</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nerdchess.game.ChessGame.pass_turn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pass the turn to the other player.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-nerdchess.move">
+<span id="nerdchess-move-module"></span><h2>nerdchess.move module<a class="headerlink" href="#module-nerdchess.move" title="Permalink to this headline">¶</a></h2>
+<p>This module describes a move in a game of chess.</p>
+<p>The move is not aware of the board context, but is aware of the boundaries
+of a board in general.</p>
+<dl class="py class">
+<dt id="nerdchess.move.Move">
+<em class="property">class </em><code class="sig-prename descclassname">nerdchess.move.</code><code class="sig-name descname">Move</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">move</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nerdchess.move.Move" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<p>Represents a move in a game of chess.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>move</strong> (<em>String</em>) – A string that’s tested with the regex
+‘[a-h][1-8][a-h][1-8]’</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="nerdchess.move.Move.text">
+<code class="sig-name descname">text</code><a class="headerlink" href="#nerdchess.move.Move.text" title="Permalink to this definition">¶</a></dt>
+<dd><p>String representation of the move r’[a-h][1-8][a-h][1-8]’</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>String</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="nerdchess.move.Move.origin">
+<code class="sig-name descname">origin</code><a class="headerlink" href="#nerdchess.move.Move.origin" title="Permalink to this definition">¶</a></dt>
+<dd><p>String representation of the origin square</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>String</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="nerdchess.move.Move.destination">
+<code class="sig-name descname">destination</code><a class="headerlink" href="#nerdchess.move.Move.destination" title="Permalink to this definition">¶</a></dt>
+<dd><p>String representation of the destination square</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>String</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="nerdchess.move.Move.horizontal">
+<code class="sig-name descname">horizontal</code><a class="headerlink" href="#nerdchess.move.Move.horizontal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Amount of horizontal steps in the move</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="nerdchess.move.Move.vertical">
+<code class="sig-name descname">vertical</code><a class="headerlink" href="#nerdchess.move.Move.vertical" title="Permalink to this definition">¶</a></dt>
+<dd><p>Amount of vertical steps in the move</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="nerdchess.move.Move.indices">
+<code class="sig-name descname">indices</code><a class="headerlink" href="#nerdchess.move.Move.indices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Origin/destination letter(x)/number(y) mapped to their
+list position</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nerdchess.move.Move.from_position">
+<em class="property">classmethod </em><code class="sig-name descname">from_position</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">position</span></em>, <em class="sig-param"><span class="n">steps</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nerdchess.move.Move.from_position" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a move based on the current position and steps (hori/verti).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>position</strong> (<em>String</em>) – The current position (eg. a1)</p></li>
+<li><p><strong>steps</strong> (<em>tuple</em><em>(</em><em>int</em><em>, </em><em>int</em><em>)</em>) – The steps taken in the move</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A new move instance</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#nerdchess.move.Move" title="nerdchess.move.Move">Move</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nerdchess.move.Move.get_steps">
+<code class="sig-name descname">get_steps</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nerdchess.move.Move.get_steps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the horizontal/vertical steps of the move.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nerdchess.move.Move.is_diagonal">
+<code class="sig-name descname">is_diagonal</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nerdchess.move.Move.is_diagonal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is the move diagonal.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nerdchess.move.Move.is_horizontal">
+<code class="sig-name descname">is_horizontal</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nerdchess.move.Move.is_horizontal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is the move horizontal (only).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nerdchess.move.Move.is_vertical">
+<code class="sig-name descname">is_vertical</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nerdchess.move.Move.is_vertical" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is the move vertical (only).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nerdchess.move.Move.squares_between">
+<code class="sig-name descname">squares_between</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nerdchess.move.Move.squares_between" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the squares between the origin and destination.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-nerdchess.pieces">
+<span id="nerdchess-pieces-module"></span><h2>nerdchess.pieces module<a class="headerlink" href="#module-nerdchess.pieces" title="Permalink to this headline">¶</a></h2>
+<p>This module describes what pieces and pawns look like.</p>
+<dl class="py class">
+<dt id="nerdchess.pieces.Bishop">
+<em class="property">class </em><code class="sig-prename descclassname">nerdchess.pieces.</code><code class="sig-name descname">Bishop</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">color</span></em>, <em class="sig-param"><span class="n">captured</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nerdchess.pieces.Bishop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nerdchess.pieces.Piece" title="nerdchess.pieces.Piece"><code class="xref py py-class docutils literal notranslate"><span class="pre">nerdchess.pieces.Piece</span></code></a></p>
+<p>Represents a bishop in a game of chess.</p>
+<dl class="py method">
+<dt id="nerdchess.pieces.Bishop.move_pattern">
+<code class="sig-name descname">move_pattern</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nerdchess.pieces.Bishop.move_pattern" title="Permalink to this definition">¶</a></dt>
+<dd><p>Movevement pattern of a piece.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Move pattern as list of tuples</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>list(tuple(int, int), )</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nerdchess.pieces.Bishop.start_position">
+<code class="sig-name descname">start_position</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nerdchess.pieces.Bishop.start_position" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start positions of a piece.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="nerdchess.pieces.King">
+<em class="property">class </em><code class="sig-prename descclassname">nerdchess.pieces.</code><code class="sig-name descname">King</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">color</span></em>, <em class="sig-param"><span class="n">captured</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nerdchess.pieces.King" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nerdchess.pieces.Piece" title="nerdchess.pieces.Piece"><code class="xref py py-class docutils literal notranslate"><span class="pre">nerdchess.pieces.Piece</span></code></a></p>
+<p>Represents a king in a game of chess.</p>
+<dl class="py method">
+<dt id="nerdchess.pieces.King.move_pattern">
+<code class="sig-name descname">move_pattern</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nerdchess.pieces.King.move_pattern" title="Permalink to this definition">¶</a></dt>
+<dd><p>Movevement pattern of a piece.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Move pattern as list of tuples</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>list(tuple(int, int), )</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nerdchess.pieces.King.start_position">
+<code class="sig-name descname">start_position</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nerdchess.pieces.King.start_position" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start positions of a piece.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="nerdchess.pieces.Knight">
+<em class="property">class </em><code class="sig-prename descclassname">nerdchess.pieces.</code><code class="sig-name descname">Knight</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">color</span></em>, <em class="sig-param"><span class="n">captured</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nerdchess.pieces.Knight" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nerdchess.pieces.Piece" title="nerdchess.pieces.Piece"><code class="xref py py-class docutils literal notranslate"><span class="pre">nerdchess.pieces.Piece</span></code></a></p>
+<p>Represents a knight in a game of chess.</p>
+<dl class="py method">
+<dt id="nerdchess.pieces.Knight.move_pattern">
+<code class="sig-name descname">move_pattern</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nerdchess.pieces.Knight.move_pattern" title="Permalink to this definition">¶</a></dt>
+<dd><p>Movevement pattern of a piece.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Move pattern as list of tuples</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>list(tuple(int, int), )</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nerdchess.pieces.Knight.start_position">
+<code class="sig-name descname">start_position</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nerdchess.pieces.Knight.start_position" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start positions of a piece.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="nerdchess.pieces.Pawn">
+<em class="property">class </em><code class="sig-prename descclassname">nerdchess.pieces.</code><code class="sig-name descname">Pawn</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">color</span></em>, <em class="sig-param"><span class="n">captured</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nerdchess.pieces.Pawn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nerdchess.pieces.Piece" title="nerdchess.pieces.Piece"><code class="xref py py-class docutils literal notranslate"><span class="pre">nerdchess.pieces.Piece</span></code></a></p>
+<p>Represents a pawn in a game of chess.</p>
+<dl class="py method">
+<dt id="nerdchess.pieces.Pawn.move_pattern">
+<code class="sig-name descname">move_pattern</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nerdchess.pieces.Pawn.move_pattern" title="Permalink to this definition">¶</a></dt>
+<dd><p>Movevement pattern of a piece.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Move pattern as list of tuples</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>list(tuple(int, int), )</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nerdchess.pieces.Pawn.start_position">
+<code class="sig-name descname">start_position</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nerdchess.pieces.Pawn.start_position" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start positions of a piece.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="nerdchess.pieces.Piece">
+<em class="property">class </em><code class="sig-prename descclassname">nerdchess.pieces.</code><code class="sig-name descname">Piece</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">color</span></em>, <em class="sig-param"><span class="n">captured</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nerdchess.pieces.Piece" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<p>Baseclass of a game piece (pawns and pieces).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>color</strong> (<a class="reference internal" href="#nerdchess.config.colors" title="nerdchess.config.colors"><em>colors</em></a>) – The color of the piece</p></li>
+<li><p><strong>captured</strong> (<em>Bool</em>) – Is the piece captured?</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="nerdchess.pieces.Piece.color">
+<code class="sig-name descname">color</code><a class="headerlink" href="#nerdchess.pieces.Piece.color" title="Permalink to this definition">¶</a></dt>
+<dd><p>The color of the piece</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#nerdchess.config.colors" title="nerdchess.config.colors">colors</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="nerdchess.pieces.Piece.position">
+<code class="sig-name descname">position</code><a class="headerlink" href="#nerdchess.pieces.Piece.position" title="Permalink to this definition">¶</a></dt>
+<dd><p>The position of the piece</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>String</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="nerdchess.pieces.Piece.captured">
+<code class="sig-name descname">captured</code><a class="headerlink" href="#nerdchess.pieces.Piece.captured" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is the piece captured?</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nerdchess.pieces.Piece.allowed_moves">
+<code class="sig-name descname">allowed_moves</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nerdchess.pieces.Piece.allowed_moves" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transform the move pattern into a list of allowed moves.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>A list of allowed moves for the piece</dt><dd><p>doesn’t factor in other pieces on the board.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>list(<a class="reference internal" href="#nerdchess.move.Move" title="nerdchess.move.Move">Move</a>, )</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nerdchess.pieces.Piece.diagonal_pattern">
+<code class="sig-name descname">diagonal_pattern</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nerdchess.pieces.Piece.diagonal_pattern" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a diagonal movement pattern as a list (bishops).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nerdchess.pieces.Piece.move_pattern">
+<em class="property">abstract </em><code class="sig-name descname">move_pattern</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nerdchess.pieces.Piece.move_pattern" title="Permalink to this definition">¶</a></dt>
+<dd><p>Movevement pattern of a piece.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Move pattern as list of tuples</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>list(tuple(int, int), )</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nerdchess.pieces.Piece.start_position">
+<em class="property">abstract </em><code class="sig-name descname">start_position</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nerdchess.pieces.Piece.start_position" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start positions of a piece.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nerdchess.pieces.Piece.straight_pattern">
+<code class="sig-name descname">straight_pattern</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nerdchess.pieces.Piece.straight_pattern" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a straight movement pattern as a list (rooks).</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="nerdchess.pieces.Queen">
+<em class="property">class </em><code class="sig-prename descclassname">nerdchess.pieces.</code><code class="sig-name descname">Queen</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">color</span></em>, <em class="sig-param"><span class="n">captured</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nerdchess.pieces.Queen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nerdchess.pieces.Piece" title="nerdchess.pieces.Piece"><code class="xref py py-class docutils literal notranslate"><span class="pre">nerdchess.pieces.Piece</span></code></a></p>
+<p>Represents a queen in a game of chess.</p>
+<dl class="py method">
+<dt id="nerdchess.pieces.Queen.move_pattern">
+<code class="sig-name descname">move_pattern</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nerdchess.pieces.Queen.move_pattern" title="Permalink to this definition">¶</a></dt>
+<dd><p>Movevement pattern of a piece.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Move pattern as list of tuples</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>list(tuple(int, int), )</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nerdchess.pieces.Queen.start_position">
+<code class="sig-name descname">start_position</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nerdchess.pieces.Queen.start_position" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start positions of a piece.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="nerdchess.pieces.Rook">
+<em class="property">class </em><code class="sig-prename descclassname">nerdchess.pieces.</code><code class="sig-name descname">Rook</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">color</span></em>, <em class="sig-param"><span class="n">captured</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nerdchess.pieces.Rook" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nerdchess.pieces.Piece" title="nerdchess.pieces.Piece"><code class="xref py py-class docutils literal notranslate"><span class="pre">nerdchess.pieces.Piece</span></code></a></p>
+<p>Represents a rook in a game of chess.</p>
+<dl class="py method">
+<dt id="nerdchess.pieces.Rook.move_pattern">
+<code class="sig-name descname">move_pattern</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nerdchess.pieces.Rook.move_pattern" title="Permalink to this definition">¶</a></dt>
+<dd><p>Movevement pattern of a piece.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Move pattern as list of tuples</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>list(tuple(int, int), )</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nerdchess.pieces.Rook.start_position">
+<code class="sig-name descname">start_position</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nerdchess.pieces.Rook.start_position" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start positions of a piece.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="nerdchess.pieces.create_pawns">
+<code class="sig-prename descclassname">nerdchess.pieces.</code><code class="sig-name descname">create_pawns</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nerdchess.pieces.create_pawns" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a standard set of pawns.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="nerdchess.pieces.create_pieces">
+<code class="sig-prename descclassname">nerdchess.pieces.</code><code class="sig-name descname">create_pieces</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nerdchess.pieces.create_pieces" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a standard set of chess pieces.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-nerdchess.player">
+<span id="nerdchess-player-module"></span><h2>nerdchess.player module<a class="headerlink" href="#module-nerdchess.player" title="Permalink to this headline">¶</a></h2>
+<p>Represent a player in a game of chess.</p>
+<dl class="py class">
+<dt id="nerdchess.player.Player">
+<em class="property">class </em><code class="sig-prename descclassname">nerdchess.player.</code><code class="sig-name descname">Player</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">color</span></em>, <em class="sig-param"><span class="n">turn</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nerdchess.player.Player" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a player in a chessgame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – The name of the player</p></li>
+<li><p><strong>color</strong> – The color of the player</p></li>
+<li><p><strong>turn</strong> – Whether it’s the players turn</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="nerdchess.player.Player.name">
+<code class="sig-name descname">name</code><a class="headerlink" href="#nerdchess.player.Player.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>The name of the player</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="nerdchess.player.Player.color">
+<code class="sig-name descname">color</code><a class="headerlink" href="#nerdchess.player.Player.color" title="Permalink to this definition">¶</a></dt>
+<dd><p>The color of the player</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="nerdchess.player.Player.turn">
+<code class="sig-name descname">turn</code><a class="headerlink" href="#nerdchess.player.Player.turn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is it the players turn?</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nerdchess.player.Player.create_two">
+<em class="property">classmethod </em><code class="sig-name descname">create_two</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name_1</span></em>, <em class="sig-param"><span class="n">name_2</span></em>, <em class="sig-param"><span class="n">color_input</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nerdchess.player.Player.create_two" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create two players and base the colors off of the one assigned to 1.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name_1</strong> – The name of player 1</p></li>
+<li><p><strong>name_2</strong> – The name of player 2</p></li>
+<li><p><strong>color_input</strong> – The color to assign to player 1</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The players that are going to play the game</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Tuple(<a class="reference internal" href="#nerdchess.player.Player" title="nerdchess.player.Player">Player</a>, <a class="reference internal" href="#nerdchess.player.Player" title="nerdchess.player.Player">Player</a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="nerdchess.player.random_color">
+<code class="sig-prename descclassname">nerdchess.player.</code><code class="sig-name descname">random_color</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nerdchess.player.random_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a random color.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-nerdchess">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-nerdchess" title="Permalink to this headline">¶</a></h2>
+<p>Init for nerdchess.</p>
+<p>When ran standalone opens a small TUI game of chess.</p>
+<dl class="py function">
+<dt id="nerdchess.main">
+<code class="sig-prename descclassname">nerdchess.</code><code class="sig-name descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nerdchess.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>Play a gane of chess.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">nerdchess</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, jwizzle.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/nerdchess.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

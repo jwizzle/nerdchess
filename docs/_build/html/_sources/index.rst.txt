@@ -7,8 +7,7 @@ Welcome to nerdchess's documentation!
 =====================================
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+   :maxdepth: 5
 
 .. automodule:: nerdchess
    :members:

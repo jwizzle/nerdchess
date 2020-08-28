@@ -1,0 +1,54 @@
+tests package
+=============
+
+Submodules
+----------
+
+tests.conftest module
+---------------------
+
+.. automodule:: tests.conftest
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+tests.test\_board module
+------------------------
+
+.. automodule:: tests.test_board
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+tests.test\_game module
+-----------------------
+
+.. automodule:: tests.test_game
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+tests.test\_moves module
+------------------------
+
+.. automodule:: tests.test_moves
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+tests.test\_pieces module
+-------------------------
+
+.. automodule:: tests.test_pieces
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: tests
+   :members:
+   :undoc-members:
+   :show-inheritance:

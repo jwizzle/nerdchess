@@ -1,0 +1,303 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tests package &#8212; nerdchess  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="tests-package">
+<h1>tests package<a class="headerlink" href="#tests-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-tests.conftest">
+<span id="tests-conftest-module"></span><h2>tests.conftest module<a class="headerlink" href="#module-tests.conftest" title="Permalink to this headline">¶</a></h2>
+<p>Fixtures for pytest.</p>
+<dl class="py class">
+<dt id="tests.conftest.BoardFixt">
+<em class="property">class </em><code class="sig-prename descclassname">tests.conftest.</code><code class="sig-name descname">BoardFixt</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">board</span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.conftest.BoardFixt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Helper functions to manipulate a board passed as fixture.</p>
+<dl class="py method">
+<dt id="tests.conftest.BoardFixt.default_setup">
+<code class="sig-name descname">default_setup</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.conftest.BoardFixt.default_setup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the board in default game start position.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The new board object</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>board</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="tests.conftest.BoardFixt.place_piece">
+<code class="sig-name descname">place_piece</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">piece</span></em>, <em class="sig-param"><span class="n">position</span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.conftest.BoardFixt.place_piece" title="Permalink to this definition">¶</a></dt>
+<dd><p>Place a piece or pawn on the board.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="tests.conftest.board_fixt">
+<code class="sig-prename descclassname">tests.conftest.</code><code class="sig-name descname">board_fixt</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.conftest.board_fixt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrap the boardfixt class as a pytest fixture.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-tests.test_board">
+<span id="tests-test-board-module"></span><h2>tests.test_board module<a class="headerlink" href="#module-tests.test_board" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="tests.test_board.TestBoard">
+<em class="property">class </em><code class="sig-prename descclassname">tests.test_board.</code><code class="sig-name descname">TestBoard</code><a class="headerlink" href="#tests.test_board.TestBoard" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Test aspects of the Board class.</p>
+<dl class="py method">
+<dt id="tests.test_board.TestBoard.test_checkmate">
+<code class="sig-name descname">test_checkmate</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">board_fixt</span></em>, <em class="sig-param"><span class="n">king_pos</span></em>, <em class="sig-param"><span class="n">expected</span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_board.TestBoard.test_checkmate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="tests.test_board.TestBoard.test_ischeck">
+<code class="sig-name descname">test_ischeck</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">board_fixt</span></em>, <em class="sig-param"><span class="n">king_pos</span></em>, <em class="sig-param"><span class="n">expected</span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_board.TestBoard.test_ischeck" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test if kingcheck works correctly</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-tests.test_game">
+<span id="tests-test-game-module"></span><h2>tests.test_game module<a class="headerlink" href="#module-tests.test_game" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="tests.test_game.TestGame">
+<em class="property">class </em><code class="sig-prename descclassname">tests.test_game.</code><code class="sig-name descname">TestGame</code><a class="headerlink" href="#tests.test_game.TestGame" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Tests the setup and basic functionality of a game.</p>
+<dl class="py method">
+<dt id="tests.test_game.TestGame.test_move">
+<code class="sig-name descname">test_move</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">chessgame</span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_game.TestGame.test_move" title="Permalink to this definition">¶</a></dt>
+<dd><p>Do moves process correctly?</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="tests.test_game.TestGame.test_setup">
+<code class="sig-name descname">test_setup</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">chessgame</span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_game.TestGame.test_setup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test for expected contents of the game.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="tests.test_game.TestMatch">
+<em class="property">class </em><code class="sig-prename descclassname">tests.test_game.</code><code class="sig-name descname">TestMatch</code><a class="headerlink" href="#tests.test_game.TestMatch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Test a complete match between two players!</p>
+<dl class="py method">
+<dt id="tests.test_game.TestMatch.test_match">
+<code class="sig-name descname">test_match</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">chessgame</span></em>, <em class="sig-param"><span class="n">move</span></em>, <em class="sig-param"><span class="n">game_over</span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_game.TestMatch.test_match" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="tests.test_game.chessgame">
+<code class="sig-prename descclassname">tests.test_game.</code><code class="sig-name descname">chessgame</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_game.chessgame" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-tests.test_moves">
+<span id="tests-test-moves-module"></span><h2>tests.test_moves module<a class="headerlink" href="#module-tests.test_moves" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="tests.test_moves.TestBoardRules">
+<em class="property">class </em><code class="sig-prename descclassname">tests.test_moves.</code><code class="sig-name descname">TestBoardRules</code><a class="headerlink" href="#tests.test_moves.TestBoardRules" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Test specific board rules defined in legal_move().</p>
+<dl class="py method">
+<dt id="tests.test_moves.TestBoardRules.test_blocked">
+<code class="sig-name descname">test_blocked</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">board_fixt</span></em>, <em class="sig-param"><span class="n">move</span></em>, <em class="sig-param"><span class="n">expected</span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_moves.TestBoardRules.test_blocked" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test rules for blocked pieces work correctly.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="tests.test_moves.TestBoardRules.test_castling">
+<code class="sig-name descname">test_castling</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">board_fixt</span></em>, <em class="sig-param"><span class="n">move</span></em>, <em class="sig-param"><span class="n">expected</span></em>, <em class="sig-param"><span class="n">side</span></em>, <em class="sig-param"><span class="n">color</span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_moves.TestBoardRules.test_castling" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test different castling scenario’s</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="tests.test_moves.TestBoardRules.test_castling_blocked">
+<code class="sig-name descname">test_castling_blocked</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">board_fixt</span></em>, <em class="sig-param"><span class="n">move</span></em>, <em class="sig-param"><span class="n">expected</span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_moves.TestBoardRules.test_castling_blocked" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test if we can castle through others.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="tests.test_moves.TestBoardRules.test_enpassant">
+<code class="sig-name descname">test_enpassant</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">board_fixt</span></em>, <em class="sig-param"><span class="n">black_pos</span></em>, <em class="sig-param"><span class="n">expected</span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_moves.TestBoardRules.test_enpassant" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test enpassant rules.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="tests.test_moves.TestBoardRules.test_pawncapture">
+<code class="sig-name descname">test_pawncapture</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">board_fixt</span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_moves.TestBoardRules.test_pawncapture" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the possibility for pawns to move horizontally.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="tests.test_moves.TestBoardRules.test_selfchecking">
+<code class="sig-name descname">test_selfchecking</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">board_fixt</span></em>, <em class="sig-param"><span class="n">move</span></em>, <em class="sig-param"><span class="n">expected</span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_moves.TestBoardRules.test_selfchecking" title="Permalink to this definition">¶</a></dt>
+<dd><p>Confirm it’s not possible to place self in check.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="tests.test_moves.TestDirections">
+<em class="property">class </em><code class="sig-prename descclassname">tests.test_moves.</code><code class="sig-name descname">TestDirections</code><a class="headerlink" href="#tests.test_moves.TestDirections" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Test directional movement with a queen on e4.</p>
+<dl class="py method">
+<dt id="tests.test_moves.TestDirections.test_diagonal">
+<code class="sig-name descname">test_diagonal</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">board_queen_e4</span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_moves.TestDirections.test_diagonal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="tests.test_moves.TestDirections.test_horizontal">
+<code class="sig-name descname">test_horizontal</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">board_queen_e4</span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_moves.TestDirections.test_horizontal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="tests.test_moves.TestDirections.test_vertical">
+<code class="sig-name descname">test_vertical</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">board_queen_e4</span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_moves.TestDirections.test_vertical" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="tests.test_moves.board_queen_e4">
+<code class="sig-prename descclassname">tests.test_moves.</code><code class="sig-name descname">board_queen_e4</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">board_fixt</span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_moves.board_queen_e4" title="Permalink to this definition">¶</a></dt>
+<dd><p>Empty board with queen on e4.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-tests.test_pieces">
+<span id="tests-test-pieces-module"></span><h2>tests.test_pieces module<a class="headerlink" href="#module-tests.test_pieces" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="tests.test_pieces.TestPieces">
+<em class="property">class </em><code class="sig-prename descclassname">tests.test_pieces.</code><code class="sig-name descname">TestPieces</code><a class="headerlink" href="#tests.test_pieces.TestPieces" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt id="tests.test_pieces.TestPieces.test_creation">
+<code class="sig-name descname">test_creation</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">piece</span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_pieces.TestPieces.test_creation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="tests.test_pieces.TestPieces.test_moves">
+<code class="sig-name descname">test_moves</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">piece</span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_pieces.TestPieces.test_moves" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="tests.test_pieces.piece">
+<code class="sig-prename descclassname">tests.test_pieces.</code><code class="sig-name descname">piece</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">request</span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_pieces.piece" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-tests">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-tests" title="Permalink to this headline">¶</a></h2>
+<p>Test package for nerdchess.</p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">nerdchess</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, jwizzle.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/tests.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
