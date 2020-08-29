@@ -74,7 +74,8 @@ class Move(ABC):
         move = "{}{}{}".format(position, new_letter, new_number)
         return cls(move)
 
-    # TODO Clean up this mess of a function
+    # TODO Should this be moved to boardmove?
+    # Or maybe some generator that implements this, returns the actual squres.
     def squares_between(self):
         """Return the squares between the origin and destination."""
         squares = []
@@ -100,20 +101,25 @@ class Move(ABC):
             steps = v_steps
             step_range = self.vertical
 
+        h_counter = h_steps
+        v_counter = v_steps
+
         for i in range(steps, step_range, steps):
-            try:
-                step_index_h = self.indices['or']['x'] + h_steps
-                step_index_v = self.indices['or']['x'] + v_steps
+            step_index_h = self.indices['or']['x'] + h_counter
+            step_index_v = self.indices['or']['y'] + v_counter
 
-                letter = letterlist[step_index_h]
-                number = numbers[step_index_v]
-                square = f"{letter}{number}"
-                squares.append(square)
+            if step_index_v < 0 or step_index_h < 0:
+                h_counter = h_counter + h_steps
+                v_counter = v_counter + v_steps
+                continue
 
-                h_steps = h_steps + h_steps
-                v_steps = v_steps + v_steps
-            except IndexError:
-                pass
+            letter = letterlist[step_index_h]
+            number = numbers[step_index_v]
+            square = f"{letter}{number}"
+            squares.append(square)
+
+            h_counter = h_counter + h_steps
+            v_counter = v_counter + v_steps
 
         return squares
 

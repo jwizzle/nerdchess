@@ -14,7 +14,6 @@ Example:
 from nerdchess import pieces
 from nerdchess.board import Board
 from nerdchess.boardmove import BoardMove
-from nerdchess.player import Player
 
 
 class ChessGame():

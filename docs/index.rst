@@ -15,6 +15,6 @@ Welcome to nerdchess's documentation!
 Indices and tables
 ==================
 
-* :ref:`genindex`
+.. * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
