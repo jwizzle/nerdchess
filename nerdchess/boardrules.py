@@ -60,9 +60,7 @@ class BoardRules():
     def __blocking_pieces(self):
         """Check if the move is being blocked."""
         for square in self.move.squares_between():
-            c = square[0]
-            i = int(square[1])
-            if self.move.board.squares[c][i].occupant:
+            if square.occupant:
                 self.valid = False
 
     def __self_checking(self):

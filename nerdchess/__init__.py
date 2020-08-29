@@ -8,7 +8,7 @@ from tabulate import tabulate
 
 
 def main():
-    """Play a gane of chess."""
+    """Play a game of chess."""
     name_1 = input('What is the name of player 1?')
     name_1_color = input(
         "With which color should {} start, (w)hite, (b)lack or (r)andom?\

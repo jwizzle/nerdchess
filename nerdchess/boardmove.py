@@ -38,6 +38,18 @@ class BoardMove(Move):
         (self.origin_sq,
          self.destination_sq) = self.__get_origin_destination()
 
+    def squares_between(self):
+        """Get the squares between origin and destination of this move.
+
+        Yields:
+            Square: The squares between origin and destination of this move.
+        """
+        for selector in self.square_selectors_between():
+            c = selector[0]
+            i = int(selector[1])
+
+            yield self.board.squares[c][i]
+
     def castle_side(self):
         """Return the side we're castling to."""
         castling = self.is_castling()
