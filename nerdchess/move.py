@@ -77,7 +77,11 @@ class Move(ABC):
     # TODO Should this be moved to boardmove?
     # Or maybe some generator that implements this, returns the actual squres.
     def squares_between(self):
-        """Return the squares between the origin and destination."""
+        """Return the squares between the origin and destination.
+
+        Returns:
+            list(String): A list of selectors of squares.
+        """
         squares = []
 
         if self.horizontal == 1 or self.vertical == 1:

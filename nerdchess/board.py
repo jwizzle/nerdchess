@@ -6,8 +6,7 @@ from nerdchess.pieces import King
 
 
 class Board():
-    """
-    Represents a board in a game of chess.
+    """Represents a board in a game of chess.
 
     {
         a: {
@@ -27,7 +26,6 @@ class Board():
         letters(list): The letters of a board
         numbers(list): The numbers of a board
         squares(dict): A dict of letters containing numbers with squares
-
     """
 
     def __init__(self):
@@ -35,14 +33,15 @@ class Board():
         self.letters = [i.value for i in letters]
         self.numbers = range(1, 9)
         self.squares = {}
-        self.create_board()
+        self.__create_board()
 
     @classmethod
     def piece_list(cls, square_dict, color=None):
         """Generate the current pieces on the board as a list.
 
         Parameters:
-            square_dict: The dictionary of squares to get the list from
+            square_dict(dict): The dictionary of squares to get the list from.
+            color(Color): Optional: The color to get the pieces for.
 
         Yields:
             Piece: A chess piece or pawn
@@ -85,17 +84,20 @@ class Board():
         return matrix
 
     def setup_board(self, game_pieces, pawns):
-        """Set up the pieces and pawns in one go.
+        """Set up the pieces and pawns at their startpositions.
+
+        The lists passed can be created first with
+        nerdchess.pieces.create_pieces and nerdchess.pieces.create_pawns.
 
         Parameters:
             game_pieces(list(Piece)): A list of game pieces to set up
             pawns(list(Pawns)): A list of pawns to set up
         """
-        self.setup_pieces(game_pieces)
-        self.setup_pawns(pawns)
+        self.__setup_pieces(game_pieces)
+        self.__setup_pawns(pawns)
 
-    def setup_pieces(self, game_pieces):
-        """Set up the pieces on the board.
+    def __setup_pieces(self, game_pieces):
+        """Set up the pieces at their startposition on the board.
 
         Parameters:
             game_pieces(list(Piece)): A list of pieces to set up
@@ -111,7 +113,7 @@ class Board():
                     square.occupant = piece
                     break
 
-    def setup_pawns(self, pawns):
+    def __setup_pawns(self, pawns):
         """Set up the pawns on the board.
 
         Parameters:
@@ -128,8 +130,8 @@ class Board():
                     pawn.position = square.selector
                     break
 
-    def create_board(self):
-        """Create the board."""
+    def __create_board(self):
+        """Create the dict of squares representing the board."""
         for letter in self.letters:
             self.squares[letter] = {}
 
@@ -192,6 +194,8 @@ class Board():
         """Create a new board from a supplied move.
 
         This does not do any explicit validation on the move.
+        It does set a piece's captured status to True when needed.
+        It does set a piece's new position.
 
         Parameters:
             move(Move): The move to process
