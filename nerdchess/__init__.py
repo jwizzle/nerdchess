@@ -25,7 +25,7 @@ from tabulate import tabulate
 
 
 def main():
-    """Play a gane of chess.
+    """Play a game of chess.
 
     The main function of this module starts a really basic game of chess on the
     commandline. Moves are input in the format 'e2e4'.

@@ -20,14 +20,14 @@ class TestDirections():
         move = BoardMove(board_queen_e4, 'e4c2')
         result = move.process()
 
-        assert move.squares_between() == ['d3']
+        assert move.square_selectors_between() == ['d3']
         assert result
 
     def test_horizontal(self, board_queen_e4):
         move = BoardMove(board_queen_e4, 'e4a4')
         result = move.process()
 
-        assert move.squares_between() == [
+        assert move.square_selectors_between() == [
             'd4', 'c4', 'b4'
         ]
         assert result
@@ -36,7 +36,7 @@ class TestDirections():
         move = BoardMove(board_queen_e4, 'e4e7')
         result = move.process()
 
-        assert move.squares_between() == ['e5', 'e6']
+        assert move.square_selectors_between() == ['e5', 'e6']
         assert result
 
 
