@@ -74,7 +74,8 @@ class Move(ABC):
         move = "{}{}{}".format(position, new_letter, new_number)
         return cls(move)
 
-    # TODO Clean up this mess of a function
+    # TODO Should this be moved to boardmove?
+    # Or maybe some generator that implements this, returns the actual squres.
     def squares_between(self):
         """Return the squares between the origin and destination."""
         squares = []
@@ -85,43 +86,40 @@ class Move(ABC):
         if self.horizontal == -1 or self.vertical == -1:
             return squares
 
+        h_steps = 1 if self.horizontal > 0 else -1
+        v_steps = 1 if self.vertical > 0 else -1
+
         if self.is_diagonal():
-            steps = 1 if self.horizontal > 0 else -1
-            if self.vertical < 0 and steps == 1:
-                v_steps = -1
-            elif self.vertical > 0 and steps == -1:
-                v_steps = -1
-            else:
-                v_steps = 1
-
-            try:
-                for i in range(steps, self.horizontal, steps):
-                    step_index_x = self.indices['or']['x'] + i
-                    step_index_y = self.indices['or']['y'] + (i * v_steps)
-
-                    if step_index_x < 0 or step_index_y < 0:
-                        continue
-
-                    letter = letterlist[step_index_x]
-                    number = numbers[step_index_y]
-                    square = f"{letter}{number}"
-                    squares.append(square)
-            except IndexError:
-                pass
+            steps = h_steps
+            step_range = self.horizontal
         elif self.is_horizontal():
-            steps = 1 if self.horizontal > 0 else -1
-            for i in range(steps, self.horizontal, steps):
-                letter = letterlist[self.indices['or']['x'] + i]
-                number = self.origin[1]
-                square = f"{letter}{number}"
-                squares.append(square)
+            v_steps = 0
+            steps = h_steps
+            step_range = self.horizontal
         elif self.is_vertical():
-            steps = 1 if self.vertical > 0 else -1
-            for i in range(steps, self.vertical, steps):
-                letter = self.origin[0]
-                number = numbers[self.indices['or']['y'] + i]
-                square = f"{letter}{number}"
-                squares.append(square)
+            h_steps = 0
+            steps = v_steps
+            step_range = self.vertical
+
+        h_counter = h_steps
+        v_counter = v_steps
+
+        for i in range(steps, step_range, steps):
+            step_index_h = self.indices['or']['x'] + h_counter
+            step_index_v = self.indices['or']['y'] + v_counter
+
+            if step_index_v < 0 or step_index_h < 0:
+                h_counter = h_counter + h_steps
+                v_counter = v_counter + v_steps
+                continue
+
+            letter = letterlist[step_index_h]
+            number = numbers[step_index_v]
+            square = f"{letter}{number}"
+            squares.append(square)
+
+            h_counter = h_counter + h_steps
+            v_counter = v_counter + v_steps
 
         return squares
 

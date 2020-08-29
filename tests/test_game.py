@@ -1,5 +1,6 @@
 import pytest
-from nerdchess.game import Player, ChessGame
+from nerdchess.game import ChessGame
+from nerdchess.player import Player
 from nerdchess.board import Board
 from nerdchess.config import colors
 
