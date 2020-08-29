@@ -50,14 +50,18 @@ class BoardMove(Move):
             return CastleSide.QUEEN
 
     def is_capturing(self):
-        """Is this a capturing move."""
+        """Check if this move is capturing."""
         if self.destination_sq.occupant:
             return True
         else:
             return False
 
     def is_castling(self):
-        """Is this a castling move."""
+        """Check if this move is castling.
+
+        Returns:
+            Color: The color of the player castling, or False.
+        """
         piece = self.origin_sq.occupant
         is_king = isinstance(piece, pieces.King)
         is_rook = isinstance(piece, pieces.Rook)
@@ -96,7 +100,7 @@ class BoardMove(Move):
         return piece.color
 
     def __get_origin_destination(self):
-        """Get the origin and destination square of a move.
+        """Get the origin and destination square of this move.
 
         Returns:
             tuple(Square, Square): The origin and destination
@@ -113,7 +117,7 @@ class BoardMove(Move):
         return (origin, destination)
 
     def process(self):
-        """Process a move in the context of the board.
+        """Process this move in the context of the board.
 
         Returns:
             Bool: False if the move is incorrect
