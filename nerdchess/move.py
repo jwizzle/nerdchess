@@ -75,7 +75,11 @@ class Move(ABC):
         return cls(move)
 
     def square_selectors_between(self):
-        """Return selectors of squares between the origin and destination."""
+        """Return selectors of squares between the origin and destination.
+
+        Returns:
+            list(String): A list of selectors of squares.
+        """
         squares = []
 
         if self.horizontal == 1 or self.vertical == 1:
