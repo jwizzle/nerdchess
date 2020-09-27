@@ -132,12 +132,20 @@ class Board():
 
     def __create_board(self):
         """Create the dict of squares representing the board."""
+        color = colors.BLACK
         for letter in self.letters:
             self.squares[letter] = {}
 
             for number in self.numbers:
                 selector = "{}{}".format(letter, number)
-                self.squares[letter][number] = Square(selector)
+
+                self.squares[letter][number] = Square(selector, color)
+
+                if number != len(self.numbers):
+                    if color == colors.BLACK:
+                        color = colors.WHITE
+                    else:
+                        color = colors.BLACK
 
     def is_check(self, color=None):
         """Is one of the kings in check.
@@ -273,10 +281,11 @@ class Square():
         occupant(Piece): Usually a piece or pawn, needs to implement __str__
     """
 
-    def __init__(self, selector, occupant=None):
+    def __init__(self, selector, color, occupant=None):
         """Init."""
         self.selector = selector
         self.occupant = occupant
+        self.color = color
 
     def __str__(self):
         """Text representation of a square.
