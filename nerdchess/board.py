@@ -212,6 +212,7 @@ class Board():
             newboard: The new board
         """
         newboard = copy.deepcopy(self)
+        old_move = move
         move = BoardMove(newboard, move.text)
 
         piece = move.origin_sq.occupant
@@ -219,6 +220,15 @@ class Board():
         move.origin_sq.occupant = None
         if move.destination_sq.occupant:
             move.destination_sq.occupant.captured = True
+        try:
+            if old_move.enpassant:
+                o_letter = old_move.enpassant.selector[0]
+                o_number = int(old_move.enpassant.selector[1])
+
+                newboard.squares[o_letter][o_number].occupant.captured = True
+                newboard.squares[o_letter][o_number].occupant = None
+        except AttributeError:
+            pass
         move.destination_sq.occupant = piece
         piece.position = move.destination_sq.selector
 

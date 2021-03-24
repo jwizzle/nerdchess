@@ -52,9 +52,10 @@ class BoardRules():
                 d_letter = self.move.destination[0]
                 o_number = int(self.move.origin[1])
                 # If not, is it at least en passant?
-                if not isinstance(
-                        self.move.board.squares[d_letter][o_number].occupant,
-                        pieces.Pawn):
+                pass_sq = self.move.board.squares[d_letter][o_number]
+                if isinstance(pass_sq.occupant, pieces.Pawn):
+                    self.enpassant = pass_sq
+                else:
                     self.valid = False
 
     def __blocking_pieces(self):
