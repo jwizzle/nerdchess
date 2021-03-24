@@ -70,6 +70,8 @@ class TestBoardRules():
         rules = BoardRules(move)
 
         assert rules.valid == expected
+        if expected:
+            assert not move.process().squares['d'][2].occupant
 
     @pytest.mark.parametrize("move,expected", [
         # Can we move through other colored pieces?

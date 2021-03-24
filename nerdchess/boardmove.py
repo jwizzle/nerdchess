@@ -147,6 +147,11 @@ class BoardMove(Move):
             return False
 
         boardrules = BoardRules(self)
+        try:
+            self.enpassant = boardrules.enpassant
+        except AttributeError:
+            pass
+
         if not boardrules.valid:
             return False
 
