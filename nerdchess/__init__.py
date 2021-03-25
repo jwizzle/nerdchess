@@ -75,14 +75,8 @@ def main():
     while not chessgame.over:
         for player in chessgame.playerlist:
             if player.turn:
-                current_player = player
-
-        if not player:
-            raise ValueError(
-                'Player not found, something has gone horribly wrong.')
-
-        move = input("What's your move, {}?: ".format(current_player.name))
-        chessgame.move(current_player, move)
+                move = input("What's your move, {}?: ".format(player.name))
+                chessgame.move(player, move)
 
         print(tabulate(chessgame.board.matrix()))
 
