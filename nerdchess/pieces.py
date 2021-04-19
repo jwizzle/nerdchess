@@ -35,7 +35,7 @@ class Piece(ABC):
         Returns:
             list(tuple(int, int), ): Move pattern as list of tuples
         """
-        pass
+        return [(0, 0)]
 
     def diagonal_pattern(self):
         """Return a diagonal movement pattern as a list (bishops)."""

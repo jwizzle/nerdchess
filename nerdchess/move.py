@@ -81,6 +81,8 @@ class Move(ABC):
             list(String): A list of selectors of squares.
         """
         squares = []
+        steps = 0
+        step_range = 0
 
         if self.horizontal == 1 or self.vertical == 1:
             return squares

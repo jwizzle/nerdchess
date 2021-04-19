@@ -57,6 +57,9 @@ class BoardRules():
                     self.enpassant = pass_sq
                 else:
                     self.valid = False
+        elif self.move.vertical > 0:
+            if self.move.destination_sq.occupant:
+                self.valid = False
 
     def __blocking_pieces(self):
         """Check if the move is being blocked."""

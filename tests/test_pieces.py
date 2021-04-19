@@ -18,6 +18,7 @@ def piece(request):
 
 
 class TestPieces():
+    """Test some basic piece creation."""
 
     def test_creation(self, piece):
         assert isinstance(piece, pieces.Piece)

@@ -44,6 +44,7 @@ class TestGame():
     def test_move(self, chessgame):
         """ Do moves process correctly? """
         # White should start
+        player = 'henk'
         for dude in chessgame.playerlist:
             if dude.color == colors.WHITE:
                 player = dude
@@ -86,6 +87,7 @@ class TestMatch():
         ('f3f7', True),
     ])
     def test_match(self, chessgame, move, game_over):
+        current_player = 'henk'
         for player in chessgame.playerlist:
             if player.turn:
                 current_player = player

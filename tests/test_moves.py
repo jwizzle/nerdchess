@@ -55,6 +55,21 @@ class TestBoardRules():
         assert isinstance(
             valid.squares['f'][5].occupant, pieces.Pawn)
 
+    def test_pawn_no_move_backwards(self, board_fixt):
+        """Test if pawns can't move backwards."""
+        move = BoardMove(board_fixt.board, 'c3c2')
+        board_fixt.place_piece(pieces.Pawn(colors.WHITE), 'c3')
+
+        assert not move.process()
+
+    def test_pawn_no_forward_capture(self, board_fixt):
+        """Test if it's not possible for pawns to capture forward."""
+        move = BoardMove(board_fixt.board, 'c3c4')
+        board_fixt.place_piece(pieces.Pawn(colors.WHITE), 'c3')
+        board_fixt.place_piece(pieces.Rook(colors.BLACK), 'c4')
+
+        assert not move.process()
+
     @pytest.mark.parametrize("black_pos,expected", [
         ('d2', True),
         ('d4', False),
