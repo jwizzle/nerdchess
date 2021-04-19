@@ -62,6 +62,9 @@ class ChessGame():
         """
         move = BoardMove(self.board, move)
 
+        if not player.turn:
+            return False
+
         if move.origin_sq.occupant:
             if move.origin_sq.occupant.color != player.color:
                 return False

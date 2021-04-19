@@ -50,7 +50,6 @@ class TestGame():
                 player = dude
                 assert dude.turn
             else:
-                player = dude
                 assert not dude.turn
 
         # Shouldn't be able to move the other players' pawn
