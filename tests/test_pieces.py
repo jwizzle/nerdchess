@@ -2,7 +2,6 @@ import pytest
 from nerdchess import pieces
 from nerdchess.config import colors
 from nerdchess.move import Move
-from nerdchess.boardmove import BoardMove
 
 
 @pytest.fixture(scope='class', params=[
