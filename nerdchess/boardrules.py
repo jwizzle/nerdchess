@@ -46,18 +46,21 @@ class BoardRules():
 
     def __pawn_rules(self):
         """Rules to apply to pawns only."""
-        if self.move.horizontal == 1:
+        if (self.move.horizontal == 1
+           or self.move.horizontal == -1):
             # If we're going horizontal, are we at least capturing?
             if not self.move.destination_sq.occupant:
                 d_letter = self.move.destination[0]
                 o_number = int(self.move.origin[1])
                 # If not, is it at least en passant?
                 pass_sq = self.move.board.squares[d_letter][o_number]
-                if isinstance(pass_sq.occupant, pieces.Pawn):
+                if (isinstance(pass_sq.occupant, pieces.Pawn)
+                   and pass_sq.occupant.color != self.piece.color):
                     self.enpassant = pass_sq
                 else:
                     self.valid = False
-        elif self.move.vertical > 0:
+        elif (self.move.vertical > 0
+                or self.move.vertical < 0):
             if self.move.destination_sq.occupant:
                 self.valid = False
 
