@@ -59,7 +59,8 @@ class BoardRules():
                     self.enpassant = pass_sq
                 else:
                     self.valid = False
-        elif self.move.vertical > 0:
+        elif (self.move.vertical > 0
+                or self.move.vertical < 0):
             if self.move.destination_sq.occupant:
                 self.valid = False
 

@@ -65,8 +65,18 @@ class TestBoardRules():
     def test_pawn_no_forward_capture(self, board_fixt):
         """Test if it's not possible for pawns to capture forward."""
         move = BoardMove(board_fixt.board, 'c3c4')
+
         board_fixt.place_piece(pieces.Pawn(colors.WHITE), 'c3')
         board_fixt.place_piece(pieces.Rook(colors.BLACK), 'c4')
+
+        assert not move.process()
+
+    def test_pawn_no_backward_capture(self, board_fixt):
+        """Test if it's not possible for pawns to capture backwards."""
+        move = BoardMove(board_fixt.board, 'c4c3')
+
+        board_fixt.place_piece(pieces.Rook(colors.WHITE), 'c3')
+        board_fixt.place_piece(pieces.Pawn(colors.BLACK), 'c4')
 
         assert not move.process()
 
