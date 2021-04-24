@@ -81,8 +81,8 @@ class Piece(ABC):
         for move in self.move_pattern():
             try:
                 new_move = Move.from_position(self.position, move)
-                if board:
-                    new_move = BoardMove(board, new_move).process()
+                if board and new_move:
+                    new_move = BoardMove(board, new_move.text).process()
                 if new_move:
                     allowed_moves.append(new_move)
             except IndexError:

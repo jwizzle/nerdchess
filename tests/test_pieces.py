@@ -2,6 +2,7 @@ import pytest
 from nerdchess import pieces
 from nerdchess.config import colors
 from nerdchess.move import Move
+from nerdchess.boardmove import BoardMove
 
 
 @pytest.fixture(scope='class', params=[
@@ -29,3 +30,11 @@ class TestPieces():
         assert isinstance(allowed_moves, list)
         for move in allowed_moves:
             assert isinstance(move, Move)
+
+    def test_allowed_moves_board(self, piece, board_fixt):
+        """Test the allowed moves in context of a board."""
+        allowed_moves = piece.allowed_moves(board=board_fixt.board)
+
+        assert isinstance(allowed_moves, list)
+        for move in allowed_moves:
+            assert isinstance(move, BoardMove)
