@@ -2,6 +2,7 @@
 from abc import ABC, abstractmethod
 from nerdchess.config import colors, numbers, letterlist
 from nerdchess.move import Move
+from nerdchess.boardmove import BoardMove
 
 
 class Piece(ABC):
@@ -69,7 +70,7 @@ class Piece(ABC):
 
         return pattern
 
-    def allowed_moves(self):
+    def allowed_moves(self, board=False):
         """Transform the move pattern into a list of allowed moves.
 
         Returns:
@@ -80,6 +81,8 @@ class Piece(ABC):
         for move in self.move_pattern():
             try:
                 new_move = Move.from_position(self.position, move)
+                if board:
+                    new_move = BoardMove(board, new_move).process()
                 if new_move:
                     allowed_moves.append(new_move)
             except IndexError:
