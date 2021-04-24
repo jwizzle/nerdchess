@@ -37,4 +37,4 @@ class TestPieces():
 
         assert isinstance(allowed_moves, list)
         for move in allowed_moves:
-            assert isinstance(move, BoardMove)
+            assert isinstance(move, Move)

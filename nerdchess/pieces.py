@@ -84,7 +84,7 @@ class Piece(ABC):
                 if board and new_move:
                     new_move = BoardMove(board, new_move.text).process()
                 if new_move:
-                    allowed_moves.append(new_move)
+                    allowed_moves.append(Move(new_move.text))
             except IndexError:
                 pass
 
