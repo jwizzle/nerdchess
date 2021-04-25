@@ -2,7 +2,8 @@
 import copy
 from nerdchess.config import colors, letters
 from nerdchess.boardmove import BoardMove, CastleSide
-from nerdchess.pieces import King
+from nerdchess.pieces import King, Knight
+from nerdchess.boardrules import BoardRules
 
 
 class Board():
@@ -156,6 +157,8 @@ class Board():
         Returns:
             color: The color of the king that is in check or False
         """
+        if color:
+            color = colors.BLACK if color == colors.WHITE else colors.WHITE
         pieces = list(self.piece_list(self.squares, color))
         for piece in pieces:
             moves = [BoardMove(self, i.text) for i in piece.allowed_moves()]
@@ -164,6 +167,9 @@ class Board():
                     continue
 
                 if not move.destination_sq.occupant:
+                    continue
+
+                if not BoardRules(move, check_checking=True).valid:
                     continue
 
                 if (isinstance(move.destination_sq.occupant, King) and
@@ -193,7 +199,7 @@ class Board():
         for move in boardmoves:
             valid_move = move.process()
             if valid_move:
-                if not valid_move.is_check(check):
+                if not valid_move.is_check(color=check):
                     return False
 
         return check

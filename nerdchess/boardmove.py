@@ -44,11 +44,14 @@ class BoardMove(Move):
         Yields:
             Square: The squares between origin and destination of this move.
         """
-        for selector in self.square_selectors_between():
-            c = selector[0]
-            i = int(selector[1])
+        try:
+            for selector in self.square_selectors_between():
+                c = selector[0]
+                i = int(selector[1])
 
-            yield self.board.squares[c][i]
+                yield self.board.squares[c][i]
+        except ValueError:
+            pass
 
     def castle_side(self):
         """Return the side we're castling to."""
@@ -128,7 +131,7 @@ class BoardMove(Move):
 
         return (origin, destination)
 
-    def process(self):
+    def process(self, debug=False):
         """Process this move in the context of the board.
 
         Returns:
@@ -146,7 +149,7 @@ class BoardMove(Move):
         if Move(self.text) not in piece.allowed_moves():
             return False
 
-        boardrules = BoardRules(self)
+        boardrules = BoardRules(self, debug=True)
         try:
             self.enpassant = boardrules.enpassant
         except AttributeError:
@@ -162,7 +165,7 @@ class BoardMove(Move):
             side = self.castle_side()
             newboard = self.board.castle(side, piece.color)
 
-        if newboard.is_check() == piece.color:
+        if newboard.is_check(color=piece.color) == piece.color:
             return False
 
         return newboard
