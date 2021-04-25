@@ -18,11 +18,13 @@ class BoardRules():
         piece: The piece being moved
     """
 
-    def __init__(self, move):
+    def __init__(self, move, debug=False, check_checking=False):
         """Init."""
         self.move = move
         self.valid = True
         self.piece = self.move.origin_sq.occupant
+        self.debug = debug
+        self.check_checking = check_checking
         self.apply()
 
     def apply(self):
@@ -32,11 +34,12 @@ class BoardRules():
         if not isinstance(self.piece, pieces.Knight):
             self.__blocking_pieces()
         if self.move.is_castling():
-            self.__castling()
+            if not self.check_checking:
+                self.__castling()
         else:
             if self.move.is_capturing():
                 self.__capturing()
-            self.__self_checking()
+            # self.__self_checking()
 
     def __capturing(self):
         """Check if this is a capturing move."""
@@ -73,13 +76,15 @@ class BoardRules():
     def __self_checking(self):
         """Check if the move puts the player itself in check."""
         newboard = self.move.board.new_board(self.move)
-        if newboard.is_check() == self.piece.color:
-            self.valid = False
+        if self.valid:
+            if newboard.is_check(color=self.piece.color) == self.piece.color:
+                self.valid = False
 
     def __castling(self):
         """Apply rules specific to castling."""
         pattern = []
 
+        # TODO This introduces infinite recursion
         if self.move.board.is_check() == self.piece.color:
             self.valid = False
 

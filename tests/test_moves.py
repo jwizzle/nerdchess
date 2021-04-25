@@ -71,6 +71,17 @@ class TestBoardRules():
 
         assert not move.process()
 
+    def test_defending_check(self, board_fixt):
+        """Test if it's possible to defend check by placing a piece between."""
+        move = BoardMove(board_fixt.board, 'c8d7')
+
+        board_fixt.place_piece(pieces.Bishop(colors.WHITE), 'c8')
+        board_fixt.place_piece(pieces.Bishop(colors.BLACK), 'b5')
+        board_fixt.place_piece(pieces.King(colors.WHITE), 'e8')
+
+        assert board_fixt.board.is_check(color=colors.WHITE)
+        assert move.process(debug=True)
+
     def test_pawn_no_backward_capture(self, board_fixt):
         """Test if it's not possible for pawns to capture backwards."""
         move = BoardMove(board_fixt.board, 'c4c3')

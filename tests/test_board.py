@@ -26,6 +26,7 @@ class TestBoard():
         board_fixt.place_piece(Queen(colors.BLACK), 'g2')
         board_fixt.place_piece(Bishop(colors.BLACK), 'h3')
         board_fixt.place_piece(King(colors.WHITE), king_pos)
+
         check = board_fixt.board.is_checkmate()
 
         assert check == expected
