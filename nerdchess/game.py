@@ -19,6 +19,9 @@ from nerdchess.boardmove import BoardMove
 class ChessGame():
     """Creates a new chessgame with players, pieces, and sets up the board.
 
+    Main interface for nerdchess.
+    Args and returns for public functions should inherit the GameEvent type.
+
     Parameters:
         name_1(Player): Player 1
         name_2(Player): Player 2
@@ -62,6 +65,9 @@ class ChessGame():
 
         Returns:
             Bool: Was the move succesful?
+
+        Todo:
+            * Create a GameEvent type and use it for args and returns.
         """
         move = BoardMove(self.board, move)
 

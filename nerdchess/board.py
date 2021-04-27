@@ -183,10 +183,6 @@ class Board():
 
         Returns:
             color: Color of the king in mate or False
-
-        Todo:
-            * Tests make me believe this introduces some heavy recursion shit
-            * It's also a mess so those might be related
         """
         check = self.is_check()
         if not check:
