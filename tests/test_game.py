@@ -3,6 +3,7 @@ from nerdchess.game import ChessGame
 from nerdchess.player import Player
 from nerdchess.board import Board
 from nerdchess.config import colors
+from nerdchess import pieces
 
 
 @pytest.fixture(scope='class')
@@ -69,6 +70,25 @@ class TestGame():
                 assert dude.turn
             else:
                 assert not dude.turn
+
+    def test_promote(self, chessgame, board_fixt):
+        """Test pawn promotion."""
+        for player in chessgame.playerlist:
+            if player.color == colors.WHITE:
+                player.turn = True
+                player_white = player
+
+        pawn = pieces.Pawn(colors.WHITE)
+        board_fixt.place_piece(pawn, 'e7')
+        chessgame.board = board_fixt.board
+
+        result = chessgame.move(player_white, 'e7e8')
+        assert result.promotion
+
+        pawn = chessgame.board.squares['e'][8].occupant
+        result = chessgame.promote(pawn, pieces.Queen)
+        assert isinstance(chessgame.board.squares['e'][8].occupant,
+                          pieces.Queen)
 
 
 class TestMatch():

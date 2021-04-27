@@ -127,6 +127,18 @@ class Pawn(Piece):
         else:
             return u'\u265F'
 
+    def promote(self, target):
+        """Promote a pawn.
+
+        Parameters:
+            target: The target Class (nerdchess.Piece) to promote to
+        """
+        newpiece = target(self.color)
+        newpiece.position = self.position
+        newpiece.last_move = self.last_move
+
+        return newpiece
+
     def start_position(self):
         """Start positions of a piece."""
         pass

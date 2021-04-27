@@ -41,6 +41,7 @@ class BoardMove(Move):
         (self.origin_sq,
          self.destination_sq) = self.__get_origin_destination()
         self.enpassant = self.__is_enpassant()
+        self.promotion = self.__promotion()
 
         if rule_check:
             rules = BoardRules(self, check_checking=check_checking)
@@ -121,6 +122,22 @@ class BoardMove(Move):
             return False
 
         return piece.color
+
+    def __promotion(self):
+        """Are we promoting a pawn."""
+        if not isinstance(self.origin_sq.occupant, pieces.Pawn):
+            return False
+
+        if self.origin_sq.occupant.color == colors.WHITE:
+            if int(self.destination_sq.selector[1]) == 8:
+                return True
+            else:
+                return False
+        else:
+            if int(self.destination_sq.selector[1]) == 1:
+                return True
+            else:
+                return False
 
     def __is_enpassant(self):
         """Is the move en passant."""

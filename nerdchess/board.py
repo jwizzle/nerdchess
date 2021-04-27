@@ -61,6 +61,22 @@ class Board():
                 else:
                     pass
 
+    def promote(self, pawn, target):
+        """Promote a pawn.
+
+        Parameters:
+            pawn: The pawn to promote
+            target: The target Piece object
+
+        Returns:
+            Bool: Was this succesful?
+        """
+        square = self.squares[pawn.position[0]][int(pawn.position[1])]
+        newpiece = pawn.promote(target)
+        square.occupant = newpiece
+
+        return True
+
     def matrix(self):
         """Return a matrix of the board represented as a nested list."""
         matrix = []
@@ -183,10 +199,6 @@ class Board():
 
         Returns:
             color: Color of the king in mate or False
-
-        Todo:
-            * Tests make me believe this introduces some heavy recursion shit
-            * It's also a mess so those might be related
         """
         check = self.is_check()
         if not check:
@@ -198,8 +210,6 @@ class Board():
             for move in i.allowed_moves(board=self, check_checking=True):
                 moves.append(move)
 
-        # TODO This creates some huge loading times when a lot of pieces are
-        # there
         for move in moves:
             if not self.new_board(move).is_check(color=check):
                 return False
@@ -238,6 +248,7 @@ class Board():
 
         move.destination_sq.occupant = piece
         piece.position = move.destination_sq.selector
+        piece.last_move = move
 
         return newboard
 
@@ -282,6 +293,9 @@ class Board():
         rook_dest.occupant = rook
         king.position = king_dest.selector
         rook.position = rook_dest.selector
+
+        king.last_move = 'castle'
+        rook.last_move = 'castle'
 
         return newboard
 
