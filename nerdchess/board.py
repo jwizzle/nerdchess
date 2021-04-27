@@ -61,6 +61,22 @@ class Board():
                 else:
                     pass
 
+    def promote(self, pawn, target):
+        """Promote a pawn.
+
+        Parameters:
+            pawn: The pawn to promote
+            target: The target Piece object
+
+        Returns:
+            Bool: Was this succesful?
+        """
+        square = self.squares[pawn.position[0]][int(pawn.position[1])]
+        newpiece = pawn.promote(target)
+        square.occupant = newpiece
+
+        return True
+
     def matrix(self):
         """Return a matrix of the board represented as a nested list."""
         matrix = []

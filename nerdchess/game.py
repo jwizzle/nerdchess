@@ -12,6 +12,8 @@ Example:
 """
 
 from nerdchess import pieces
+from nerdchess import game_event
+from nerdchess.config import colors
 from nerdchess.board import Board
 from nerdchess.boardmove import BoardMove
 
@@ -65,20 +67,17 @@ class ChessGame():
 
         Returns:
             Bool: Was the move succesful?
-
-        Todo:
-            * Create a GameEvent type and use it for args and returns.
         """
         move = BoardMove(self.board, move)
 
         if not player.turn:
-            return False
+            return game_event.MoveEvent(False)
 
         if move.origin_sq.occupant:
             if move.origin_sq.occupant.color != player.color:
-                return False
+                return game_event.MoveEvent(False)
         else:
-            return False
+            return game_event.MoveEvent(False)
 
         result = move.process()
         if result:
@@ -87,6 +86,31 @@ class ChessGame():
                 self.over = True
             self.board = result
             self.pass_turn()
-            return True
+            return game_event.MoveEvent(True, promotion=move.promotion)
         else:
-            return False
+            return game_event.MoveEvent(False)
+
+    def promote(self, pawn, target):
+        """Promote a pawn.
+
+        Parameters:
+            pawn: The pawn object to promote
+            target: The target nerdchess.Piece object
+
+        returns:
+            PromotionEvent: Result object containing event information
+        """
+        if not isinstance(pawn, pieces.Pawn):
+            return game_event.PromotionEvent(False)
+
+        if pawn.color == colors.WHITE:
+            if pawn.last_move.text[3] == '8':
+                return game_event.MoveEvent(self.board.promote(pawn, target))
+            else:
+                return game_event.MoveEvent(False)
+        else:
+            if pawn.last_move.text[3] == '1':
+                return game_event.MoveEvent(self.board.promote(pawn, target))
+            else:
+                return game_event.MoveEvent(False)
+

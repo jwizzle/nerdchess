@@ -243,3 +243,17 @@ class TestBoardRules():
         result = boardmove.process()
 
         assert result == expected
+
+    @pytest.mark.parametrize("move,position,color,expected", [
+        ('e7e8', 'e7', colors.WHITE, True),
+        ('e6e7', 'e6', colors.WHITE, False),
+        ('e2e1', 'e2', colors.BLACK, True),
+        ('e3e2', 'e3', colors.BLACK, False),
+    ])
+    def test_promotion(self, board_fixt, move, position, color, expected):
+        """Test if promotion is properly detected."""
+        board_fixt.place_piece(pieces.Pawn(color), position)
+
+        boardmove = BoardMove(board_fixt.board, move)
+
+        assert boardmove.promotion == expected

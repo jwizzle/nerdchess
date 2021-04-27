@@ -13,6 +13,4 @@ It's still the idea to make it possible to write AI's againt this package. But f
 I'm not aiming for this to be some widely used package, and am mostly making it for fun and learning. Expect things to change a lot, and your applications to break if you don't freeze versions might you decide to use this. At least in it's current state.
 
 ## TODO
-* Make game.py a single interface to communicate with nerdchess through GameEvent objects
-* Handle pawn promotion
 * Start seperate project for a more complete TUI chessgame implementing this package

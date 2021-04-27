@@ -1,11 +1,4 @@
 """Holds classes related to interaction with the game back-end."""
-# TODO Figure out what exactly we want this to do
-# It seems like the best way to implement promotion to construct some
-# Types that represent how we interact with the game.
-# Eventually we'll also want to do things like reveal options by talking
-# Too the same game object instead of querying objects directly and accessing
-# Game objects directly from outside the scope of this package.
-# Probably want to generate some api spec.
 from abc import ABC
 
 
@@ -17,9 +10,40 @@ class GameEvent(ABC):
         pass
 
 
-class Post(GameEvent):
-    """Post event used to interact with the game."""
+class MoveEvent(GameEvent):
+    """Results for the move action."""
 
-    def __init__(self, action, args):
-        """Construct the post."""
-        pass
+    def __init__(self, valid, promotion=False):
+        """Construct the event.
+
+        Parameters:
+            valid(Bool): Was the move valid?
+
+        Attributes:
+            valid(Bool): Was the move valid?
+        """
+        self.valid = valid
+        self.promotion = promotion
+
+    def __bool__(self):
+        """Bool representation."""
+        return self.valid
+
+
+class PromotionEvent(GameEvent):
+    """Results for the promote action."""
+
+    def __init__(self, valid):
+        """Construct the event.
+
+        Parameters:
+            valid(Bool): Was the promotion valid?
+
+        Attributes:
+            valid(Bool): Was the promotion valid?
+        """
+        self.valid = valid
+
+    def __bool__(self):
+        """Bool representation."""
+        return self.valid
