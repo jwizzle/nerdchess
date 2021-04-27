@@ -124,6 +124,15 @@ class BoardMove(Move):
 
     def __is_enpassant(self):
         """Is the move en passant."""
+        if not isinstance(self.origin_sq.occupant, pieces.Pawn):
+            return False
+
+        if not self.horizontal == 1 and not self.horizontal == -1:
+            return False
+
+        if self.destination_sq.occupant:
+            return False
+
         d_letter = self.destination[0]
         o_number = int(self.origin[1])
         pass_sq = self.board.squares[d_letter][o_number]

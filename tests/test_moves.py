@@ -4,7 +4,6 @@ from nerdchess.board import Board
 from nerdchess.boardmove import BoardMove
 from nerdchess import pieces
 from nerdchess.config import colors
-from nerdchess.boardrules import BoardRules
 
 
 @pytest.fixture
@@ -122,19 +121,22 @@ class TestBoardRules():
         board_fixt.place_piece(white_piece, white_pos)
         board_fixt.place_piece(black_piece, black_pos)
 
+        for pos in (white_pos, black_pos):
+            if not move[:2] == pos:
+                pass_pos = pos
+
         move = BoardMove(board_fixt.board, move)
 
-        rules = BoardRules(move)
-
         # Test if the boardrules are valid or not as we expect
-        assert rules.valid == expected
+        assert move.valid == expected
 
         if expected:
             # Test the amount of allowed moves for the moving piece
             assert len(move.origin_sq.occupant.allowed_moves(
-                    board=board_fixt.board)) == 2
+                board=board_fixt.board)) == 2
             # Test whether the piece we're capturing is actually gone
-            assert not move.process().squares['d'][2].occupant
+            assert not move.process(
+            ).squares[pass_pos[0]][int(pass_pos[1])].occupant
         else:
             # Test the amount of allowed moves for the moving piece
             assert len(move.origin_sq.occupant.allowed_moves(
