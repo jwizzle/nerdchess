@@ -80,8 +80,6 @@ class ChessGame():
             if result.is_checkmate():
                 self.over = True
             self.board = result
-            self.board.squares[move.text[2]][int(
-                move.text[3])].occupant.last_move = move
             self.pass_turn()
             return True
         else:

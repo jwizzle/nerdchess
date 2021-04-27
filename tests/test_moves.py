@@ -180,6 +180,8 @@ class TestBoardRules():
     @pytest.mark.parametrize("move,expected,side,color", [
         # Queenside castle for white with no checks etc.
         ('e1a1', True, 'queenside', colors.WHITE),
+        # Kingside castle for white with no checks etc.
+        ('e1h1', True, 'kingside', colors.WHITE),
         # Same as above but differnt notation
         ('e1b1', True, 'queenside', colors.WHITE),
         # Black kingside no checks etc.
@@ -197,8 +199,9 @@ class TestBoardRules():
         board_fixt.place_piece(pieces.King(colors.BLACK), 'e8')
         board_fixt.place_piece(pieces.Rook(colors.BLACK), 'a8')
         board_fixt.place_piece(pieces.Rook(colors.BLACK), 'h8')
-        board_fixt.place_piece(pieces.Bishop(colors.BLACK), 'h3')
         board_fixt.place_piece(pieces.Bishop(colors.WHITE), 'f5')
+        if color == colors.WHITE and not expected and side == 'kingside':
+            board_fixt.place_piece(pieces.Bishop(colors.BLACK), 'h3')
 
         boardmove = BoardMove(board_fixt.board, move)
 

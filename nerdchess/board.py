@@ -198,8 +198,6 @@ class Board():
             for move in i.allowed_moves(board=self, check_checking=True):
                 moves.append(move)
 
-        # TODO This creates some huge loading times when a lot of pieces are
-        # there
         for move in moves:
             if not self.new_board(move).is_check(color=check):
                 return False
@@ -238,6 +236,7 @@ class Board():
 
         move.destination_sq.occupant = piece
         piece.position = move.destination_sq.selector
+        piece.last_move = move
 
         return newboard
 
@@ -282,6 +281,9 @@ class Board():
         rook_dest.occupant = rook
         king.position = king_dest.selector
         rook.position = rook_dest.selector
+
+        king.last_move = 'castle'
+        rook.last_move = 'castle'
 
         return newboard
 
