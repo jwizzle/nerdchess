@@ -60,6 +60,9 @@ class TestGame():
         result = chessgame.move(player, 'e2e4')
         assert result
 
+        # We should be keeping history
+        assert len(chessgame.board_history) == 1
+
         # After a succesful move the turn is passed
         for dude in chessgame.playerlist:
             if dude.color == colors.BLACK:

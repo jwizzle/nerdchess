@@ -43,6 +43,9 @@ class ChessGame():
         self.pieces = pieces.create_pieces()
         self.pawns = pieces.create_pawns()
         self.board.setup_board(self.pieces, self.pawns)
+
+        self.board_history = []
+
         self.over = over
 
     def pass_turn(self):
@@ -73,9 +76,12 @@ class ChessGame():
 
         result = move.process()
         if result:
+            self.board_history.append(self.board)
             if result.is_checkmate():
                 self.over = True
             self.board = result
+            self.board.squares[move.text[2]][int(
+                move.text[3])].occupant.last_move = move
             self.pass_turn()
             return True
         else:

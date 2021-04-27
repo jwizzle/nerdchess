@@ -29,14 +29,22 @@ class BoardMove(Move):
         board(Board): The boardcontext.
         origin_sq(Square): The origin square.
         destination_sq(Square): The destination square.
+        valid(Bool): Is this move considered valid.
     """
 
-    def __init__(self, board, *args, **kwargs):
+    def __init__(self, board, *args,
+                 rule_check=True, check_checking=False, **kwargs):
         """Init."""
         super().__init__(*args, **kwargs)
+
         self.board = board
         (self.origin_sq,
          self.destination_sq) = self.__get_origin_destination()
+        self.enpassant = self.__is_enpassant()
+
+        if rule_check:
+            rules = BoardRules(self, check_checking=check_checking)
+            self.valid = rules.valid
 
     def squares_between(self):
         """Get the squares between origin and destination of this move.
@@ -114,6 +122,34 @@ class BoardMove(Move):
 
         return piece.color
 
+    def __is_enpassant(self):
+        """Is the move en passant."""
+        if not isinstance(self.origin_sq.occupant, pieces.Pawn):
+            return False
+
+        if not self.horizontal == 1 and not self.horizontal == -1:
+            return False
+
+        if self.destination_sq.occupant:
+            return False
+
+        d_letter = self.destination[0]
+        o_number = int(self.origin[1])
+        pass_sq = self.board.squares[d_letter][o_number]
+
+        if (isinstance(pass_sq.occupant, pieces.Pawn)
+           and pass_sq.occupant.color != self.origin_sq.occupant):
+            if pass_sq.occupant.last_move:
+                if (pass_sq.occupant.last_move.vertical == 2
+                        or pass_sq.occupant.last_move.vertical == -2):
+                    return True
+                else:
+                    return False
+            else:
+                return False
+        else:
+            return False
+
     def __get_origin_destination(self):
         """Get the origin and destination square of this move.
 
@@ -149,13 +185,7 @@ class BoardMove(Move):
         if Move(self.text) not in piece.allowed_moves():
             return False
 
-        boardrules = BoardRules(self, debug=True)
-        try:
-            self.enpassant = boardrules.enpassant
-        except AttributeError:
-            pass
-
-        if not boardrules.valid:
+        if not self.valid:
             return False
 
         castling = self.is_castling()
