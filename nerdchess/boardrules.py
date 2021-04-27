@@ -51,17 +51,13 @@ class BoardRules():
         """Rules to apply to pawns only."""
         if (self.move.horizontal == 1
            or self.move.horizontal == -1):
-            # If we're going horizontal, are we at least capturing?
-            if not self.move.destination_sq.occupant:
-                d_letter = self.move.destination[0]
-                o_number = int(self.move.origin[1])
-                # If not, is it at least en passant?
-                pass_sq = self.move.board.squares[d_letter][o_number]
-                if (isinstance(pass_sq.occupant, pieces.Pawn)
-                   and pass_sq.occupant.color != self.piece.color):
-                    self.enpassant = pass_sq
-                else:
-                    self.valid = False
+            # Exit early if we're capturing horizontally
+            if self.move.destination_sq.occupant:
+                return True
+
+            if not self.move.enpassant:
+                self.valid = False
+
         elif (self.move.vertical > 0
                 or self.move.vertical < 0):
             if self.move.destination_sq.occupant:
@@ -84,7 +80,6 @@ class BoardRules():
         """Apply rules specific to castling."""
         pattern = []
 
-        # TODO This introduces infinite recursion
         if self.move.board.is_check() == self.piece.color:
             self.valid = False
 

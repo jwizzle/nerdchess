@@ -1,4 +1,5 @@
 import pytest
+from types import SimpleNamespace
 from nerdchess.board import Board
 from nerdchess.boardmove import BoardMove
 from nerdchess import pieces
@@ -64,10 +65,10 @@ class TestBoardRules():
 
     def test_pawn_no_forward_capture(self, board_fixt):
         """Test if it's not possible for pawns to capture forward."""
-        move = BoardMove(board_fixt.board, 'c3c4')
-
         board_fixt.place_piece(pieces.Pawn(colors.WHITE), 'c3')
         board_fixt.place_piece(pieces.Rook(colors.BLACK), 'c4')
+
+        move = BoardMove(board_fixt.board, 'c3c4')
 
         assert not move.process()
 
@@ -84,30 +85,60 @@ class TestBoardRules():
 
     def test_pawn_no_backward_capture(self, board_fixt):
         """Test if it's not possible for pawns to capture backwards."""
-        move = BoardMove(board_fixt.board, 'c4c3')
-
         board_fixt.place_piece(pieces.Rook(colors.WHITE), 'c3')
         board_fixt.place_piece(pieces.Pawn(colors.BLACK), 'c4')
 
+        move = BoardMove(board_fixt.board, 'c4c3')
+
         assert not move.process()
 
-    @pytest.mark.parametrize("black_pos,expected", [
-        ('d2', True),
-        ('d4', False),
-    ])
-    def test_enpassant(self, board_fixt, black_pos, expected):
+    @pytest.mark.parametrize(
+        "white_pos,black_pos,move,expected,vertical_steps", [
+            # Black to move left
+            ('c4', 'd4', 'd4c3', True, 2),
+            ('c4', 'd4', 'd4c3', False, 1),
+            ('c2', 'd4', 'd4c3', False, 2),
+            # Black to move right
+            ('e4', 'd4', 'd4e3', True, 2),
+            ('e4', 'd4', 'd4e3', False, 1),
+            ('e2', 'd4', 'd4e3', False, 2),
+            # White to move left
+            ('d5', 'c5', 'd5c6', True, 2),
+            ('d5', 'c5', 'd5c6', False, 1),
+            ('d5', 'c7', 'd5c6', False, 2),
+            # White to move right
+            ('d5', 'e5', 'd5e6', True, 2),
+            ('d5', 'e5', 'd5e6', False, 1),
+            ('d5', 'e7', 'd5e6', False, 2),
+        ])
+    def test_enpassant(self, board_fixt, white_pos, black_pos,
+                       move, expected, vertical_steps):
         """ Test enpassant rules. """
-        move = BoardMove(board_fixt.board, 'c2d3')
-        move_piece = pieces.Pawn(colors.WHITE)
+        white_piece = pieces.Pawn(colors.WHITE)
+        black_piece = pieces.Pawn(colors.BLACK)
+        white_piece.last_move = SimpleNamespace(vertical=vertical_steps)
+        black_piece.last_move = SimpleNamespace(vertical=vertical_steps)
 
-        board_fixt.place_piece(move_piece, 'c2')
-        board_fixt.place_piece(pieces.Pawn(colors.BLACK), black_pos)
+        board_fixt.place_piece(white_piece, white_pos)
+        board_fixt.place_piece(black_piece, black_pos)
+
+        move = BoardMove(board_fixt.board, move)
 
         rules = BoardRules(move)
 
+        # Test if the boardrules are valid or not as we expect
         assert rules.valid == expected
+
         if expected:
+            # Test the amount of allowed moves for the moving piece
+            assert len(move.origin_sq.occupant.allowed_moves(
+                    board=board_fixt.board)) == 2
+            # Test whether the piece we're capturing is actually gone
             assert not move.process().squares['d'][2].occupant
+        else:
+            # Test the amount of allowed moves for the moving piece
+            assert len(move.origin_sq.occupant.allowed_moves(
+                board=board_fixt.board)) == 1
 
     @pytest.mark.parametrize("move,expected", [
         # Can we move through other colored pieces?
@@ -158,7 +189,6 @@ class TestBoardRules():
     ])
     def test_castling(self, board_fixt, move, expected, side, color):
         """ Test different castling scenario's """
-        boardmove = BoardMove(board_fixt.board, move)
         board_fixt.place_piece(pieces.King(colors.WHITE), 'e1')
         board_fixt.place_piece(pieces.Rook(colors.WHITE), 'a1')
         board_fixt.place_piece(pieces.Rook(colors.WHITE), 'h1')
@@ -167,6 +197,8 @@ class TestBoardRules():
         board_fixt.place_piece(pieces.Rook(colors.BLACK), 'h8')
         board_fixt.place_piece(pieces.Bishop(colors.BLACK), 'h3')
         board_fixt.place_piece(pieces.Bishop(colors.WHITE), 'f5')
+
+        boardmove = BoardMove(board_fixt.board, move)
 
         result = boardmove.process()
 
@@ -197,10 +229,11 @@ class TestBoardRules():
     ])
     def test_castling_blocked(self, board_fixt, move, expected):
         """ Test if we can castle through others. """
-        boardmove = BoardMove(board_fixt.board, move)
         board_fixt.place_piece(pieces.King(colors.WHITE), 'e1')
         board_fixt.place_piece(pieces.Bishop(colors.WHITE), 'b1')
         board_fixt.place_piece(pieces.Rook(colors.WHITE), 'a1')
+
+        boardmove = BoardMove(board_fixt.board, move)
 
         result = boardmove.process()
 

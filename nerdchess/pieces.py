@@ -23,6 +23,7 @@ class Piece(ABC):
         self.color = color
         self.position = ''
         self.captured = captured
+        self.last_move = None
 
     @abstractmethod
     def start_position(self):
@@ -70,7 +71,7 @@ class Piece(ABC):
 
         return pattern
 
-    def allowed_moves(self, board=False):
+    def allowed_moves(self, board=False, debug=False, check_checking=False):
         """Transform the move pattern into a list of allowed moves.
 
         Returns:
@@ -83,9 +84,10 @@ class Piece(ABC):
                 new_move = Move.from_position(self.position, move)
 
                 if board and new_move:
-                    result = BoardMove(board, new_move.text).process()
-                    if result:
-                        allowed_moves.append(new_move)
+                    boardmove = BoardMove(board, new_move.text,
+                                          check_checking=check_checking)
+                    if boardmove.valid:
+                        allowed_moves.append(boardmove)
                 elif new_move:
                     allowed_moves.append(new_move)
             except IndexError:
@@ -104,6 +106,15 @@ class Piece(ABC):
             return self.color == item.color
         else:
             return NotImplemented
+
+    def __deepcopy__(self, memodict={}):
+        """Deepcopy."""
+        obj = Piece(self.color)
+        obj.position = self.position
+        obj.captured = self.captured
+        obj.last_move = self.last_move
+
+        return obj
 
 
 class Pawn(Piece):
@@ -143,6 +154,15 @@ class Pawn(Piece):
 
         return pattern
 
+    def __deepcopy__(self, memodict={}):
+        """Deepcopy."""
+        obj = Pawn(self.color)
+        obj.position = self.position
+        obj.captured = self.captured
+        obj.last_move = self.last_move
+
+        return obj
+
 
 class Rook(Piece):
     """Represents a rook in a game of chess."""
@@ -169,6 +189,15 @@ class Rook(Piece):
         """
         return self.straight_pattern()
 
+    def __deepcopy__(self, memodict={}):
+        """Deepcopy."""
+        obj = Rook(self.color)
+        obj.position = self.position
+        obj.captured = self.captured
+        obj.last_move = self.last_move
+
+        return obj
+
 
 class Bishop(Piece):
     """Represents a bishop in a game of chess."""
@@ -194,6 +223,15 @@ class Bishop(Piece):
             list(tuple(int, int), ): Move pattern as list of tuples
         """
         return self.diagonal_pattern()
+
+    def __deepcopy__(self, memodict={}):
+        """Deepcopy."""
+        obj = Bishop(self.color)
+        obj.position = self.position
+        obj.captured = self.captured
+        obj.last_move = self.last_move
+
+        return obj
 
 
 class Knight(Piece):
@@ -231,6 +269,15 @@ class Knight(Piece):
         ]
         return pattern
 
+    def __deepcopy__(self, memodict={}):
+        """Deepcopy."""
+        obj = Knight(self.color)
+        obj.position = self.position
+        obj.captured = self.captured
+        obj.last_move = self.last_move
+
+        return obj
+
 
 class Queen(Piece):
     """Represents a queen in a game of chess."""
@@ -259,6 +306,15 @@ class Queen(Piece):
         diagonal = self.diagonal_pattern()
         pattern = straight + diagonal
         return pattern
+
+    def __deepcopy__(self, memodict={}):
+        """Deepcopy."""
+        obj = Queen(self.color)
+        obj.position = self.position
+        obj.captured = self.captured
+        obj.last_move = self.last_move
+
+        return obj
 
 
 class King(Piece):
@@ -303,6 +359,15 @@ class King(Piece):
             pattern.append((-4, 0))
 
         return pattern
+
+    def __deepcopy__(self, memodict={}):
+        """Deepcopy."""
+        obj = King(self.color)
+        obj.position = self.position
+        obj.captured = self.captured
+        obj.last_move = self.last_move
+
+        return obj
 
 
 def create_pieces():

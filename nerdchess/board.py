@@ -2,8 +2,7 @@
 import copy
 from nerdchess.config import colors, letters
 from nerdchess.boardmove import BoardMove, CastleSide
-from nerdchess.pieces import King, Knight
-from nerdchess.boardrules import BoardRules
+from nerdchess.pieces import King
 
 
 class Board():
@@ -161,7 +160,7 @@ class Board():
             color = colors.BLACK if color == colors.WHITE else colors.WHITE
         pieces = list(self.piece_list(self.squares, color))
         for piece in pieces:
-            moves = [BoardMove(self, i.text) for i in piece.allowed_moves()]
+            moves = piece.allowed_moves(board=self, check_checking=True)
             for move in moves:
                 if not move:
                     continue
@@ -169,7 +168,7 @@ class Board():
                 if not move.destination_sq.occupant:
                     continue
 
-                if not BoardRules(move, check_checking=True).valid:
+                if not move.valid:
                     continue
 
                 if (isinstance(move.destination_sq.occupant, King) and
@@ -184,6 +183,10 @@ class Board():
 
         Returns:
             color: Color of the king in mate or False
+
+        Todo:
+            * Tests make me believe this introduces some heavy recursion shit
+            * It's also a mess so those might be related
         """
         check = self.is_check()
         if not check:
@@ -192,15 +195,14 @@ class Board():
         pieces = list(self.piece_list(self.squares, check))
         moves = []
         for i in pieces:
-            moves = moves + i.allowed_moves()
+            for move in i.allowed_moves(board=self, check_checking=True):
+                moves.append(move)
 
-        boardmoves = [BoardMove(self, i.text) for i in moves]
-
-        for move in boardmoves:
-            valid_move = move.process()
-            if valid_move:
-                if not valid_move.is_check(color=check):
-                    return False
+        # TODO This creates some huge loading times when a lot of pieces are
+        # there
+        for move in moves:
+            if not self.new_board(move).is_check(color=check):
+                return False
 
         return check
 
@@ -219,7 +221,7 @@ class Board():
         """
         newboard = copy.deepcopy(self)
         old_move = move
-        move = BoardMove(newboard, move.text)
+        move = BoardMove(newboard, move.text, rule_check=False)
 
         piece = move.origin_sq.occupant
 
@@ -284,6 +286,14 @@ class Board():
 
         return newboard
 
+    def __deepcopy__(self, memodict={}):
+        """Deepcopy."""
+        obj = Board()
+        obj.squares = copy.deepcopy(self.squares)
+        obj.__create_board = None
+
+        return obj
+
 
 class Square():
     """Represents a square on a chessboard.
@@ -314,3 +324,13 @@ class Square():
             return "[{}]".format(str(self.occupant))
         else:
             return '[ ]'
+
+    def __deepcopy__(self, memodict={}):
+        """Deepcopy."""
+        obj = Square(
+            self.selector,
+            self.color,
+            occupant=copy.deepcopy(self.occupant)
+        )
+
+        return obj
