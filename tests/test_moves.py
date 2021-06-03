@@ -45,10 +45,10 @@ class TestBoardRules():
 
     def test_pawncapture(self, board_fixt):
         """ Test the possibility for pawns to move horizontally. """
-        move = BoardMove(board_fixt.board, 'e4f5')
         board_fixt.place_piece(pieces.Pawn(colors.WHITE), 'e4')
         board_fixt.place_piece(pieces.Rook(colors.BLACK), 'f5')
 
+        move = BoardMove(board_fixt.board, 'e4f5')
         valid = move.process()
 
         assert valid
@@ -73,11 +73,11 @@ class TestBoardRules():
 
     def test_defending_check(self, board_fixt):
         """Test if it's possible to defend check by placing a piece between."""
-        move = BoardMove(board_fixt.board, 'c8d7')
-
         board_fixt.place_piece(pieces.Bishop(colors.WHITE), 'c8')
         board_fixt.place_piece(pieces.Bishop(colors.BLACK), 'b5')
         board_fixt.place_piece(pieces.King(colors.WHITE), 'e8')
+
+        move = BoardMove(board_fixt.board, 'c8d7')
 
         assert board_fixt.board.is_check(color=colors.WHITE)
         assert move.process(debug=True)

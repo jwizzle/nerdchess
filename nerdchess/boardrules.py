@@ -39,7 +39,7 @@ class BoardRules():
         else:
             if self.move.is_capturing():
                 self.__capturing()
-            # self.__self_checking()
+            self.__self_checking()
 
     def __capturing(self):
         """Check if this is a capturing move."""
@@ -71,10 +71,14 @@ class BoardRules():
 
     def __self_checking(self):
         """Check if the move puts the player itself in check."""
-        newboard = self.move.board.new_board(self.move)
-        if self.valid:
-            if newboard.is_check(color=self.piece.color) == self.piece.color:
-                self.valid = False
+        try:
+            if not self.check_checking:
+                newboard = self.move.board.new_board(self.move)
+                if newboard.is_check(
+                        color=self.piece.color) == self.piece.color:
+                    self.valid = False
+        except AttributeError:
+            self.valid = False
 
     def __castling(self):
         """Apply rules specific to castling."""
