@@ -103,3 +103,8 @@ class BoardRules():
             inter_board = self.move.board.new_board(inter_move)
             if inter_board.is_check() == self.piece.color:
                 self.valid = False
+
+            dest_sq = self.move.board.squares[
+                str(inter_move.destination[0])][int(inter_move.destination[1])]
+            if dest_sq.occupant:
+                self.valid = False

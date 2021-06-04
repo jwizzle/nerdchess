@@ -102,6 +102,8 @@ class ChessGame():
         """
         if not isinstance(pawn, pieces.Pawn):
             return game_event.PromotionEvent(False)
+        if not pawn.last_move:
+            return game_event.PromotionEvent(False)
 
         if pawn.color == colors.WHITE:
             if pawn.last_move.text[3] == '8':
@@ -113,4 +115,3 @@ class ChessGame():
                 return game_event.MoveEvent(self.board.promote(pawn, target))
             else:
                 return game_event.MoveEvent(False)
-
